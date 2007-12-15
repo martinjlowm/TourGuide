@@ -1,10 +1,10 @@
 TourGuide:RegisterGuide("Ashenvale (26-27)", "Stonetalon Mountains (27)", "Horde", function()
 return [[
-R Splintertree Post
+F Splintertree Post
 h Splintertree Post
 A Stonetalon Standstill
 A Satyr Horns
-A Ashenvale Outrunners |N|Get This at the camp southwest of Splintertree Post (71,68)|
+A Ashenvale Outrunners |N|Started by Kuray'bin (71,68)|
 
 T The Ashenvale Hunt |N|Don't skip this or the quest items won't drop!  Go to Orgrimmar and grab it if you don't have it.|
 N Kill Sharptalon |N|Spawns around (74,70). Bringing him to 1/3 health than dragging him over to the guards should help.|
@@ -36,7 +36,7 @@ T The Hunt Completed
 F Zoram'gar Outpost
 T Je'neu of the Earthen Ring
 A Vorsha the Lasher
-C Vortha the Lasher |N|On Island|
+C Vorsha the Lasher |N|On Island|
 A Between a Rock and a Thistlefur
 A Troll Charm
 
@@ -59,6 +59,7 @@ N Retrieve Pet |C|Hunter|
 
 H Splintertree Post
 T Freedom to Ruul
+G Grind to 27 |LV|27|
 A Destroy the Legion
 C Ordanus |N|(61,52) Fight to top room. Just kill Ordanus, loot the head then jump out of there.|
 C Satyr Horns |N|(80,52)Most annoying quest ever if you can't remove curse.|
