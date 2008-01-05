@@ -22,7 +22,10 @@ function TourGuide:GetObjectiveTag(tag, i)
     local tags = self.tags[i]
     if not tags then return end
 
-    if tag == "O" then return string.find(tags, "|O|")
+    if tag == "O" then
+        return string.find(tags, "|O|")
+    elseif tag == "T" then
+        return string.find(tags, "|T|")
     elseif tag == "L" then
         local _, _, lootitem, lootqty = string.find(tags, "|L|(%d+)%s?(%d*)|")
         lootqty = tonumber(lootqty) or 1
