@@ -26,7 +26,7 @@ T Super Reaper 6000
 A Further Instructions
 
 R Sun Rock Retreat |N|(46,59)|
-A Boulderslide Ravine
+A Boulderslide Ravine |T|
 C Boulderslide Ravine |N|(61,92)|
 
 T Blood Feeders
@@ -36,8 +36,7 @@ A Shredding Machines
 A The Elder Crone
 
 H The Crossroads
-N Stable your pet |C|Hunter|
-T Report to Kadrak |N|Take the road north out of town to the Ashenvale border|
+N Stable your pet |C|Hunter| |T|
+T Report to Kadrak |N|Take the road north out of town to the Ashenvale border| |T|
 ]]
 end)
-
