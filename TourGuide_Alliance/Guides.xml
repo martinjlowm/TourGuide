@@ -2,7 +2,6 @@
 	<Script file="01_11_Dun_Morogh.lua"/>
 	<Script file="01_12_Elwynn_Forest.lua"/>
 	<Script file="01_12_Azuremyst_Isle.lua"/>
-
 	<Script file="01_12_Teldrassil.lua"/>
 	<Script file="12_17_Darkshore.lua"/>
 
@@ -10,7 +9,7 @@
 	<Script file="18_20_Redridge_Mountains.lua"/>
 
 	<Script file="20_21_Darkshore.lua"/>
-	<Script file="21_22_Ashenvale.lua"/>
+	<Script file="22_24_Ashenvale.lua"/>
 	<Script file="25_27_Wetlands.lua"/>
 	<Script file="27_28_Redridge_Mountains.lua"/>
 	<Script file="28_29_Duskwood.lua"/>
