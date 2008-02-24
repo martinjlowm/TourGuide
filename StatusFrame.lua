@@ -25,6 +25,7 @@ end
 
 
 local f = CreateFrame("Button", nil, UIParent)
+TourGuide.statusframe = f
 f:SetPoint("BOTTOMRIGHT", QuestWatchFrame, "TOPRIGHT", -60, -15)
 f:SetHeight(24)
 f:SetFrameStrata("LOW")
@@ -266,7 +267,15 @@ f:SetScript("OnClick",
                     OptionHouse:Open("Tour Guide", "Guides")
                 else
                     if arg1 == "RightButton" then
-			OptionHouse:Open("Tour Guide", "Objectives")
+			if TourGuide.objectiveframe:IsVisible() then
+				HideUIPanel(TourGuide.objectiveframe)
+			else
+				local quad, vhalf, hhalf = GetQuadrant(self)
+				local anchpoint = (vhalf == "TOP" and "BOTTOM" or "TOP")..hhalf
+				TourGuide.objectiveframe:ClearAllPoints()
+				TourGuide.objectiveframe:SetPoint(quad, self, anchpoint)
+				ShowUIPanel(TourGuide.objectiveframe)
+			end
                     else
 			local i = TourGuide:GetQuestLogIndexByName()
 			if i then SelectQuestLogEntry(i) end
@@ -321,6 +330,9 @@ f:RegisterForDrag("LeftButton")
 f:SetMovable(true)
 f:SetClampedToScreen(true)
 f:SetScript("OnDragStart", function(...)
+                if TourGuide.objectiveframe:IsVisible() then
+                    HideUIPanel(TourGuide.objectiveframe)
+                end
                 GameTooltip:Hide()
                 this:StartMoving()
                            end)
@@ -332,7 +344,6 @@ f:SetScript("OnDragStop", function(...)
                 this:SetPoint(TourGuide.db.profile.statusframepoint, TourGuide.db.profile.statusframex, TourGuide.db.profile.statusframey)
                 ShowTooltip(this)
                           end)
-
 
 item:RegisterForDrag("LeftButton")
 item:SetMovable(true)
