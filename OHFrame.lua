@@ -103,16 +103,16 @@ function TourGuide:CreateObjectivePanel()
                     end)
     end
 
-    title = ww.SummonFontString(frame, nil, "SubZoneTextFont", nil, "BOTTOM", frame, "TOP", 0, 10)
+    title = ww.SummonFontString(frame, nil, "SubZoneTextFont", nil, "BOTTOM", frame, "TOP")
     local fontname, fontheight, fontflags = title:GetFont()
     title:SetFont(fontname, 18, fontflags)
 
     completed = ww.SummonFontString(frame, nil, "NumberFontNormalLarge", nil,
                                     "BOTTOMLEFT", 10, 10)
 
-    	scrollbar, upbutt, downbutt = ww.ConjureScrollBar(frame)
-	scrollbar:SetPoint("TOPRIGHT", frame, -7, -21)
-	scrollbar:SetPoint("BOTTOM", frame, 0, 22 + 22)
+    scrollbar, upbutt, downbutt = ww.ConjureScrollBar(frame)
+    scrollbar:SetPoint("TOPRIGHT", frame, -7, -21)
+    scrollbar:SetPoint("BOTTOM", frame, 0, 22 + 22)
     scrollbar:SetScript("OnValueChanged",
                         function(...)
                             self:UpdateOHPanel(arg1)
