@@ -153,6 +153,8 @@ function TourGuide:UpdateStatusFrame()
             local haslootitem = lootitem and GetItemCount(lootitem) >= lootqty
 
             -- Test for completed objectives and mark them done
+            if action == "SETHEARTH" and self.db.char.hearth == name then return self:SetTurnedIn(i, true) end
+
             local zonetext, subzonetext, subzonetag = GetZoneText(), GetSubZoneText(), self:GetObjectiveTag("SZ")
             if (action == "RUN" or action == "FLY" or action == "HEARTH" or action == "BOAT") and (subzonetext == name or subzonetext == subzonetag or zonetext == name or zonetext == subzonetag) then
                 return self:SetTurnedIn(i, true)

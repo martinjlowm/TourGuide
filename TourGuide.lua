@@ -34,6 +34,7 @@ TourGuide.icons = setmetatable({
 function TourGuide:Initialize()
     self.db = self:InitializeDB("TourGuideAlphaDB", {
                                     char = {
+                                        hearth = "Unknown",
                                         turnedin = {},
                                         turnins = {},
                                         cachedturnins = {},
