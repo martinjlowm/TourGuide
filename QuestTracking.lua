@@ -1,8 +1,12 @@
 local TourGuide = TourGuide
 local L = TourGuide.Locale
 
-TourGuide.TrackEvents = {"UI_INFO_MESSAGE", "CHAT_MSG_LOOT", "CHAT_MSG_SYSTEM", "QUEST_WATCH_UPDATE", "QUEST_LOG_UPDATE", "ZONE_CHANGED", "ZONE_CHANGED_INDOORS",
-                         "MINIMAP_ZONE_CHANGED", "ZONE_CHANGED_NEW_AREA", "PLAYER_LEVEL_UP", "PLAYER_ENTERING_WORLD"}
+TourGuide.TrackEvents = {
+    "UI_INFO_MESSAGE", "CHAT_MSG_LOOT", "CHAT_MSG_SYSTEM", "QUEST_WATCH_UPDATE",
+    "QUEST_LOG_UPDATE", "ZONE_CHANGED", "ZONE_CHANGED_INDOORS",
+    "MINIMAP_ZONE_CHANGED", "ZONE_CHANGED_NEW_AREA", "PLAYER_LEVEL_UP",
+    "PLAYER_ENTERING_WORLD", "CRAFT_SHOW"
+}
 
 
 function TourGuide:PLAYER_ENTERING_WORLD(event)
@@ -56,6 +60,16 @@ function TourGuide:CHAT_MSG_SYSTEM(event)
             return self:UpdateStatusFrame()
         end
     end
+
+    if action == "PET" then
+        local _, _, text = string.find(msg, L["You have learned a new spell: (.*)."])
+        local nextEntry = table.getn(TourGuide.petskills) + 1
+        TourGuide.petskills[nextEntry] = text
+        if text and quest == text then
+            self:DebugF(1, "Detected pet skill train %q", quest)
+            return self:SetTurnedIn()
+        end
+    end
 end
 
 
@@ -101,6 +115,28 @@ function TourGuide:UI_INFO_MESSAGE(event)
     if msg == ERR_NEWTAXIPATH and self:GetObjectiveInfo() == "GETFLIGHTPOINT" then
         self:Debug(1, "Discovered flight point")
         self:SetTurnedIn()
+    end
+end
+
+
+function TourGuide:CRAFT_SHOW()
+    local isPetTraining = CraftIsPetTraining()
+    if ( isPetTraining == 1 ) then
+        -- cycle through Pet skills, I hope...
+        TourGuide.petskills = {}
+        local numCrafts = GetNumCrafts()
+        local index
+        for index = 1, numCrafts, 1 do
+            local craftName, craftRank = GetCraftInfo(index)
+            local fullSkillName = ""
+            if ( craftRank == "" ) then
+                fullSkillName = craftName
+            else
+                fullSkillName = craftName .. " (" .. craftRank .. ")"
+            end
+            TourGuide.petskills[index] = fullSkillName
+        end
+        self:UpdateStatusFrame()
     end
 end
 

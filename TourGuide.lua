@@ -11,38 +11,45 @@ if tekDebug then TourGuide:EnableDebug(10, tekDebug:GetFrame("TourGuide")) end
 TourGuide.guides = {}
 TourGuide.guidelist = {}
 TourGuide.nextzones = {}
+TourGuide.petskills = {}
 TourGuide.Locale = L
 
-TourGuide.icons = setmetatable({
-                                   ACCEPT = "Interface\\GossipFrame\\AvailableQuestIcon",
-                                   COMPLETE = "Interface\\Icons\\Ability_DualWield",
-                                   TURNIN = "Interface\\GossipFrame\\ActiveQuestIcon",
-                                   KILL = "Interface\\Icons\\Ability_Creature_Cursed_02",
-                                   RUN = "Interface\\Icons\\Ability_Tracking",
-                                   MAP = "Interface\\Icons\\Ability_Spy",
-                                   FLY = "Interface\\Icons\\Ability_Druid_FlightForm",
-                                   SETHEARTH = "Interface\\AddOns\\TourGuide\\resting.tga",
-                                   HEARTH = "Interface\\Icons\\INV_Misc_Rune_01",
-                                   NOTE = "Interface\\Icons\\INV_Misc_Note_01",
-                                   USE = "Interface\\Icons\\INV_Misc_Bag_08",
-                                   BUY = "Interface\\Icons\\INV_Misc_Coin_01",
-                                   BOAT = "Interface\\Icons\\Spell_Frost_SummonWaterElemental",
-                                   GETFLIGHTPOINT = "Interface\\Icons\\Ability_Hunter_EagleEye",
-                               }, {__index = function() return "Interface\\Icons\\INV_Misc_QuestionMark" end})
+TourGuide.icons = setmetatable(
+    {
+        ACCEPT = "Interface\\GossipFrame\\AvailableQuestIcon",
+        COMPLETE = "Interface\\Icons\\Ability_DualWield",
+        TURNIN = "Interface\\GossipFrame\\ActiveQuestIcon",
+        KILL = "Interface\\Icons\\Ability_Creature_Cursed_02",
+        RUN = "Interface\\Icons\\Ability_Tracking",
+        MAP = "Interface\\Icons\\Ability_Spy",
+        FLY = "Interface\\Icons\\Ability_Druid_FlightForm",
+        SETHEARTH = "Interface\\AddOns\\TourGuide\\resting.tga",
+        HEARTH = "Interface\\Icons\\INV_Misc_Rune_01",
+        NOTE = "Interface\\Icons\\INV_Misc_Note_01",
+        USE = "Interface\\Icons\\INV_Misc_Bag_08",
+        BUY = "Interface\\Icons\\INV_Misc_Coin_01",
+        BOAT = "Interface\\Icons\\Spell_Frost_SummonWaterElemental",
+        GETFLIGHTPOINT = "Interface\\Icons\\Ability_Hunter_EagleEye",
+        PET = "Interface\\Icons\\Ability_Hunter_BeastCall02",
+    }, {__index = function()
+            return "Interface\\Icons\\INV_Misc_QuestionMark"
+       end}
+)
 
 
 function TourGuide:Initialize()
-    self.db = self:InitializeDB("TourGuideAlphaDB", {
-                                    char = {
-                                        hearth = "Unknown",
-                                        turnedin = {},
-                                        turnins = {},
-                                        cachedturnins = {},
-                                        trackquests = true,
-                                        completion = {},
-                                        currentguide = "No Guide",
-                                    },
-                                                    })
+    self.db = self:InitializeDB(
+        "TourGuideAlphaDB", {
+            char = {
+                hearth = "Unknown",
+                turnedin = {},
+                turnins = {},
+                cachedturnins = {},
+                trackquests = true,
+                completion = {},
+                currentguide = "No Guide",
+            },
+    })
     if self.db.char.turnedin then self.db.char.turnedin = nil end -- Purge old table if present
     self.cachedturnins = self.db.char.cachedturnins
 
