@@ -11,7 +11,6 @@ if tekDebug then TourGuide:EnableDebug(10, tekDebug:GetFrame("TourGuide")) end
 TourGuide.guides = {}
 TourGuide.guidelist = {}
 TourGuide.nextzones = {}
-TourGuide.petskills = {}
 TourGuide.Locale = L
 
 TourGuide.icons = setmetatable(
@@ -48,6 +47,7 @@ function TourGuide:Initialize()
                 trackquests = true,
                 completion = {},
                 currentguide = "No Guide",
+                petskills = {}
             },
     })
     if self.db.char.turnedin then self.db.char.turnedin = nil end -- Purge old table if present
