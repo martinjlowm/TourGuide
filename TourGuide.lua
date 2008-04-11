@@ -60,6 +60,10 @@ end
 
 
 function TourGuide:Enable()
+    if TomTom and TomTom.version ~= "SVN" and (tonumber(TomTom.version) or 0) < 120 then
+        self:Print("Your version of TomTom is out of date.  TourGuide waypoints may not work correctly.")
+    end
+
     local _, title = GetAddOnInfo("TourGuide")
     local author, version = GetAddOnMetadata("TourGuide", "Author"), GetAddOnMetadata("TourGuide", "Version")
     local oh = OptionHouse:RegisterAddOn("Tour Guide", title, author, version)
@@ -70,6 +74,7 @@ function TourGuide:Enable()
     self:RegisterEvent("QUEST_COMPLETE", "UpdateStatusFrame")
     self:RegisterEvent("QUEST_DETAIL", "UpdateStatusFrame")
     self.TrackEvents = nil
+    self:QuestID_QUEST_LOG_UPDATE()
     self:UpdateStatusFrame()
 end
 
