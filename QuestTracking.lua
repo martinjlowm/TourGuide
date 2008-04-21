@@ -4,20 +4,8 @@ local L = TourGuide.Locale
 TourGuide.TrackEvents = {
     "UI_INFO_MESSAGE", "CHAT_MSG_LOOT", "CHAT_MSG_SYSTEM", "QUEST_WATCH_UPDATE",
     "QUEST_LOG_UPDATE", "ZONE_CHANGED", "ZONE_CHANGED_INDOORS",
-    "MINIMAP_ZONE_CHANGED", "ZONE_CHANGED_NEW_AREA", "PLAYER_ENTERING_WORLD",
-    "CRAFT_SHOW"
+    "MINIMAP_ZONE_CHANGED", "ZONE_CHANGED_NEW_AREA", "CRAFT_SHOW"
 }
-
-function TourGuide:PLAYER_ENTERING_WORLD(event)
-    local addon = arg1
-    if addon ~= "Blizzard_TrainerUI" then return end
-
-    self:UnregisterEvent("PLAYER_ENTERING_WORLD")
-
-    local f = CreateFrame("Frame", nil, ClassTrainerFrame)
-    f:SetScript("OnShow", function(self) if self:GetObjectiveInfo() == "TRAIN" then self:SetTurnedIn() end end)
-end
-
 
 function TourGuide:ZONE_CHANGED()
     local zonetext, subzonetext, subzonetag, action, quest = GetZoneText(), GetSubZoneText(), self:GetObjectiveTag("SZ"), self:GetObjectiveInfo()
