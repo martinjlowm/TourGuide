@@ -4,10 +4,9 @@ local L = TourGuide.Locale
 TourGuide.TrackEvents = {
     "UI_INFO_MESSAGE", "CHAT_MSG_LOOT", "CHAT_MSG_SYSTEM", "QUEST_WATCH_UPDATE",
     "QUEST_LOG_UPDATE", "ZONE_CHANGED", "ZONE_CHANGED_INDOORS",
-    "MINIMAP_ZONE_CHANGED", "ZONE_CHANGED_NEW_AREA", "PLAYER_LEVEL_UP",
-    "PLAYER_ENTERING_WORLD", "CRAFT_SHOW"
+    "MINIMAP_ZONE_CHANGED", "ZONE_CHANGED_NEW_AREA", "PLAYER_ENTERING_WORLD",
+    "CRAFT_SHOW"
 }
-
 
 function TourGuide:PLAYER_ENTERING_WORLD(event)
     local addon = arg1
@@ -17,15 +16,6 @@ function TourGuide:PLAYER_ENTERING_WORLD(event)
 
     local f = CreateFrame("Frame", nil, ClassTrainerFrame)
     f:SetScript("OnShow", function(self) if self:GetObjectiveInfo() == "TRAIN" then self:SetTurnedIn() end end)
-end
-
-
-function TourGuide:PLAYER_LEVEL_UP(event)
-    local newlevel = arg1
-
-    local level = tonumber((self:GetObjectiveTag("LV")))
-    self:Debug(1, "PLAYER_LEVEL_UP", newlevel, level)
-    if level and newlevel >= level then self:SetTurnedIn() end
 end
 
 
