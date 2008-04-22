@@ -27,6 +27,8 @@ function TourGuide:GetObjectiveTag(tag, i)
         return string.find(tags, "|O|")
     elseif tag == "T" then
         return string.find(tags, "|T|")
+    elseif tag == "QID" then
+        return tonumber((string.match(tags, "|QID|(%d+)|")))
     elseif tag == "L" then
         local _, _, lootitem, lootqty = string.find(tags, "|L|(%d+)%s?(%d*)|")
         lootqty = tonumber(lootqty) or 1
