@@ -6,11 +6,11 @@ A Deadmire |QID|1205|
 
 F Dustwallow Marsh
 h Brackenwall Village
-A Theramore Spies |QID|1201|
-A Check Up on Tabetha |QID|11213|
-A The Black Shield (Part 1) |QID|???|
-A Twilight of the Dawn Runner |QID|9437|
-A The Hermit of Witch Hill |QID|11225|
+A Theramore Spies |T| |QID|1201|
+A Check Up on Tabetha |T| |QID|11213|
+A The Black Shield (Part 3) |T| |QID|1322|
+A Twilight of the Dawn Runner |T| |QID|9437|
+A The Hermit of Witch Hill |T| |QID|11225|
 A Hungry! |N|From Mudcrush Durtfeet, south of Brackenwall (35,37)| |QID|1177|
 
 C Twilight of the Dawn Runner |N|The cargo is on the top of the Northpoint Tower (46,23)| |L|23657| |QID|9437|
@@ -39,21 +39,25 @@ T Cleansing Witch Hill |QID|11183|
 
 A Stinky's Escape |N|North of the tower (46.78, 17.00).  You may want to clear the area first.| |QID|1270|
 C Stinky's Escape |QID|1270|
-C Jarl Needs Eyes |QID|1206|
-C The Black Shield (Part 1) |QID|???|
-C Theramore Spies |QID|1201|
 
-T Theramore Spies |N|Back in Brackenwall Village| |QID|1201|
-A The Theramore Docks |QID|1202|
-T The Black Shield (Part 1) |QID|???|
-A The Black Shield (Part 2) |QID|???|
-T The Black Shield (Part 2) |QID|???|
-T Twilight of the Dawn Runner |QID|9437|
-T The Lost Report |QID|1238|
-T Hungry! |QID|1177|
+C Jarl Needs Eyes |N|Kill spiders to the southwest at Darkmist Cavern (35,21).| |QID|1206|
+C The Black Shield (Part 3) |QID|1322|
+C Theramore Spies |N|Stealthed mobs all around Brackenwall Village| |QID|1201|
 
-T Check Up on Tabetha |N|New quest, At (45,57)| |QID|11213|
-A Help for Mudsprocket |QID|11211|
+T Theramore Spies |N|Back in Brackenwall Village| |T| |QID|1201|
+A The Theramore Docks |T| |QID|1202|
+T The Lost Report |T| |QID|1238|
+A Help Mudsprocket |T| |QID|11215|
+T The Black Shield (Part 3) |T| |QID|1322|
+A The Black Shield (Part 4) |T| |QID|1323|
+T The Black Shield (Part 4) |T| |QID|1323|
+A Inspecting the Ruins |N|Easy XP and its on the way to Tabetha.| |T| |QID|11124|
+T Twilight of the Dawn Runner |T| |QID|9437|
+
+T Hungry! |N|Southwest at Mudcrush Durtfeet (35,38)| |QID|1177|
+T Inspecting the Ruins |N|Follow the path south-west from Mudcrush (30,48)| |QID|11124|
+
+T Check Up on Tabetha |N||Follow the road south, then east to Tabetha's Farm (46.04, 57.17).| |QID|11213|
 A The Grimtotem Weapon |QID|11169|
 A The Reagent Thief |QID|11173|
 A Direhorn Raiders |N|Just outside of hut| |QID|11156|
@@ -110,3 +114,4 @@ F Ratchet
 T Stinky's Escape |T| |QID|1270|
 ]]
 end)
+
