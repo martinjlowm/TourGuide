@@ -86,6 +86,18 @@ local function DebugQuestObjective(text, action, quest, accepts, turnins, comple
 	return haserrors
 end
 
+local function InTagList(taglist, needle)
+    if taglist then
+        for match in string.gmatch(taglist, "(%a+( ?%a+))") do
+            DEFAULT_CHAT_FRAME:AddMessage(match, 1, 0, 0)
+            if match == needle then
+                DEFAULT_CHAT_FRAME:AddMessage(needle, 0, 1, 0)
+                return true
+            end
+        end
+    end
+    return false
+end
 
 local myclass, myrace = UnitClass("player"), UnitRace("player")
 local function ParseQuests(...)
@@ -94,13 +106,12 @@ local function ParseQuests(...)
     local actions, quests, tags = {}, {}, {}
     local i, haserrors = 1, false
 
-    for j = 1, table.getn(arg) do
-        local text = arg[j]
+    for j = 1, select('#', arg) do
+        local text = select(j, unpack(arg))
+        local _, _, classes = string.find(text, "|C|([^|]+)|")
+        local _, _, races = string.find(text, "|R|([^|]+)|")
 
-        local class = select(3, string.find(text, "|C|([^|]+)|"))
-        local race = select(3, string.find(text, "|R|([^|]+)|"))
-
-        if text ~= "" and (not class or class == myclass) and (not race or race == myrace) then
+        if text ~= "" and (not classes or InTagList(classes, myclass)) and (not races or InTagList(races, myrace)) then
             local action, quest, tag = select(3, string.find(text, "^(%a) ([^|]*)(.*)"))
             assert(actiontypes[action], "Unknown action: "..text)
             quest = string.trim(quest)
