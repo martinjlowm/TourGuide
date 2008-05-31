@@ -87,15 +87,6 @@ local function DebugQuestObjective(text, action, quest, accepts, turnins, comple
 end
 
 
-local function InTagList(taglist, needle)
-    if taglist then
-        if string.find(taglist, needle) then
-            return true
-        end
-    end
-    return false
-end
-
 local myclass, myrace = UnitClass("player"), UnitRace("player")
 local function ParseQuests(...)
     local accepts, turnins, completes = {}, {}, {}
@@ -108,7 +99,7 @@ local function ParseQuests(...)
         local _, _, classes = string.find(text, "|C|([^|]+)|")
         local _, _, races = string.find(text, "|R|([^|]+)|")
 
-        if text ~= "" and (not classes or InTagList(classes, myclass)) and (not races or InTagList(races, myrace)) then
+        if text ~= "" and (not classes or string.find(classes, myclass)) and (not races or string.find(races, myrace)) then
             local action, quest, tag = select(3, string.find(text, "^(%a) ([^|]*)(.*)"))
             assert(actiontypes[action], "Unknown action: "..text)
             quest = string.trim(quest)
