@@ -89,14 +89,12 @@ end
 
 local function InTagList(taglist, needle)
     if taglist then
-        local _, _, match = string.find(taglist, "("..needle..")")
-        if match then
+        if string.find(taglist, needle) then
             return true
         end
     end
     return false
 end
-
 
 local myclass, myrace = UnitClass("player"), UnitRace("player")
 local function ParseQuests(...)
