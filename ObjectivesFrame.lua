@@ -102,13 +102,12 @@ function TourGuide:CreateObjectivePanel()
 
     if tekDebug then
         local b = CreateButton(frame, "RIGHT", configbutton, "LEFT")
-        b:SetText("Debug All")
+        b:SetText("Debug")
         b:SetScript("OnClick",
                     function()
                         frame:Hide();
-                        self:DebugGuideSequence(true)
                         LibStub("OptionHouse-1.1"):Open("tekDebug", "TourGuide")
-                    end)
+        end)
     end
 
     title = ww.SummonFontString(frame, nil, "SubZoneTextFont", nil, "BOTTOM", frame, "TOP")
