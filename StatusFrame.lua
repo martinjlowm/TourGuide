@@ -40,16 +40,6 @@ local icon = ww.SummonTexture(f, "ARTWORK", ICONSIZE, ICONSIZE, nil, "LEFT", che
 local text = ww.SummonFontString(f, "OVERLAY", "GameFontNormalSmall", nil, "RIGHT", -GAP-4, 0)
 text:SetPoint("LEFT", icon, "RIGHT", GAP-4, 0)
 
-local item = CreateFrame("Button", nil, UIParent, "ActionButtonTemplate")
-item:SetFrameStrata("LOW")
-item:SetHeight(36)
-item:SetWidth(36)
-item:SetPoint("BOTTOMRIGHT", QuestWatchFrame, "TOPRIGHT", -62, 10)
-item:RegisterForClicks("LeftButtonUp", "RightButtonUp")
-local itemicon = ww.SummonTexture(item, "ARTWORK", 24, 24, "Interface\\Icons\\INV_Misc_Bag_08")
-itemicon:SetAllPoints(item)
-item:Hide()
-
 local f2 = CreateFrame("Frame", nil, UIParent)
 local f2anchor = "RIGHT"
 f2:SetHeight(32)
@@ -83,11 +73,6 @@ function TourGuide:PositionStatusFrame()
 	if self.db.profile.statusframepoint then
 		f:ClearAllPoints()
 		f:SetPoint(self.db.profile.statusframepoint, self.db.profile.statusframex, self.db.profile.statusframey)
-	end
-
-	if self.db.profile.itemframepoint then
-		item:ClearAllPoints()
-		item:SetPoint(self.db.profile.itemframepoint, self.db.profile.itemframex, self.db.profile.itemframey)
 	end
 end
 
@@ -128,7 +113,7 @@ function TourGuide:SetText(i)
 end
 
 
-local lastmapped, lastmappedaction, tex, uitem
+local lastmapped, lastmappedaction
 function TourGuide:UpdateStatusFrame()
     self:Debug(1, "UpdateStatusFrame", self.current)
 
@@ -243,23 +228,10 @@ function TourGuide:UpdateStatusFrame()
     if not f2:IsVisible() then f:SetWidth(FIXEDWIDTH + text:GetWidth()) end
     newsize = FIXEDWIDTH + text:GetWidth()
 
-    tex = useitem and select(10, GetItemInfo(tonumber(useitem)))
-    uitem = useitem
-    self:PLAYER_REGEN_ENABLED()
+    local usetex = useitem and select(10, GetItemInfo(tonumber(useitem)))
+    self:SetUseItem(usetex, useitem)
 
     self:UpdateOHPanel()
-end
-
-
-function TourGuide:PLAYER_REGEN_ENABLED()
-    if tex then
-        itemicon:SetTexture(tex)
-        item:SetAttribute("type1", "item")
-        item:SetAttribute("item1", "item:"..uitem)
-        item:Show()
-        tex = nil
-    else item:Hide() end
-    self:UnregisterEvent("PLAYER_REGEN_ENABLED")
 end
 
 
@@ -292,19 +264,9 @@ check:SetScript("OnClick",
                     TourGuide:SetTurnedIn()
                 end)
 
-
-item:SetScript("OnClick",
-               function(...)
-                   if TourGuide:GetObjectiveInfo() == "USE" then
-                       TourGuide:SetTurnedIn()
-                   end
-               end)
-
-
 local function ShowTooltip(self)
     local tip = TourGuide:GetObjectiveTag("N")
     if not tip then return end
-
     GameTooltip:SetOwner(self, "ANCHOR_NONE")
     local quad, vhalf, hhalf = GetQuadrant(self)
     local anchpoint = (vhalf == "TOP" and "BOTTOM" or "TOP")..hhalf
@@ -331,6 +293,7 @@ end
 f:RegisterForDrag("LeftButton")
 f:SetMovable(true)
 f:SetClampedToScreen(true)
+
 f:SetScript("OnDragStart", function(...)
                 if TourGuide.objectiveframe:IsVisible() then
                     HideUIPanel(TourGuide.objectiveframe)
@@ -346,13 +309,3 @@ f:SetScript("OnDragStop", function(...)
                 this:SetPoint(TourGuide.db.profile.statusframepoint, TourGuide.db.profile.statusframex, TourGuide.db.profile.statusframey)
                 ShowTooltip(this)
                           end)
-
-item:RegisterForDrag("LeftButton")
-item:SetMovable(true)
-item:SetClampedToScreen(true)
-item:SetScript("OnDragStart", item.StartMoving)
-item:SetScript("OnDragStop", function(...)
-                   this:StopMovingOrSizing()
-                   TourGuide:Debug(1, "Item frame moved", GetUIParentAnchor(this))
-                   TourGuide.db.profile.itemframepoint, TourGuide.db.profile.itemframex, TourGuide.db.profile.itemframey = GetUIParentAnchor(this)
-                             end)
