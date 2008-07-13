@@ -3,13 +3,12 @@ return [[
 H Orgrimmar
 F The Crossroads
 A The Swarm Grows (Part 1) |N|From Korran, west of windrider (51.1, 29.6)| |Z|The Barrens| |QID|1145|
-T Regthar Deathgate |N|West of Crossroads in the bunkers (45.3, 28.4)| |QID|1361|
+T Regthar Deathgate |N|West of the Crossroads in the bunkers (45.3, 28.4)| |QID|1361|
 A The Kolkar of Desolace |N|West of Crossroads in the bunkers (45.3, 28.4)| |Z|The Barrens| |QID|1362|
 
 R Shimmering Flats |N|Run back to Crossroads and fly down to Thousand Needles|
 A Hemet Nesingwary Jr. |N|From Kravel Koalbeard (77.8, 77.2)| |QID|5762|
-A Delivery to the Gnomes (Part 1) |QID|???|
-A Wharfmaster Dizzywig |QID|1492|
+A Wharfmaster Dizzywig |QID|1111|
 A A Bump in the Road |QID|1175|
 A Hardened Shells |QID|1105|
 A Load Lightening |QID|1176|
