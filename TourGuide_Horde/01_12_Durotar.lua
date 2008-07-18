@@ -1,7 +1,7 @@
 TourGuide:RegisterGuide("Durotar (1-12)", "The Barrens (12-20)", "Horde", function()
     return [[
-A Your Place In The World |QID|4641|
-T Your Place In The World |QID|4641|
+A Your Place In The World |QID|4641| |NODEBUG|
+T Your Place In The World |QID|4641| |NODEBUG|
 A Cutting Teeth |QID|788|
 C Cutting Teeth |QID|788|
 A Sarkoth (Part 1) |N|Western Valley of Trials (40.6, 62.6)| |QID|790|
@@ -29,7 +29,7 @@ C Vile Familiars |QID|1499|
 
 T Galgar's Cactus Apple Surprise |QID|4402|
 T Sting of the Scorpid |QID|789|
-A Call of Earth |C|Shaman| |QID|1516|
+A Call of Earth (Part 1) |C|Shaman| |QID|1516|
 T Vile Familiars |QID|1499|
 A Burning Blade Medallion |QID|794|
 T Lazy Peons |QID|5441|
@@ -37,16 +37,16 @@ A Thazz'ril's Pick |QID|6394|
 
 C Thazz'ril's Pick |N|In the cave at North end of Valley of Trials. Go straight ahead at the fork. (43.7,53.7)| |QID|6394|
 C Burning Blade Medallion |N|Go back to the fork and take the northern path at the fork. (42.7,52.9)| |QID|794|
-C Call of Earth |C|Shaman| |QID|1516|
+C Call of Earth (Part 1) |C|Shaman| |QID|1516|
 
 H Valley of Trials
 T Burning Blade Medallion |QID|794|
 A Report to Sen'jin Village |QID|805|
-T Call of Earth |C|Shaman| |QID|1516|
-A Call of Earth |C|Shaman| |QID|1517| 
-T Call of Earth |C|Shaman| |N|Head south-west to the Hidden Path (41.6,73.2) then follow the path to the Spirit Rock| |QID|1517| |U|6635|
-A Call of Earth |C|Shaman| |QID|1518| 
-T Call of Earth |C|Shaman| |QID|1518| 
+T Call of Earth (Part 1) |C|Shaman| |QID|1516|
+A Call of Earth (Part 2) |C|Shaman| |QID|1517|
+T Call of Earth (Part 2) |C|Shaman| |N|Head south-west to the Hidden Path (41.6,73.2) then follow the path to the Spirit Rock| |QID|1517| |U|6635|
+A Call of Earth (Part 3) |C|Shaman| |QID|1518|
+T Call of Earth (Part 3) |C|Shaman| |QID|1518|
 T Thazz'ril's Pick |QID|6394|
 A A Peon's Burden |N|From the orc just outside the newbie area (52.0,68.3)| |QID|2161|
 
@@ -78,14 +78,14 @@ A The Admiral's Orders (Part 1) |U|4881| |QID|830|
 T The Admiral's Orders (Part 1) |QID|830|
 A The Admiral's Orders (Part 2) |QID|831|
 T Vanquish the Betrayers |QID|784|
-A From The Wreckage.... |QID|825|
+A From The Wreckage.... |QID|825| |NODEBUG|
 T Carry Your Weight |QID|791|
 C A Solvent Spirit |N|Along the beaches (62,50)| |QID|818|
-C From The Wreckage.... |N|Helps if you have water breathing| |QID|825|
+C From The Wreckage.... |N|Helps if you have water breathing| |QID|825| |NODEBUG|
 K Razormane Scout |N|Razormane Grounds (51.1,49.4)| |Q|Encroachment| |QO|Razormane Scout: 4/4|
 K Razormane Quilboar |Q|Encroachment| |QO|Razormane Quilboar: 4/4|
 
-T From The Wreckage.... |T| |QID|825|
+T From The Wreckage.... |T| |QID|825| |NODEBUG|
 
 C Thwarting Kolkar Aggression |N|West of Sen'jin, each little camp has an item to pickup. (48,79)| |QID|786|
 C Break a Few Eggs |N|Head over to the Echo Isles (59.6,82.6). Kill Tigers if you see them.| |QID|815|
@@ -107,6 +107,8 @@ A Winds in the Desert |N|Follow the canyon/road from Razor Hill to Orgrimmar (46
 C Winds in the Desert |QID|834|
 T Winds in the Desert |QID|834|
 A Securing the Lines |QID|835|
+C Securing the Lines |QID|835|
+T Securing the Lines |QID|835|
 
 T Encroachment |N|Back at Razor Hill| |QID|837|
 N Do Pet Quests |C|Hunter|
@@ -141,6 +143,7 @@ T Neeru Fireblade |N|Neeru Fireblade (49.6,50.4) in the Cleft of Shadow| |QID|82
 A Ak'Zeloth |QID|809|
 C Hidden Enemies (Part 2) |N|Talk to Neeru Fireblade| |QID|5727|
 A Burning Shadows |U|4903| |O| |QID|832|
+T Burning Shadows |O| |QID|832|
 T Hidden Enemies (Part 2) |N|And back to Thrall! Skip the follow-up.| |QID|5727|
 
 H Razor Hill
