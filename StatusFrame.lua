@@ -280,7 +280,7 @@ f:SetScript("OnLeave", function() GameTooltip:Hide() end)
 f:SetScript("OnEnter", function(...) ShowTooltip(this) end)
 
 
-local function GetUIParentAnchor(frame)
+function TourGuide.GetUIParentAnchor(frame)
     local w, h, x, y = UIParent:GetWidth(), UIParent:GetHeight(), frame:GetCenter()
     local hhalf, vhalf = (x > w/2) and "RIGHT" or "LEFT", (y > h/2) and "TOP" or "BOTTOM"
     local dx = hhalf == "RIGHT" and math.floor(frame:GetRight() + 0.5) - w or math.floor(frame:GetLeft() + 0.5)
@@ -293,19 +293,14 @@ end
 f:RegisterForDrag("LeftButton")
 f:SetMovable(true)
 f:SetClampedToScreen(true)
-
 f:SetScript("OnDragStart", function(...)
-                if TourGuide.objectiveframe:IsVisible() then
-                    HideUIPanel(TourGuide.objectiveframe)
-                end
-                GameTooltip:Hide()
-                this:StartMoving()
-                           end)
+	if TourGuide.objectiveframe:IsVisible() then HideUIPanel(TourGuide.objectiveframe) end
+	this:StartMoving()
+end)
 f:SetScript("OnDragStop", function(...)
-                this:StopMovingOrSizing()
-                TourGuide:Debug(1, "Status frame moved", GetUIParentAnchor(this))
-                TourGuide.db.profile.statusframepoint, TourGuide.db.profile.statusframex, TourGuide.db.profile.statusframey = GetUIParentAnchor(this)
-                this:ClearAllPoints()
-                this:SetPoint(TourGuide.db.profile.statusframepoint, TourGuide.db.profile.statusframex, TourGuide.db.profile.statusframey)
-                ShowTooltip(this)
-                          end)
+	this:StopMovingOrSizing()
+	TourGuide.db.profile.statusframepoint, TourGuide.db.profile.statusframex, TourGuide.db.profile.statusframey = TourGuide.GetUIParentAnchor(frame)
+	TourGuide:Debug(1, "Status frame moved", TourGuide.db.profile.statusframepoint, TourGuide.db.profile.statusframex, TourGuide.db.profile.statusframey)
+	this:ClearAllPoints()
+	this:SetPoint(TourGuide.db.profile.statusframepoint, TourGuide.db.profile.statusframex, TourGuide.db.profile.statusframey)
+end)
