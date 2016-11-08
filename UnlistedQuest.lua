@@ -20,11 +20,11 @@ notlisted:Hide()
 notlisted:RegisterEvent("QUEST_DETAIL")
 notlisted:RegisterEvent("QUEST_COMPLETE")
 notlisted:RegisterEvent("QUEST_FINISHED")
-notlisted:SetScript("OnEvent", function(self, event)
-	if event ~= "QUEST_DETAIL" then return self:Hide() end
+notlisted:SetScript("OnEvent", function(event)
+	if event ~= "QUEST_DETAIL" then return this:Hide() end
 	local quest = GetTitleText()
-	if quest and TourGuide:IsQuestAcceptable(quest) then self:Hide()
-	else self:Show() end
+	if quest and TourGuide:IsQuestAcceptable(quest) then this:Hide()
+	else this:Show() end
 end)
 
 

@@ -15,7 +15,7 @@ function WidgetWarlock.SummonCheckBox(size, parent, ...)
 	local check = CreateFrame("CheckButton", nil, parent)
 	check:SetWidth(size)
 	check:SetHeight(size)
-	if select(1, ...) then check:SetPoint(...) end
+	if arg[1] then check:SetPoint(unpack(arg)) end
 
 	check:SetNormalTexture("Interface\\Buttons\\UI-CheckBox-Up")
 	check:SetPushedTexture("Interface\\Buttons\\UI-CheckBox-Down")
@@ -32,7 +32,7 @@ function WidgetWarlock.SummonTexture(parent, layer, w, h, texture, ...)
 	if w then tex:SetWidth(w) end
 	if h then tex:SetHeight(h) end
 	tex:SetTexture(texture)
-	if select(1, ...) then tex:SetPoint(...) end
+	if arg[1] then tex:SetPoint(unpack(arg)) end
 	return tex
 end
 
@@ -40,7 +40,7 @@ end
 function WidgetWarlock.SummonFontString(parent, layer, inherit, text, ...)
 	local fs = parent:CreateFontString(nil, layer, inherit)
 	fs:SetText(text)
-	if select(1, ...) then fs:SetPoint(...) end
+	if arg[1] then fs:SetPoint(unpack(arg)) end
 	return fs
 end
 
@@ -62,12 +62,12 @@ end
 
 
 function WidgetWarlock.FadeIn(frame, elap)
-	elapsed[frame] = elapsed[frame] + elap
-	if elapsed[frame] > fadetimes[frame] then
-		frame:SetScript("OnUpdate", nil)
-		frame:SetAlpha(1)
-		elapsed[frame] = 0
-	else frame:SetAlpha(elapsed[frame]/fadetimes[frame]) end
+    elapsed[frame] = elapsed[frame] + elap
+    if elapsed[frame] > fadetimes[frame] then
+        frame:SetScript("OnUpdate", nil)
+        frame:SetAlpha(1)
+        elapsed[frame] = 0
+    else frame:SetAlpha(elapsed[frame]/fadetimes[frame]) end
 end
 
 

@@ -16,10 +16,10 @@ local frame
 
 
 local function OnShow(self)
-	TourGuide:UpdateGuidesPanel()
+    TourGuide:UpdateGuidesPanel()
 
-	self:SetAlpha(0)
-	self:SetScript("OnUpdate", ww.FadeIn)
+    self:SetAlpha(0)
+    self:SetScript("OnUpdate", function(...) ww.FadeIn(this, arg1) end)
 end
 
 
@@ -27,28 +27,28 @@ local function HideTooltip() GameTooltip:Hide() end
 
 
 local function ShowTooltip(f)
-	if TourGuide.db.char.completion[f.guide] ~= 1 then return end
+    if TourGuide.db.char.completion[f.guide] ~= 1 then return end
 
-	GameTooltip:SetOwner(f, "ANCHOR_RIGHT")
-	GameTooltip:SetText("This guide has been completed.  Shift-click to reset it.", nil, nil, nil, nil, true)
+    GameTooltip:SetOwner(f, "ANCHOR_RIGHT")
+    GameTooltip:SetText("This guide has been completed.  Shift-click to reset it.", nil, nil, nil, nil, true)
 end
 
 
 local function OnClick(self)
-	if IsShiftKeyDown() then
-		TourGuide.db.char.completion[self.guide] = nil
-		TourGuide.db.char.turnins[self.guide] = {}
-		TourGuide:UpdateGuidesPanel()
-		GameTooltip:Hide()
-	else
-		local text = self.guide
-		if not text then self:SetChecked(false)
-		else
-			TourGuide:LoadGuide(text)
-			TourGuide:UpdateStatusFrame()
-			TourGuide:UpdateGuidesPanel()
-		end
-	end
+    if IsShiftKeyDown() then
+        TourGuide.db.char.completion[self.guide] = nil
+        TourGuide.db.char.turnins[self.guide] = {}
+        TourGuide:UpdateGuidesPanel()
+        GameTooltip:Hide()
+    else
+        local text = self.guide
+        if not text then self:SetChecked(false)
+        else
+            TourGuide:LoadGuide(text)
+            TourGuide:UpdateStatusFrame()
+            TourGuide:UpdateGuidesPanel()
+        end
+    end
 end
 
 
@@ -75,8 +75,8 @@ function TourGuide:CreateGuidesPanel()
 
 		local text = ww.SummonFontString(row, nil, "GameFontWhite", nil, "LEFT", 6, 0)
 
-		row:SetScript("OnClick", OnClick)
-		row:SetScript("OnEnter", ShowTooltip)
+		row:SetScript("OnClick", function(...) OnClick(this) end)
+		row:SetScript("OnEnter", function(...) ShowTooltip(this) end)
 		row:SetScript("OnLeave", HideTooltip)
 
 		row.text = text
@@ -86,12 +86,12 @@ function TourGuide:CreateGuidesPanel()
 	frame:EnableMouseWheel()
 	frame:SetScript("OnMouseWheel", function(f, val)
 		offset = offset - val*NUMROWS
-		if (offset + NUMROWS*2) > #self.guidelist then offset = offset - NUMROWS end
+		if (offset + NUMROWS*2) > table.getn(self.guidelist) then offset = offset - NUMROWS end
 		if offset < 0 then offset = 0 end
 		self:UpdateGuidesPanel()
 	end)
 
-	frame:SetScript("OnShow", OnShow)
+	frame:SetScript("OnShow", function(...) OnShow(this) end)
 	ww.SetFadeTime(frame, 0.5)
 	OnShow(frame)
 	return frame
@@ -104,7 +104,7 @@ function TourGuide:UpdateGuidesPanel()
 		row.i = i + offset + 1
 
 		local name = self.guidelist[i + offset + 1]
-		local complete = self.db.char.currentguide == name and (self.current-1)/#self.actions or self.db.char.completion[name]
+		local complete = self.db.char.currentguide == name and (self.current-1)/table.getn(self.actions) or self.db.char.completion[name]
 		row.guide = name
 
 		local r,g,b = self.ColorGradient(complete or 0)
@@ -113,4 +113,3 @@ function TourGuide:UpdateGuidesPanel()
 		row:SetChecked(self.db.char.currentguide == name)
 	end
 end
-

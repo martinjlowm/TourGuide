@@ -1,4 +1,4 @@
-
+local _G = getfenv(0)
 
 local actiontypes = {
 	A = "ACCEPT",
@@ -16,22 +16,21 @@ local actiontypes = {
 	U = "USE",
 }
 
-
 function TourGuide:GetObjectiveTag(tag, i)
-	self:Debug(11, "GetObjectiveTag", tag, i)
-	i = i or self.current
-	local tags = self.tags[i]
-	if not tags then return end
+    self:Debug(11, "GetObjectiveTag", tag, i)
+    i = i or self.current
+    local tags = self.tags[i]
+    if not tags then return end
 
-	if tag == "O" then return tags:find("|O|")
-	elseif tag == "L" then
-		local _, _, lootitem, lootqty = tags:find("|L|(%d+)%s?(%d*)|")
-		lootqty = tonumber(lootqty) or 1
+    if tag == "O" then return string.find(tags, "|O|")
+    elseif tag == "L" then
+        local _, _, lootitem, lootqty = string.find(tags, "|L|(%d+)%s?(%d*)|")
+        lootqty = tonumber(lootqty) or 1
 
-		return lootitem, lootqty
-	end
+        return lootitem, lootqty
+    end
 
-	return select(3, tags:find("|"..tag.."|([^|]*)|?"))
+    return select(3, string.find(tags, "|"..tag.."|([^|]*)|?"))
 end
 
 
@@ -60,14 +59,14 @@ local function DebugQuestObjective(text, action, quest, accepts, turnins, comple
 	if action == "A" or action == "C" or action == "T" then
 		-- Catch bad Title Case
 		for _,word in pairs(titlematches) do
-			if quest:find("[^:]%s"..word.."%s") or quest:find("[^:]%s"..word.."$") or quest:find("[^:]%s"..word.."@") then
+			if string.find(quest, "[^:]%s"..word.."%s") or string.find(quest, "[^:]%s"..word.."$") or string.find(quest, "[^:]%s"..word.."@") then
 				TourGuide:DebugF(1, "%s %s -- Contains bad title case", action, quest)
 				haserrors = true
 			end
 		end
 	end
 
-	if text:find("[“”’]") then
+	if string.find(text, "[“”’]") then
 		TourGuide:DebugF(1, "%s %s -- Contains bad char", action, quest)
 		haserrors = true
 	end
@@ -84,56 +83,58 @@ end
 
 local myclass, myrace = UnitClass("player"), UnitRace("player")
 local function ParseQuests(...)
-	local accepts, turnins, completes = {}, {}, {}
-	local uniqueid = 1
-	local actions, quests, tags = {}, {}, {}
-	local i, haserrors = 1, false
+    local accepts, turnins, completes = {}, {}, {}
+    local uniqueid = 1
+    local actions, quests, tags = {}, {}, {}
+    local i, haserrors = 1, false
 
-	for j=1,select("#", ...) do
-		local text = select(j, ...)
-		local _, _, class = text:find("|C|([^|]+)|")
-		local _, _, race = text:find("|R|([^|]+)|")
+    for j = 1, table.getn(arg) do
+        local text = arg[j]
 
-		if text ~= "" and (not class or class == myclass) and (not race or race == myrace) then
-			local _, _, action, quest, tag = text:find("^(%a) ([^|]*)(.*)")
-			assert(actiontypes[action], "Unknown action: "..text)
-			quest = quest:trim()
-			if not (action == "A" or action =="C" or action =="T") then
-				quest = quest.."@"..uniqueid.."@"
-				uniqueid = uniqueid + 1
-			end
+        local class = select(3, string.find(text, "|C|([^|]+)|"))
+        local race = select(3, string.find(text, "|R|([^|]+)|"))
 
-			actions[i], quests[i], tags[i] = actiontypes[action], quest, tag
+        if text ~= "" and (not class or class == myclass) and (not race or race == myrace) then
+            local action, quest, tag = select(3, string.find(text, "^(%a) ([^|]*)(.*)"))
+            assert(actiontypes[action], "Unknown action: "..text)
+            quest = string.trim(quest)
+            if not (action == "A" or action =="C" or action =="T") then
+                quest = quest.."@"..uniqueid.."@"
+                uniqueid = uniqueid + 1
+            end
 
-			i = i + 1
+            actions[i], quests[i], tags[i] = actiontypes[action], quest, tag
 
-			haserrors = haserrors or DebugQuestObjective(text, action, quest, accepts, turnins, completes)
-		end
-	end
+            i = i + 1
 
-	DumpQuestDebug(accepts, turnins, completes)
+            haserrors = haserrors or DebugQuestObjective(text, action, quest, accepts, turnins, completes)
+        end
+    end
 
-	if haserrors and TourGuide:IsDebugEnabled() then TourGuide:Print("This guide contains errors") end
+    DumpQuestDebug(accepts, turnins, completes)
 
-	return actions, quests, tags
+    if haserrors and TourGuide:IsDebugEnabled() then TourGuide:Print("This guide contains errors") end
+
+    return actions, quests, tags
 end
 
 
 function TourGuide:LoadGuide(name, complete)
-	if not name then return end
+    if not name then return end
 
-	if complete then self.db.char.completion[self.db.char.currentguide] = 1
-	elseif self.actions then self.db.char.completion[self.db.char.currentguide] = (self.current-1)/#self.actions end
+    if complete then self.db.char.completion[self.db.char.currentguide] = 1
+    elseif self.actions then self.db.char.completion[self.db.char.currentguide] = (self.current-1)/table.getn(self.actions) end
 
-	self.db.char.currentguide = self.guides[name] and name or self.guidelist[1]
-	self:DebugF(1, "Loading guide: %s", name)
-	self.guidechanged = true
-	local _, _, zonename = name:find("^(.*) %(.*%)$")
-	self.zonename = zonename
-	self.actions, self.quests, self.tags = ParseQuests(string.split("\n", self.guides[self.db.char.currentguide]()))
+    self.db.char.currentguide = self.guides[name] and name or self.guidelist[1]
+    self:DebugF(1, "Loading guide: %s", name)
+    self.guidechanged = true
+    local zonename = select(3, string.find(name, "^(.*) %(.*%)$"))
+    self.zonename = zonename
 
-	if not self.db.char.turnins[name] then self.db.char.turnins[name] = {} end
-	self.turnedin = self.db.char.turnins[name]
+    self.actions, self.quests, self.tags = ParseQuests(string.split("\n", self.guides[self.db.char.currentguide]()))
+
+    if not self.db.char.turnins[name] then self.db.char.turnins[name] = {} end
+    self.turnedin = self.db.char.turnins[name]
 end
 
 
@@ -142,19 +143,19 @@ function TourGuide:DebugGuideSequence(dumpquests)
 	local function DebugParse(...)
 		local uniqueid, haserrors = 1
 
-		for j=1,select("#", ...) do
-			local text = select(j, ...)
+		for j = 1, select('#', arg) do
+			local text = select(j, arg)
 
 			if text ~= "" then
-				local _, _, action, quest, tag = text:find("^(%a) ([^|]*)(.*)")
-				if not actiontypes[action] then TourGuide:Debug(1, "Unknown action: "..text) end
-				quest = quest:trim()
-				if not (action == "A" or action =="C" or action =="T") then
-					quest = quest.."@"..uniqueid.."@"
-					uniqueid = uniqueid + 1
-				end
+                            local action, quest, tag = select(3, string.find(text, "^(%a) ([^|]*)(.*)"))
+                            if not actiontypes[action] then TourGuide:Debug(1, "Unknown action: "..text) end
+                            quest = string.trim(quest)
+                            if not (action == "A" or action =="C" or action =="T") then
+                                quest = quest.."@"..uniqueid.."@"
+                                uniqueid = uniqueid + 1
+                            end
 
-				haserrors = DebugQuestObjective(text, action, quest, accepts, turnins, completes) or haserrors
+                            haserrors = DebugQuestObjective(text, action, quest, accepts, turnins, completes) or haserrors
 			end
 		end
 
@@ -178,5 +179,3 @@ function TourGuide:DebugGuideSequence(dumpquests)
 	end
 	self:Debug(1, "------ End Full Debug ------")
 end
-
-
