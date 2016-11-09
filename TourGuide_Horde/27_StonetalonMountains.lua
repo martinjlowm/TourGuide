@@ -1,18 +1,17 @@
 TourGuide:RegisterGuide("Stonetalon Mountains (27)", "Thousand Needles (27-29)", "Horde", function()
 return [[
 F Sun Rock Retreat
-T Ordanus |N|Skip "The Den"| |QID|1088|
+T Ordanus |N|Skip "The Den"|
 h Sun Rock Retreat
-A Bloodfury Bloodline |QID|6283|
+A Bloodfury Bloodline
 
-C Bloodfury Bloodline |N|Kill Bloodfury Ripper (30,63), grinding along the way.| |QID|6283|
+C Bloodfury Bloodline |N|Kill Bloodfury Ripper (30,63), grinding along the way.|
 
 H Sun Rock Retreat
-T Bloodfury Bloodline |QID|6283|
+T Bloodfury Bloodline
 
 F Thunder Bluff
-T The Sacred Flame (Part 1) |QID|1195|
-A The Sacred Flame (Part 2) |QID|1196|
+T The Sacred Flame (Part 1)
+A The Sacred Flame (Part 2)
 ]]
 end)
-

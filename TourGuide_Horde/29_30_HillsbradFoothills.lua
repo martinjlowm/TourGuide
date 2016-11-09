@@ -4,12 +4,12 @@ F Orgrimmar
 h Orgrimmar
 
 R Hillsbrad Foothills |N|Take the zeppelin outside Orgrimmar to Undercity.  Run down thru Silverpine.|
-A Time To Strike |N|You get this at Southpoint Tower (20,47) as soon as you enter Hillsbrad| |QID|494| |NODEBUG|
+A Time To Strike |N|You get this at Southpoint Tower (20,47) as soon as you enter Hillsbrad| |NODEBUG|
 
 R Tarren Mill
-T Time To Strike |QID|494| |NODEBUG|
+T Time To Strike |NODEBUG|
 f Grab flight point
-A Regthar Deathgate |QID|1361|
-A The Hammer May Fall |QID|676|
+A Regthar Deathgate
+A The Hammer May Fall
 ]]
 end)

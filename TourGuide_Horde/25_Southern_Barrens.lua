@@ -1,18 +1,18 @@
 TourGuide:RegisterGuide("The Barrens (25)", "Thousand Needles (25-26)", "Horde", function()
 return [[
 F Camp Taurajo
-T Ishamuhale |O| |QID|882|
-A Enraged Thunder Lizards |O| |PRE|Ishamuhale| |QID|907|
+T Ishamuhale |O|
+A Enraged Thunder Lizards |O| |PRE|Ishamuhale|
 h Camp Taurajo
-A A New Ore Sample |QID|1153|
-C Enraged Thunder Lizards |O| |PRE|Ishamuhale| |QID|907|
-C Revenge of Gann (Part 1) |N|Dwarf area (47,85)| |QID|846|
-T Revenge of Gann (Part 1) |QID|846|
-A Revenge of Gann (Part 2) |QID|849|
-C Revenge of Gann (Part 2) |N|Blow up (49,84)| |QID|849|
-T Revenge of Gann (Part 2) |QID|849|
+A A New Ore Sample
+C Enraged Thunder Lizards |O| |PRE|Ishamuhale|
+C Revenge of Gann (Part 1) |N|Dwarf area (47,85)|
+T Revenge of Gann (Part 1)
+A Revenge of Gann (Part 2)
+C Revenge of Gann (Part 2) |N|Blow up (49,84)|
+T Revenge of Gann (Part 2)
 R The Great Lift
-T Calling in the Reserves |QID|5881|
-A Message to Freewind Post |QID|4542|
+T Calling in the Reserves
+A Message to Freewind Post
 ]]
 end)
