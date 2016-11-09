@@ -8,7 +8,7 @@
 
 ## SavedVariables: TourGuideAlphaDB
 
-## Dependencies: _LuaPlus
+## Dependencies: gxLuaPlus
 ## OptionalDeps: Dongle, Optionhouse, TomTom, tekDebug
 
 ## DefaultState: disabled
