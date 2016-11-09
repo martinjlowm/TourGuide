@@ -2,7 +2,7 @@
 local TourGuide = TourGuide
 
 
-local frame = CreateFrame("Button", "TourGuideItemFrame", UIParent, "SecureActionButtonTemplate")
+local frame = CreateFrame("Button", "TourGuideItemFrame", UIParent, "ActionButtonTemplate")
 frame:SetFrameStrata("LOW")
 frame:SetHeight(36)
 frame:SetWidth(36)
@@ -17,7 +17,13 @@ itemicon:SetAllPoints(frame)
 
 
 frame:RegisterForClicks("anyUp")
-frame:HookScript("OnClick", function() if TourGuide:GetObjectiveInfo() == "USE" then TourGuide:SetTurnedIn() end end)
+frame:SetScript("OnClick",
+                function()
+                    if TourGuide:GetObjectiveInfo() == "USE" then
+                        TourGuide:SetTurnedIn()
+                    end
+                end
+)
 
 
 local texture, item

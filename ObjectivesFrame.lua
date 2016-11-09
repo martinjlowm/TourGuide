@@ -60,7 +60,7 @@ end
 
 local function CreateButton(parent, ...)
 	local b = CreateFrame("Button", nil, parent)
-	if select("#", ...) > 0 then b:SetPoint(...) end
+	if select('#', unpack(arg)) > 0 then b:SetPoint(unpack(arg)) end
 	b:SetWidth(80) b:SetHeight(22)
 
 	-- Fonts --
