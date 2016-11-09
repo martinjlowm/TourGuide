@@ -58,14 +58,6 @@ local function ShowTooltip(f)
 end
 
 
-local function ShowTooltip2(f)
-	if not f.qid then return end
-
-	GameTooltip:SetOwner(f, "ANCHOR_RIGHT")
-	GameTooltip:SetHyperlink("quest:"..f.qid)
-end
-
-
 local function CreateButton(parent, ...)
 	local b = CreateFrame("Button", nil, parent)
 	if select("#", ...) > 0 then b:SetPoint(...) end
@@ -150,11 +142,6 @@ function TourGuide:CreateObjectivePanel()
                                       ROWHEIGHT - ROWOFFSET, nil, "LEFT", check,
                                       "RIGHT", ROWOFFSET, 0)
 
-        local questhover = CreateFrame("Button", nil, row)
-        questhover:SetAllPoints(text)
-        questhover:SetScript("OnEnter", function(...) ShowTooltip2(this) end)
-        questhover:SetScript("OnLeave", HideTooltip)
-
         local detailhover = CreateFrame("Button", nil, row)
         detailhover:SetHeight(ROWHEIGHT - ROWOFFSET)
         detailhover:SetPoint("LEFT", text, "RIGHT", ROWOFFSET*3, 0)
@@ -171,7 +158,6 @@ function TourGuide:CreateObjectivePanel()
         check:SetScript("OnClick", function(...) self:SetTurnedIn(row.i, this:GetChecked()) end)
 
         row.text = text
-        row.questhover = questhover
         row.detail = detail
         row.check = check
         row.icon = icon
@@ -261,7 +247,6 @@ function TourGuide:UpdateOHPanel(value)
             row.text:SetText(name..(optional and " |cff808080(Optional)" or ""))
             row.detail:SetText(self:GetObjectiveTag("N", i + offset))
             row.check:SetChecked(checked)
-            row.questhover.qid = self:GetObjectiveTag("QID", i + offset)
 
             if (TourGuide.current > (i + offset)) and optional and not checked then
                 row.text:SetTextColor(0.5, 0.5, 0.5)

@@ -104,19 +104,11 @@ function TourGuide:GetQuestLogIndexByName(name)
     end
 end
 
-function TourGuide:GetQuestLogIndexByQID(qid)
-    for i = 1, GetNumQuestLogEntries() do
-        local link = GetQuestLink(i)
-        local thisqid = link and self.QIDmemo[link]
-        if thisqid and qid == thisqid then return i end
-    end
-end
 
-
-function TourGuide:GetQuestDetails(name, qid)
+function TourGuide:GetQuestDetails(name)
     if not name then return end
 
-    local i = qid and self:GetQuestLogIndexByQID(qid) or self:GetQuestLogIndexByName(name)
+    local i = self:GetQuestLogIndexByName(name)
     local complete = i and select(7, GetQuestLogTitle(i)) == 1
 
     return i, complete
@@ -145,9 +137,7 @@ function TourGuide:GetObjectiveStatus(i)
     i = i or self.current
     if not self.actions[i] then return end
 
-    local qid = self:GetObjectiveTag("QID", i)
-
-    return qid and self.turnedinquests[qid] or self.turnedin[self.quests[i]], self:GetQuestDetails(self.quests[i], qid) -- turnedin, logi, complete
+    return self.turnedin[self.quests[i]], self:GetQuestDetails(self.quests[i]) -- turnedin, logi, complete
 end
 
 
@@ -158,9 +148,6 @@ function TourGuide:SetTurnedIn(i, value, noupdate)
     end
 
     if value then value = true else value = nil end -- Cleanup to minimize savedvar data
-
-	local qid = self:GetObjectiveTag("QID", i)
-	if qid then self.turnedinquests[qid] = value end
 	self.turnedin[self.quests[i]] = value
 	self:DebugF(1, "Set turned in %q = %s", self.quests[i], tostring(value))
 	if not noupdate then self:UpdateStatusFrame()
