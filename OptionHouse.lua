@@ -120,15 +120,15 @@ local function assert(level,condition,message)
 end
 
 local function argcheck(value, num, ...)
-    if( type(num) ~= "number" ) then
+    if (type(num) ~= "number") then
         error(L["BAD_ARGUMENT"]:format(2, "argcheck", "number", type(num)), 1)
     end
 
-    for i=1, table.getn(arg) do
-        if( type(value) == arg[i] ) then return end
+    for i = 1, select('#', unpack(arg)) do
+        if( type(value) == select(i, unpack(arg)) ) then return end
     end
 
-    local types = table.concat(arg, ", ")
+    local types = string.join(", ", unpack(arg))
     local _, _, name = string.find(debugstack(2,2,0), ": in function [`<](.-)['>]")
     error(string.format(L["BAD_ARGUMENT"], num, name, types, type(value)), 3)
 end

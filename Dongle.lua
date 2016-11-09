@@ -53,7 +53,7 @@ if not g.DongleStub or g.DongleStub:IsNewerVersion(major, minor) then
         -- "^DongleStub", and handling the version check correctly.
 
         if string.find(major, "^DongleStub") then
-            local oldmajor,oldminor = self:GetVersion()
+            local oldmajor, oldminor = self:GetVersion()
             if self.versions and self.versions[oldmajor] then
                 return minor > oldminor
             else
@@ -129,7 +129,7 @@ if not g.DongleStub or g.DongleStub:IsNewerVersion(major, minor) then
         return oldInstance
     end
 
-    function lib:GetVersion() return major,minor end
+    function lib:GetVersion() return major, minor end
 
     local function Activate(new, old)
         -- This code ensures that we'll move the versions table even
@@ -215,10 +215,9 @@ local L = {
 }
 
 -- Utility functions for Dongle use
-local function assert(level,condition,message)
+local function assert(level, condition, message)
     if not condition then
-        error(message,
-              level)
+        error(message, level)
     end
 end
 
@@ -227,11 +226,11 @@ local function argcheck(value, num, ...)
         error(string.format(L["BAD_ARGUMENT"], 2, "argcheck", "number", type(num)), 1)
     end
 
-    for i = 1, select('#', arg) do
-        if type(value) == select(i, arg) then return end
+    for i = 1, select('#', unpack(arg)) do
+        if type(value) == select(i, unpack(arg)) then return end
     end
 
-    local types = string.join(", ", arg)
+    local types = string.join(", ", unpack(arg))
     local name = string.match(debugstack(2,2,0), ": in function [`<](.-)['>]")
     error(string.format(L["BAD_ARGUMENT"], num, name, types, type(value)), 3)
 end
@@ -269,7 +268,7 @@ function Dongle:New(name, obj)
 
     -- Add this Dongle to the end of the queue
     table.insert(loadqueue, obj)
-    return obj,name
+    return obj, name
 end
 
 function Dongle:NewModule(name, obj)
@@ -302,7 +301,7 @@ local function ModuleIterator(t, name)
         name,obj = next(t, name)
     until type(name) == "string" or not name
 
-    return name,obj
+    return name, obj
 end
 
 function Dongle:IterateModules()
@@ -479,7 +478,7 @@ function Dongle:IsDebugEnabled()
 end
 
 local function argsToStrings(a1, ...)
-    if select('#', arg) > 0 then
+    if select('#', unpack(arg)) > 0 then
         return tostring(a1), argsToStrings(arg)
     else
         return tostring(a1)
@@ -496,7 +495,7 @@ local function printHelp(obj, method, header, frame, msg, ...)
         msg = "|cFF33FF99"..name.."|r: "..tostring(msg)
     end
 
-    if select('#', arg) > 0 then
+    if select('#', unpack(arg)) > 0 then
         msg = string.join(", ", msg, argsToStrings(arg))
     end
 
@@ -1193,7 +1192,7 @@ end
 
 -- DongleStub required functions and registration
 
-function Dongle:GetVersion() return major,minor end
+function Dongle:GetVersion() return major, minor end
 
 local function Activate(self, old)
     if old then
