@@ -30,7 +30,6 @@ ObjectivesFrame.lua
 GuideList.lua
 UnlistedQuest.lua
 QuestTracking.lua
-QuestIDTracking.lua
 
 NilGuide.lua
 
