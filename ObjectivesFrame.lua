@@ -66,7 +66,6 @@ local function CreateButton(parent, ...)
 	-- Fonts --
 	b:SetDisabledFontObject(GameFontDisable)
 	b:SetHighlightFontObject(GameFontHighlight)
-	b:SetNormalFontObject(GameFontNormal)
 
 	-- Textures --
 	b:SetNormalTexture("Interface\\Buttons\\UI-Panel-Button-Up")
@@ -86,10 +85,12 @@ end
 function TourGuide:CreateObjectivePanel()
     local guidebutton = CreateButton(frame, "BOTTOMRIGHT", -6, 6)
     guidebutton:SetText("Guides")
+    guidebutton:SetFont(STANDARD_TEXT_FONT, 12)
     guidebutton:SetScript("OnClick", function() frame:Hide(); LibStub("OptionHouse-1.1"):Open("Tour Guide", "Guides") end)
 
     local configbutton = CreateButton(frame, "RIGHT", guidebutton, "LEFT")
     configbutton:SetText("Config")
+    configbutton:SetFont(STANDARD_TEXT_FONT, 12)
     configbutton:SetScript("OnClick", function() frame:Hide(); LibStub("OptionHouse-1.1"):Open("Tour Guide", "Config") end)
 
     if tekDebug then
@@ -136,11 +137,12 @@ function TourGuide:CreateObjectivePanel()
         row:SetHeight(ROWHEIGHT)
         row:SetBackdrop(bg)
 
-        local check = ww.SummonCheckBox(ROWHEIGHT, row, "TOPLEFT", ROWOFFSET, 0)
         local check = ww.SummonCheckBox(ROWHEIGHT - ROWOFFSET, row, "LEFT", ROWOFFSET, 0)
         local icon = ww.SummonTexture(row, nil, ROWHEIGHT - ROWOFFSET,
                                       ROWHEIGHT - ROWOFFSET, nil, "LEFT", check,
                                       "RIGHT", ROWOFFSET, 0)
+        local text = ww.SummonFontString(row, nil, "GameFontNormal", nil,
+                                         "LEFT", icon, "RIGHT", ROWOFFSET, 0)
 
         local detailhover = CreateFrame("Button", nil, row)
         detailhover:SetHeight(ROWHEIGHT - ROWOFFSET)
