@@ -319,7 +319,7 @@ f:SetScript("OnDragStart",
 f:SetScript("OnDragStop",
             function(...)
                 this:StopMovingOrSizing()
-                TourGuide.db.profile.statusframepoint, TourGuide.db.profile.statusframex, TourGuide.db.profile.statusframey = TourGuide.GetUIParentAnchor(frame)
+                TourGuide.db.profile.statusframepoint, TourGuide.db.profile.statusframex, TourGuide.db.profile.statusframey = TourGuide.GetUIParentAnchor(this)
                 TourGuide:Debug(1, "Status frame moved", TourGuide.db.profile.statusframepoint, TourGuide.db.profile.statusframex, TourGuide.db.profile.statusframey)
                 this:ClearAllPoints()
                 this:SetPoint(TourGuide.db.profile.statusframepoint, TourGuide.db.profile.statusframex, TourGuide.db.profile.statusframey)
