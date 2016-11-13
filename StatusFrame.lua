@@ -52,64 +52,80 @@ f2:Hide()
 
 
 local elapsed, oldsize, newsize
-f2:SetScript("OnUpdate", function(...)
-	elapsed = elapsed + arg1
-	if elapsed > 1 then
-		this:Hide()
-		icon:SetAlpha(1)
-		text:SetAlpha(1)
-		f:SetWidth(newsize)
-	else
-		this:SetPoint(f2anchor, f, f2anchor, 0, elapsed*40)
-		this:SetAlpha(1 - elapsed)
-		text:SetAlpha(elapsed)
-		icon:SetAlpha(elapsed)
-		f:SetWidth(oldsize + (newsize-oldsize)*elapsed)
-	end
-end)
+f2:SetScript("OnUpdate",
+             function(...)
+                 elapsed = elapsed + arg1
+                 if elapsed > 1 then
+                     this:Hide()
+                     icon:SetAlpha(1)
+                     text:SetAlpha(1)
+                     f:SetWidth(newsize)
+                 else
+                     this:SetPoint(f2anchor, f, f2anchor, 0, elapsed * 40)
+                     this:SetAlpha(1 - elapsed)
+                     text:SetAlpha(elapsed)
+                     icon:SetAlpha(elapsed)
+                     f:SetWidth(oldsize + (newsize - oldsize) * elapsed)
+                 end
+             end
+)
 
 
 function TourGuide:PositionStatusFrame()
-	if self.db.profile.statusframepoint then
-		f:ClearAllPoints()
-		f:SetPoint(self.db.profile.statusframepoint, self.db.profile.statusframex, self.db.profile.statusframey)
-	end
+    if self.db.profile.statusframepoint then
+        f:ClearAllPoints()
+        f:SetPoint(self.db.profile.statusframepoint, self.db.profile.statusframex, self.db.profile.statusframey)
+    end
 end
 
 
 function TourGuide:SetText(i)
-	self.current = i
-	local action, quest = self:GetObjectiveInfo(i)
-	local note = self:GetObjectiveTag("N")
-	local newtext = (quest or"???")..(note and " [?]" or "")
+    self.current = i
+    local action, quest = self:GetObjectiveInfo(i)
+    local note = self:GetObjectiveTag("N")
+    local newtext = (quest or"???")..(note and " [?]" or "")
 
-	if text:GetText() ~= newtext or icon:GetTexture() ~= self.icons[action] then
-		oldsize = f:GetWidth()
-		icon:SetAlpha(0)
-		text:SetAlpha(0)
-		elapsed = 0
-		f2:SetWidth(f:GetWidth())
-		_, _, f2anchor = GetQuadrant(f)
-		f2:ClearAllPoints()
-		f2:SetPoint(f2anchor, f, f2anchor, 0, 0)
-		f2:SetAlpha(1)
-		icon2:SetTexture(icon:GetTexture())
-		icon2:SetTexCoord(4/48, 44/48, 4/48, 44/48)
-		text2:SetText(text:GetText())
-		f2:Show()
-	end
+    if text:GetText() ~= newtext or icon:GetTexture() ~= self.icons[action] then
+        oldsize = f:GetWidth()
+        icon:SetAlpha(0)
+        text:SetAlpha(0)
+        elapsed = 0
+        f2:SetWidth(f:GetWidth())
+        _, _, f2anchor = GetQuadrant(f)
+        f2:ClearAllPoints()
+        f2:SetPoint(f2anchor, f, f2anchor, 0, 0)
+        f2:SetAlpha(1)
+        icon2:SetTexture(icon:GetTexture())
+        icon2:SetTexCoord(4/48, 44/48, 4/48, 44/48)
+        text2:SetText(text:GetText())
+        f2:Show()
+    end
 
-	icon:SetTexture(self.icons[action])
-	if action ~= "ACCEPT" and action ~= "TURNIN" then icon:SetTexCoord(4/48, 44/48, 4/48, 44/48) end
-	if self:GetObjectiveTag("T") then f:SetBackdropColor(0.09, 0.5, 0.19, 0.5) else f:SetBackdropColor(0.09, 0.09, 0.19, 0.5) end
-	text:SetText(newtext)
-	check:SetChecked(false)
-	check:SetButtonState("NORMAL")
-	if self.db.char.currentguide == "No Guide" then check:Disable() else check:Enable() end
-	if i == 1 then f:SetWidth(FIXEDWIDTH + text:GetWidth()) end
-	newsize = FIXEDWIDTH + text:GetWidth()
+    icon:SetTexture(self.icons[action])
+    if action ~= "ACCEPT" and action ~= "TURNIN" then
+        icon:SetTexCoord(4/48, 44/48, 4/48, 44/48)
+    end
+    if self:GetObjectiveTag("T") then
+        f:SetBackdropColor(0.09, 0.5, 0.19, 0.5)
+    else
+        f:SetBackdropColor(0.09, 0.09, 0.19, 0.5)
+    end
+    text:SetText(newtext)
+    check:SetChecked(false)
+    check:SetButtonState("NORMAL")
+    if self.db.char.currentguide == "No Guide" then
+        check:Disable()
+    else
+        check:Enable()
+    end
+    if i == 1 then
+        f:SetWidth(FIXEDWIDTH + text:GetWidth())
+    end
+    newsize = FIXEDWIDTH + text:GetWidth()
 
-	if self.UpdateFubarPlugin then self.UpdateFubarPlugin(quest, self.icons[action], note) end
+    if self.UpdateFubarPlugin then
+        self.UpdateFubarPlugin(quest, self.icons[action], note)
+    end
 end
 
 
@@ -175,8 +191,8 @@ function TourGuide:UpdateStatusFrame()
                 repeat
                     action = self:GetObjectiveInfo(j)
                     turnedin, logi, complete = self:GetObjectiveStatus(j)
-                    if action == "COMPLETE" and logi and not complete then AddQuestWatch(logi) -- Watch if we're in a 'COMPLETE' block
-                    elseif action == "COMPLETE" and logi then RemoveQuestWatch(logi) end -- or unwatch if done
+                    if action == "COMPLETE" and logi and not complete and not IsQuestWatched(logi) then AddQuestWatch(logi) -- Watch if we're in a 'COMPLETE' block
+                    elseif action == "COMPLETE" and logi and IsQuestWatched(logi) then RemoveQuestWatch(logi) end -- or unwatch if done
                     j = j + 1
                 until action ~= "COMPLETE"
             end
@@ -204,7 +220,6 @@ function TourGuide:UpdateStatusFrame()
         self:ParseAndMapCoords(note, quest, zonename) --, zone)
     end
 
-
     local newtext = (quest or "???")..(note and " [?]" or "")
 
     if text:GetText() ~= newtext or icon:GetTexture() ~= self.icons[action] then
@@ -228,7 +243,7 @@ function TourGuide:UpdateStatusFrame()
     if not f2:IsVisible() then f:SetWidth(FIXEDWIDTH + text:GetWidth()) end
     newsize = FIXEDWIDTH + text:GetWidth()
 
-    local usetex = useitem and select(10, GetItemInfo(tonumber(useitem)))
+    local usetex = useitem and select(9, GetItemInfo(tonumber(useitem)))
     self:SetUseItem(usetex, useitem)
 
     self:UpdateOHPanel()
@@ -244,10 +259,10 @@ f:SetScript("OnClick",
 			if TourGuide.objectiveframe:IsVisible() then
 				HideUIPanel(TourGuide.objectiveframe)
 			else
-				local quad, vhalf, hhalf = GetQuadrant(self)
+				local quad, vhalf, hhalf = GetQuadrant(this)
 				local anchpoint = (vhalf == "TOP" and "BOTTOM" or "TOP")..hhalf
 				TourGuide.objectiveframe:ClearAllPoints()
-				TourGuide.objectiveframe:SetPoint(quad, self, anchpoint)
+				TourGuide.objectiveframe:SetPoint(quad, this, anchpoint)
 				ShowUIPanel(TourGuide.objectiveframe)
 			end
                     else
@@ -293,14 +308,20 @@ end
 f:RegisterForDrag("LeftButton")
 f:SetMovable(true)
 f:SetClampedToScreen(true)
-f:SetScript("OnDragStart", function(...)
-	if TourGuide.objectiveframe:IsVisible() then HideUIPanel(TourGuide.objectiveframe) end
-	this:StartMoving()
-end)
-f:SetScript("OnDragStop", function(...)
-	this:StopMovingOrSizing()
-	TourGuide.db.profile.statusframepoint, TourGuide.db.profile.statusframex, TourGuide.db.profile.statusframey = TourGuide.GetUIParentAnchor(frame)
-	TourGuide:Debug(1, "Status frame moved", TourGuide.db.profile.statusframepoint, TourGuide.db.profile.statusframex, TourGuide.db.profile.statusframey)
-	this:ClearAllPoints()
-	this:SetPoint(TourGuide.db.profile.statusframepoint, TourGuide.db.profile.statusframex, TourGuide.db.profile.statusframey)
-end)
+f:SetScript("OnDragStart",
+            function(...)
+                if TourGuide.objectiveframe:IsVisible() then
+                    HideUIPanel(TourGuide.objectiveframe)
+                end
+                this:StartMoving()
+            end
+)
+f:SetScript("OnDragStop",
+            function(...)
+                this:StopMovingOrSizing()
+                TourGuide.db.profile.statusframepoint, TourGuide.db.profile.statusframex, TourGuide.db.profile.statusframey = TourGuide.GetUIParentAnchor(frame)
+                TourGuide:Debug(1, "Status frame moved", TourGuide.db.profile.statusframepoint, TourGuide.db.profile.statusframex, TourGuide.db.profile.statusframey)
+                this:ClearAllPoints()
+                this:SetPoint(TourGuide.db.profile.statusframepoint, TourGuide.db.profile.statusframex, TourGuide.db.profile.statusframey)
+            end
+)
