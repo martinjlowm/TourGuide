@@ -163,7 +163,7 @@ A The Glowing Fruit |N|Out of town, south of the Pools of Arlithrien, just outsi
 C Ursal the Mauler |N|West of the glowing tree (39,80)|
 
 C Tumors |N|Elementals at the river east of The Oracle Glade (42,42)|
-C Crown of the Earth (Part 5) |N|Moonwell at The Oracle Glade (38.44, 34.08)| |U|18152|
+C Crown of the Earth (Part 5) |N|Moonwell at The Oracle Glade (38.44, 34.08)| |U|5623|
 A The Enchanted Glade
 
 A Mist |N|Find the saber to the west, past the harpies (31.5, 31.6)|
