@@ -47,7 +47,7 @@ local function ParseQuests(...)
     local actions, quests, tags = {}, {}, {}
     local i = 1
 
-    for j = 1, select('#', arg) do
+    for j = 1, select('#', unpack(arg)) do
         local text = select(j, unpack(arg))
         local _, _, classes = string.find(text, "|C|([^|]+)|")
         local _, _, races = string.find(text, "|R|([^|]+)|")
