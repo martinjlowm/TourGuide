@@ -4,9 +4,12 @@ local L = TourGuide.Locale
 
 
 function TourGuide:IsQuestAcceptable(name)
-	for i,v in pairs(self.actions) do
-		if (v == "ACCEPT" or v == "COMPLETE") and self.quests[i]:gsub(L.PART_GSUB, "") == name then return true end
-	end
+    for i, v in pairs(self.actions) do
+        if (v == "ACCEPT" or v == "COMPLETE")
+        and string.gsub(self.quests[i], L.PART_GSUB, "") == name then
+            return true
+        end
+    end
 end
 
 
@@ -20,12 +23,21 @@ notlisted:Hide()
 notlisted:RegisterEvent("QUEST_DETAIL")
 notlisted:RegisterEvent("QUEST_COMPLETE")
 notlisted:RegisterEvent("QUEST_FINISHED")
-notlisted:SetScript("OnEvent", function(event)
-	if event ~= "QUEST_DETAIL" then return this:Hide() end
-	local quest = GetTitleText()
-	if quest and TourGuide:IsQuestAcceptable(quest) then this:Hide()
-	else this:Show() end
-end)
+notlisted:SetScript("OnEvent",
+                    function(event)
+                        if event ~= "QUEST_DETAIL" then
+                            return this:Hide()
+                        end
+
+                        local quest = GetTitleText()
+                        if quest
+                        and TourGuide:IsQuestAcceptable(quest) then
+                            this:Hide()
+                        else
+                            this:Show()
+                        end
+                    end
+)
 
 
 local nltex = notlisted:CreateTexture()
