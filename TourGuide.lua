@@ -2,7 +2,7 @@
 local OptionHouse = LibStub("OptionHouse-1.1")
 
 
-local myfaction = UnitFactionGroup("player")
+local myfaction
 local L = TOURGUIDE_LOCALE
 TOURGUIDE_LOCALE = nil
 
@@ -37,6 +37,8 @@ TourGuide.icons = setmetatable(
 
 
 function TourGuide:Initialize()
+    myfaction = UnitFactionGroup('player')
+
     self.db = self:InitializeDB(
         "TourGuideAlphaDB", {
             char = {
@@ -53,10 +55,57 @@ function TourGuide:Initialize()
     if self.db.char.turnedin then self.db.char.turnedin = nil end -- Purge old table if present
     self.cachedturnins = self.db.char.cachedturnins
 
+    self:FilterGuides()
+
     self.db.char.currentguide = self.db.char.currentguide or self.guidelist[1]
     self:LoadGuide(self.db.char.currentguide)
     self:PositionStatusFrame()
     self:PositionItemFrame()
+end
+
+
+do
+    local function LevelSort(a, b)
+        local level_pattern = "[(]([^)-]*)"
+        a_level = tonumber(string.match(a, level_pattern))
+        b_level = tonumber(string.match(b, level_pattern)) or 0
+
+        return a_level < b_level
+    end
+
+    local guides, nextzones = {}, {}
+
+    function TourGuide:FilterGuides()
+        for name, sequencefunc in pairs(guides[myfaction]) do
+            self.guides[name] = sequencefunc
+            table.insert(self.guidelist, name)
+        end
+
+        for name, nextzone in pairs(nextzones[myfaction]) do
+            self.nextzones[name] = nextzone
+        end
+
+        table.sort(self.guidelist, LevelSort)
+
+        guides = nil
+        nextzones = nil
+    end
+
+
+    function TourGuide:RegisterGuide(name, nextzone, faction, sequencefunc)
+        if not faction then
+            self.guides[name] = sequencefunc
+            table.insert(self.guidelist, name)
+        else
+            if not guides[faction] and not nextzones[faction] then
+                guides[faction] = {}
+                nextzones[faction] = {}
+            end
+
+            guides[faction][name] = sequencefunc
+            nextzones[faction][name] = nextzone
+        end
+    end
 end
 
 
@@ -75,16 +124,8 @@ function TourGuide:Enable()
     self:RegisterEvent("QUEST_COMPLETE", "UpdateStatusFrame")
     self:RegisterEvent("QUEST_DETAIL", "UpdateStatusFrame")
     self.TrackEvents = nil
-    self:QuestID_QUEST_LOG_UPDATE()
+    self:QUEST_LOG_UPDATE()
     self:UpdateStatusFrame()
-end
-
-
-function TourGuide:RegisterGuide(name, nextzone, faction, sequencefunc)
-    if faction ~= myfaction then return end
-    self.guides[name] = sequencefunc
-    self.nextzones[name] = nextzone
-    table.insert(self.guidelist, name)
 end
 
 
