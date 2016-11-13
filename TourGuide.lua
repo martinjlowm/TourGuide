@@ -15,23 +15,23 @@ TourGuide.Locale = L
 
 TourGuide.icons = setmetatable(
     {
-        ACCEPT = "Interface\\GossipFrame\\AvailableQuestIcon",
-        COMPLETE = "Interface\\Icons\\Ability_DualWield",
-        TURNIN = "Interface\\GossipFrame\\ActiveQuestIcon",
-        KILL = "Interface\\Icons\\Ability_Creature_Cursed_02",
-        RUN = "Interface\\Icons\\Ability_Tracking",
-        MAP = "Interface\\Icons\\Ability_Spy",
-        FLY = "Interface\\Icons\\Ability_Druid_FlightForm",
-        SETHEARTH = "Interface\\AddOns\\TourGuide\\resting.tga",
-        HEARTH = "Interface\\Icons\\INV_Misc_Rune_01",
-        NOTE = "Interface\\Icons\\INV_Misc_Note_01",
-        USE = "Interface\\Icons\\INV_Misc_Bag_08",
-        BUY = "Interface\\Icons\\INV_Misc_Coin_01",
-        BOAT = "Interface\\Icons\\Spell_Frost_SummonWaterElemental",
-        GETFLIGHTPOINT = "Interface\\Icons\\Ability_Hunter_EagleEye",
-        PET = "Interface\\Icons\\Ability_Hunter_BeastCall02",
+        ACCEPT = "Interface/GossipFrame/AvailableQuestIcon",
+        COMPLETE = "Interface/Icons/Ability_DualWield",
+        TURNIN = "Interface/GossipFrame/ActiveQuestIcon",
+        KILL = "Interface/Icons/Ability_Creature_Cursed_02",
+        RUN = "Interface/Icons/Ability_Tracking",
+        MAP = "Interface/Icons/Ability_Spy",
+        FLY = "Interface/Icons/Ability_Druid_FlightForm",
+        SETHEARTH = "Interface/AddOns/TourGuide/resting.tga",
+        HEARTH = "Interface/Icons/INV_Misc_Rune_01",
+        NOTE = "Interface/Icons/INV_Misc_Note_01",
+        USE = "Interface/Icons/INV_Misc_Bag_08",
+        BUY = "Interface/Icons/INV_Misc_Coin_01",
+        BOAT = "Interface/Icons/Spell_Frost_SummonWaterElemental",
+        GETFLIGHTPOINT = "Interface/Icons/Ability_Hunter_EagleEye",
+        PET = "Interface/Icons/Ability_Hunter_BeastCall02",
     }, {__index = function()
-            return "Interface\\Icons\\INV_Misc_QuestionMark"
+            return "Interface/Icons/INV_Misc_QuestionMark"
        end}
 )
 

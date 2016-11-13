@@ -1,7 +1,7 @@
 
 local bg = {
-	bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
-	edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
+	bgFile = "Interface/Tooltips/UI-Tooltip-Background",
+	edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
 	edgeSize = 16,
 	insets = {left = 5, right = 5, top = 5, bottom = 5},
 	tile = true, tileSize = 16,

@@ -10,7 +10,7 @@ frame:RegisterForClicks("LeftButtonUp", "RightButtonUp")
 
 local itemicon = frame:CreateTexture(nil, "ARTWORK")
 itemicon:SetWidth(24) itemicon:SetHeight(24)
-itemicon:SetTexture("Interface\\Icons\\INV_Misc_Bag_08")
+itemicon:SetTexture("Interface/Icons/INV_Misc_Bag_08")
 itemicon:SetAllPoints(frame)
 
 function TourGuide:SetUseItem(texture, item)

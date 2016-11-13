@@ -4,8 +4,8 @@ WidgetWarlock = {}
 
 
 WidgetWarlock.TooltipBorderBG = {
-	bgFile = "Interface\\ChatFrame\\ChatFrameBackground",
-	edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
+	bgFile = "Interface/ChatFrame/ChatFrameBackground",
+	edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
 	edgeSize = 16,
 	insets = {left = 4, right = 4, top = 4, bottom = 4}
 }
@@ -17,11 +17,11 @@ function WidgetWarlock.SummonCheckBox(size, parent, ...)
 	check:SetHeight(size)
 	if arg[1] then check:SetPoint(unpack(arg)) end
 
-	check:SetNormalTexture("Interface\\Buttons\\UI-CheckBox-Up")
-	check:SetPushedTexture("Interface\\Buttons\\UI-CheckBox-Down")
-	check:SetHighlightTexture("Interface\\Buttons\\UI-CheckBox-Highlight")
-	check:SetDisabledCheckedTexture("Interface\\Buttons\\UI-CheckBox-Check-Disabled")
-	check:SetCheckedTexture("Interface\\Buttons\\UI-CheckBox-Check")
+	check:SetNormalTexture("Interface/Buttons/UI-CheckBox-Up")
+	check:SetPushedTexture("Interface/Buttons/UI-CheckBox-Down")
+	check:SetHighlightTexture("Interface/Buttons/UI-CheckBox-Highlight")
+	check:SetDisabledCheckedTexture("Interface/Buttons/UI-CheckBox-Check-Disabled")
+	check:SetCheckedTexture("Interface/Buttons/UI-CheckBox-Check")
 
 	return check
 end

@@ -66,7 +66,7 @@ function TourGuide:CreateGuidesPanel()
         row:SetHeight(ROWHEIGHT)
         row:SetWidth(COLWIDTH)
 
-        local highlight = ww.SummonTexture(row, nil, nil, nil, "Interface\\HelpFrame\\HelpFrameButton-Highlight")
+        local highlight = ww.SummonTexture(row, nil, nil, nil, "Interface/HelpFrame/HelpFrameButton-Highlight")
         highlight:SetTexCoord(0, 1, 0, 0.578125)
         highlight:SetAllPoints()
         row:SetHighlightTexture(highlight)

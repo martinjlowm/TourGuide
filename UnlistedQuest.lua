@@ -42,7 +42,7 @@ notlisted:SetScript("OnEvent",
 
 local nltex = notlisted:CreateTexture()
 nltex:SetAllPoints()
-nltex:SetTexture("Interface\\Icons\\INV_Misc_QuestionMark")
+nltex:SetTexture("Interface/Icons/INV_Misc_QuestionMark")
 
 local text = notlisted:CreateFontString(nil, "OVERLAY", "GameFontNormal")
 text:SetPoint("TOPLEFT", notlisted, "TOPRIGHT")

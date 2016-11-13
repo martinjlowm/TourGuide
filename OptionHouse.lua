@@ -429,7 +429,7 @@ local function createScrollFrame(frame, displayNum, onScroll)
     frame.scroll.down:SetScript("OnClick", function() scrollButtonDown(this) end)
 
     -- That square thingy that shows where the bar is
-    frame.scroll.bar:SetThumbTexture("Interface\\Buttons\\UI-ScrollBar-Knob")
+    frame.scroll.bar:SetThumbTexture("Interface/Buttons/UI-ScrollBar-Knob")
     local thumb = frame.scroll.bar:GetThumbTexture()
 
     thumb:SetHeight(16)
@@ -441,14 +441,14 @@ local function createScrollFrame(frame, displayNum, onScroll)
     frame.scroll.barUpTexture:SetWidth(31)
     frame.scroll.barUpTexture:SetHeight(256)
     frame.scroll.barUpTexture:SetPoint("TOPLEFT", frame.scroll.up, "TOPLEFT", -7, 5)
-    frame.scroll.barUpTexture:SetTexture("Interface\\PaperDollInfoFrame\\UI-Character-ScrollBar")
+    frame.scroll.barUpTexture:SetTexture("Interface/PaperDollInfoFrame/UI-Character-ScrollBar")
     frame.scroll.barUpTexture:SetTexCoord(0, 0.484375, 0, 1.0)
 
     frame.scroll.barDownTexture = frame.scroll:CreateTexture(nil, "BACKGROUND")
     frame.scroll.barDownTexture:SetWidth(31)
     frame.scroll.barDownTexture:SetHeight(106)
     frame.scroll.barDownTexture:SetPoint("BOTTOMLEFT", frame.scroll.down, "BOTTOMLEFT", -7, -3)
-    frame.scroll.barDownTexture:SetTexture("Interface\\PaperDollInfoFrame\\UI-Character-ScrollBar")
+    frame.scroll.barDownTexture:SetTexture("Interface/PaperDollInfoFrame/UI-Character-ScrollBar")
     frame.scroll.barDownTexture:SetTexCoord(0.515625, 1.0, 0, 0.4140625)
 end
 
@@ -928,10 +928,10 @@ local function createAddonFrame(hide)
                     button:SetWidth(140)
                     button:SetHeight(20)
 
-                    button:SetNormalTexture("Interface\\AuctionFrame\\UI-AuctionFrame-FilterBG")
+                    button:SetNormalTexture("Interface/AuctionFrame/UI-AuctionFrame-FilterBG")
                     button:GetNormalTexture():SetTexCoord(0, 0.53125, 0, 0.625)
 
-                    button:SetHighlightTexture("Interface\\PaperDollInfoFrame\\UI-Character-Tab-Highlight")
+                    button:SetHighlightTexture("Interface/PaperDollInfoFrame/UI-Character-Tab-Highlight")
                     button:GetHighlightTexture():SetBlendMode("ADD")
 
                     -- For sub categories only
@@ -941,7 +941,7 @@ local function createAddonFrame(hide)
                     line:SetWidth(7)
                     line:SetHeight(20)
                     line:SetPoint("LEFT", 13, 0)
-                    line:SetTexture("Interface\\AuctionFrame\\UI-AuctionFrame-FilterLines")
+                    line:SetTexture("Interface/AuctionFrame/UI-AuctionFrame-FilterLines")
                     line:SetTexCoord(0, 0.4375, 0, 0.625)
 
                     if( i > 1 ) then
@@ -1018,7 +1018,7 @@ local function createOHFrame()
         texture:SetWidth(128)
         texture:SetHeight(128)
         texture:SetPoint("TOPLEFT", 9, -2)
-        texture:SetTexture("Interface\\AddOns\\OptionHouse\\GnomePortrait")
+        texture:SetTexture("Interface/AddOns/OptionHouse/GnomePortrait")
     end
 
     local title = frame:CreateFontString(nil, "OVERLAY")
