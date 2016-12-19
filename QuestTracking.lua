@@ -68,6 +68,15 @@ function TourGuide:QUEST_LOG_UPDATE(event)
     end
 end
 
+function TourGuide:GetItemCount(item)
+    local pos, count
+
+    pos = {self:FindBagSlot(item)}
+
+    count = select('#', unpack(pos)) > 0 and (select(2, GetContainerItemInfo(unpack(pos)))) or 0
+
+    return count
+end
 
 function TourGuide:CHAT_MSG_LOOT(event)
     local msg = arg1
@@ -77,7 +86,7 @@ function TourGuide:CHAT_MSG_LOOT(event)
     local _, _, itemid, name = string.find(msg, L["^You .*Hitem:(%d+).*(%[.+%])"])
     self:Debug(10, event, action, quest, lootitem, lootqty, itemid, name)
 
-    if action == "BUY" and name and name == quest or (action == "BUY" or action == "KILL" or action == "NOTE") and lootitem and itemid == lootitem and (GetItemCount(lootitem) + 1) >= lootqty then
+    if action == "BUY" and name and name == quest or (action == "BUY" or action == "KILL" or action == "NOTE") and lootitem and itemid == lootitem and (self:GetItemCount(lootitem) + 1) >= lootqty then
         return self:SetTurnedIn()
     end
 end
@@ -93,7 +102,8 @@ end
 
 
 function TourGuide:CRAFT_SHOW()
-    if not CraftIsPetTraining() then return end
+    if not 'Beast Training' == GetCraftSkillLine(1) then return end
+
     for i = 1, GetNumCrafts() do
         local name, rank = GetCraftInfo(i)
         self.db.char.petskills[name.. (rank == "" and "" or (" (" .. rank .. ")"))] = true

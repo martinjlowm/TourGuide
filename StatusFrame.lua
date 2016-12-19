@@ -150,9 +150,9 @@ function TourGuide:UpdateStatusFrame()
             local note, useitem, optional, lootitem, lootqty = self:GetObjectiveTag("N", i), self:GetObjectiveTag("U", i), self:GetObjectiveTag("O", i), self:GetObjectiveTag("L", i)
             local level = tonumber((self:GetObjectiveTag("LV", i)))
             local needlevel = level and level > UnitLevel("player")
-            self:Debug(11, "UpdateStatusFrame", i, action, name, note, logi, complete, turnedin, quest, useitem, optional, lootitem, lootqty, lootitem and GetItemCount(lootitem) or 0, level, needlevel)
+            self:Debug(11, "UpdateStatusFrame", i, action, name, note, logi, complete, turnedin, quest, useitem, optional, lootitem, lootqty, lootitem and self:GetItemCount(lootitem) or 0, level, needlevel)
             local hasuseitem = useitem and self:FindBagSlot(useitem)
-            local haslootitem = lootitem and GetItemCount(lootitem) >= lootqty
+            local haslootitem = lootitem and self:GetItemCount(lootitem) >= lootqty
 
             -- Test for completed objectives and mark them done
             if action == "SETHEARTH" and self.db.char.hearth == name then return self:SetTurnedIn(i, true) end
@@ -191,8 +191,10 @@ function TourGuide:UpdateStatusFrame()
                 repeat
                     action = self:GetObjectiveInfo(j)
                     turnedin, logi, complete = self:GetObjectiveStatus(j)
-                    if action == "COMPLETE" and logi and not complete and not IsQuestWatched(logi) then AddQuestWatch(logi) -- Watch if we're in a 'COMPLETE' block
-                    elseif action == "COMPLETE" and logi and IsQuestWatched(logi) then RemoveQuestWatch(logi) end -- or unwatch if done
+                    if action == "COMPLETE" and logi and not complete then
+                        AddQuestWatch(logi) -- Watch if we're in a 'COMPLETE' block
+                    elseif action == "COMPLETE" and logi then
+                        RemoveQuestWatch(logi) end -- or unwatch if done
                     j = j + 1
                 until action ~= "COMPLETE"
             end
@@ -215,7 +217,7 @@ function TourGuide:UpdateStatusFrame()
     self:DebugF(1, "Progressing to objective \"%s %s\"", action, quest)
 
     -- Mapping
-    if (TomTom or Cartographer_Waypoints) and (lastmapped ~= quest or lastmappedaction ~= action) then
+    if TomTom and (lastmapped ~= quest or lastmappedaction ~= action) then
         lastmappedaction, lastmapped = action, quest
         self:ParseAndMapCoords(note, quest, zonename) --, zone)
     end
@@ -325,3 +327,21 @@ f:SetScript("OnDragStop",
                 this:SetPoint(TourGuide.db.profile.statusframepoint, TourGuide.db.profile.statusframex, TourGuide.db.profile.statusframey)
             end
 )
+
+local origAddQuestWatch = AddQuestWatch
+AddQuestWatch = function(...)
+    if IsQuestWatched(arg[1]) then
+        return
+    end
+
+    origAddQuestWatch(unpack(arg))
+end
+
+local origRemoveQuestWatch = RemoveQuestWatch
+RemoveQuestWatch = function(...)
+    if not IsQuestWatched(arg[1]) then
+        return
+    end
+
+    origRemoveQuestWatch(unpack(arg))
+end

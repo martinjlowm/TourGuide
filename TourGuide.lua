@@ -67,10 +67,10 @@ end
 do
     local function LevelSort(a, b)
         local level_pattern = "[(]([^)-]*)"
-        a_level = tonumber(string.match(a, level_pattern))
-        b_level = tonumber(string.match(b, level_pattern)) or 0
+        a_level = string.match(a, level_pattern)
+        b_level = string.match(b, level_pattern) or 0
 
-        return a_level < b_level
+        return tonumber(a_level) < tonumber(b_level)
     end
 
     local guides, nextzones = {}, {}
@@ -110,10 +110,6 @@ end
 
 
 function TourGuide:Enable()
-    if TomTom and TomTom.version ~= "SVN" and (tonumber(TomTom.version) or 0) < 120 then
-        self:Print("Your version of TomTom is out of date.  TourGuide waypoints may not work correctly.")
-    end
-
     local _, title = GetAddOnInfo("TourGuide")
     local author, version = GetAddOnMetadata("TourGuide", "Author"), GetAddOnMetadata("TourGuide", "Version")
     local oh = OptionHouse:RegisterAddOn("Tour Guide", title, author, version)
@@ -139,7 +135,7 @@ end
 function TourGuide:GetQuestLogIndexByName(name)
     name = name or self.quests[self.current]
     name = string.gsub(name, L.PART_GSUB, "")
-    for i=1,GetNumQuestLogEntries() do
+    for i = 1, GetNumQuestLogEntries() do
         local title, _, _, _, isHeader = GetQuestLogTitle(i)
         if not isHeader and title == name then return i end
     end
@@ -150,15 +146,15 @@ function TourGuide:GetQuestDetails(name)
     if not name then return end
 
     local i = self:GetQuestLogIndexByName(name)
-    local complete = i and select(7, GetQuestLogTitle(i)) == 1
+    local complete = i and select(6, GetQuestLogTitle(i)) == 1
 
     return i, complete
 end
 
 
 function TourGuide:FindBagSlot(itemid)
-    for bag=0,4 do
-        for slot=1,GetContainerNumSlots(bag) do
+    for bag = 0, 4 do
+        for slot = 1, GetContainerNumSlots(bag) do
             local item = GetContainerItemLink(bag, slot)
             if item and string.find(item, "item:"..itemid) then return bag, slot end
         end

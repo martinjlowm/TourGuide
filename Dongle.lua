@@ -1142,15 +1142,16 @@ end
 local function PLAYER_ENTERING_WORLD()
     loadqueue_len = table.getn(loadqueue)
 
-    for i=1, loadqueue_len do
+    for i = 1, loadqueue_len do
         local obj = loadqueue[i]
+
         table.insert(loadorder, obj)
 
         if type(obj.Initialize) == "function" then
             safecall(obj.Initialize, obj)
         end
 
-        table.remove(loadqueue, i)
+        loadqueue[i] = nil
     end
 
     if not Dongle.initialized then

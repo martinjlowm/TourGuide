@@ -22,11 +22,8 @@ local function MapPoint(zone, x, y, desc)
         zone = zonenames[zc][zi]
     end
 
-    if TomTom then TomTom:AddZWaypoint(zc, zi, x, y, "[TG] "..desc) --AddZWaypoint(c,z,x,y,desc)  select(z, GetMapZones(c))
-    elseif Cartographer_Waypoints then
-        local pt = NotePoint:new(zone, x/100, y/100, "[TG] "..desc)
-        Cartographer_Waypoints:AddWaypoint(pt)
-        table.insert(cache, pt.WaypointID)
+    if TomTom then
+        TomTom:AddZWaypoint(zc, zi, x, y, "[TG] "..desc) --AddZWaypoint(c,z,x,y,desc)  select(z, GetMapZones(c))
     end
 end
 
@@ -65,14 +62,11 @@ function TourGuide:ParseAndMapCoords(note, desc, zone)
                 end
             end
         end
-    elseif Cartographer_Waypoints then
-        while cache[1] do
-            local pt = table.remove(cache)
-            Cartographer_Waypoints:CancelWaypoint(pt)
-        end
     end
 
     if not note then return end
 
-    for x,y in string.gmatch(note, L.COORD_MATCH) do MapPoint(zone, tonumber(x), tonumber(y), desc) end
+    for x, y in string.gmatch(note, L.COORD_MATCH) do
+        MapPoint(zone, tonumber(x), tonumber(y), desc)
+    end
 end

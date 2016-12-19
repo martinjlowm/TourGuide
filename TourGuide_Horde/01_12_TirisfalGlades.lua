@@ -26,7 +26,7 @@ A Night Web's Hollow
 A Scavenging Deathknell
 
 C Night Web's Hollow |N|Cave to the north (27.5, 58.0)|
-K Samuel Fipps |L|16333|
+K Samuel Fipps |N|Undead to the east (36.7, 61.6)| |L|16333|
 C Scavenging Deathknell
 T Scavenging Deathknell
 C Marla's Last Wish |N|Bury Samuel's remains|
