@@ -3,11 +3,8 @@ return [[
 F Gadgetzan |N|Tanaris|
 A The Super Egg-O-Matic |N|Machine in Gadgetzan|
 T The Super Egg-O-Matic |N|Egg from feralas|
+A Tanaris Field Sampling |U|8524| |N|From previous Slake That Thirst turn-in|
 h Gadgetzan
-T Ledger from Tanaris
-T Into the Field
-A Slake That Thirst
-T Slake That Thirst
 A The Thirsty Goblin
 A Noxious Lair Investigation
 A Super Sticky
@@ -28,7 +25,8 @@ C Tooga's Quest |N|Long escort quest ends at Torta (66,25)|
 T Tooga's Quest
 T Screecher Spirits
 
-T The Thirsty Goblin |N|Back at Gadgetzan|
+H Gadgetzan
+T The Thirsty Goblin
 A In Good Taste
 T In Good Taste
 A Sprinkle's Secret Ingredient
@@ -37,12 +35,15 @@ A The Scrimshank Redemption
 T Thistleshrub Valley
 T The Dunemaul Compound
 
+C Tanaris Field Sampling
 T Gahz'ridian |N|At (52,45)|
-C The Scrimshank Redemption |N|Cave at (53,70), keep making rights|
 A Find OOX-17/TN! |U|8623| |O|
 T Find OOX-17/TN! |O| |N|Skip the follow-up unless you want to do a long crappy escort.|
+C The Scrimshank Redemption |N|Cave at (53,70), keep making rights|
+N Die on purpose
 
-H Gadgetzan
+T Tanaris Field Sampling
+A Return to Apothecary Zinge
 T The Scrimshank Redemption
 A Insect Part Analysis (Part 1)
 T Insect Part Analysis (Part 1)

@@ -1,13 +1,15 @@
 TourGuide:RegisterGuide("Desolace (32-34)", "Stranglethorn Vale (34-36)", "Horde", function()
 return [[
 H Orgrimmar
+N Learn new abilities
 T The Swarm Grows (Part 1) |N|Valley of Honor (75,34)| |Z|Orgrimmar|
 A The Swarm Grows (Part 2)
 A Alliance Relations (Part 1) |N|From Craven Drok in the Cleft of Shadow (50,47)| |Z|Orgrimmar|
 T Alliance Relations (Part 1) |N|To Keldran near west gate of Orgimmar past Valley of Spirits (22,54)| |Z|Orgrimmar|
 A Alliance Relations (Part 2)
 
-R Desolace |N|Fly to Stonetalon Mountains and run south|
+F Sun Rock Retreat
+R Desolace
 
 R Thunder Axe Fortress |N|West of the road (55,24).|
 N Kill mobs |N|Kill mobs till you get Flayed Demon Skin| |L|20310|
@@ -92,6 +94,8 @@ T Hand of Iruxos
 T Other Fish to Fry
 T Clam Bait
 T Stealing Supplies |N|At the Gelkis village.  Skip the follow-up|
+
+N You should be level 34 by now, otherwise grind until you are
 
 P Claw (Rank 5) |N|Tame a Scorpashi Lasher, level 34 (36,77)| |C|Hunter|
 

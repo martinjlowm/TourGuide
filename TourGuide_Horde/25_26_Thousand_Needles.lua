@@ -15,6 +15,8 @@ T Test of Faith |N|Do not accept "Test of Endurance" unless you're a hardcore ma
 C A New Ore Sample |N|East side of map.  Skip if you can't get the drop.|
 C Alien Egg |N|Look for occamy nests Southeast of Freewind Post|
 
+N Grind till you are level 26
+
 R Freewind Post
 T Pacify the Centaur
 A Grimtotem Spying
@@ -31,8 +33,10 @@ C Cry of the Thunderhawk |O| |PRE|Enraged Thunder Lizards|
 T Cry of the Thunderhawk |O| |PRE|Enraged Thunder Lizards| |N|Skip the follow-up|
 
 F Thunder Bluff
+N Learn new abilities
 T Melor Sends Word |N|On Hunter Rise (61,80)|
 A Steelsnap |N|Hunter Rise|
 T The Elder Crone
+A The Sacred Flame
 ]]
 end)

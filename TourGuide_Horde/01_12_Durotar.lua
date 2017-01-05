@@ -1,7 +1,7 @@
-TourGuide:RegisterGuide("Durotar (1-12)", "The Barrens (12-20)", "Horde", function()
+TourGuide:RegisterGuide("Durotar (1-12)", "The Barrens (12-15)", "Horde", function()
     return [[
-A Your Place In The World |NODEBUG|
-T Your Place In The World |NODEBUG|
+A Your Place In The World
+T Your Place In The World
 A Cutting Teeth
 C Cutting Teeth
 A Sarkoth (Part 1) |N|Western Valley of Trials (40.6, 62.6)|
@@ -61,6 +61,7 @@ A Practical Prey
 
 R Razor Hill |N|Follow the road north.|
 T Report to Orgnil |T|
+
 A Dark Storms |T|
 A Vanquish the Betrayers |T|
 A Encroachment |T|
@@ -78,14 +79,14 @@ A The Admiral's Orders (Part 1) |U|4881|
 T The Admiral's Orders (Part 1)
 A The Admiral's Orders (Part 2)
 T Vanquish the Betrayers
-A From The Wreckage.... |NODEBUG|
+A From The Wreckage....
 T Carry Your Weight
 C A Solvent Spirit |N|Along the beaches (62,50)|
-C From The Wreckage.... |N|Helps if you have water breathing| |NODEBUG|
+C From The Wreckage.... |N|Helps if you have water breathing|
 K Razormane Scout |N|Razormane Grounds (51.1,49.4)| |Q|Encroachment| |QO|Razormane Scout: 4/4|
 K Razormane Quilboar |Q|Encroachment| |QO|Razormane Quilboar: 4/4|
 
-T From The Wreckage.... |T| |NODEBUG|
+T From The Wreckage.... |T|
 
 C Thwarting Kolkar Aggression |N|West of Sen'jin, each little camp has an item to pickup. (48,79)|
 C Break a Few Eggs |N|Head over to the Echo Isles (59.6,82.6). Kill Tigers if you see them.|
@@ -120,6 +121,7 @@ N Turn in Hunter Beast Quest|C|Hunter|
 T The Admiral's Orders (Part 2) |N|In Thrall's Room (33,37)|
 A Hidden Enemies (Part 1)
 A Finding the Antidote |N|In the Cleft of Shadow (46,53)|
+N Get Professions in The Drag
 C Finding the Antidote |N|Head west towards river|
 C Lost But Not Forgotten
 T Lost But Not Forgotten |N|At the little farm Northwest of Razor Hill (43,30)|
@@ -147,6 +149,7 @@ T Burning Shadows |O|
 T Hidden Enemies (Part 2) |N|And back to Thrall! Skip the follow-up.|
 
 H Razor Hill
+N Train new abilities
 A Conscript of the Horde |N|Just outside the western entrance of Razor Hill (50.9, 43.6)|
 ]]
 end)

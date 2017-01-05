@@ -1,5 +1,4 @@
-
-TourGuide:RegisterGuide("Un'Goro Crater (51-53)", "Burning Steppes (53-54)", "Horde", function()
+TourGuide:RegisterGuide("Un'Goro Crater (51-52)", "Burning Steppes (52-53)", "Horde", function()
 return [[
 R Un'Goro Crater |N|Southewest corner of the zone (26,52)| |Z|Tanaris|
 N Look for loot... |N|There are many loot nodes scattered across this zone.  You'll need 7 of each color of power crystals.  Also loot any dirt piles or sprouts you find.|
@@ -69,9 +68,9 @@ C Shizzle's Flyer |N|Kill diemetradons and pterrordaxes, all over the zone.|
 C Finding the Source |N|At the volcano in the center of the zone.  Use the thermometer at "Hot Spots" until you complete the quest.| |U|12472|
 C Volcanic Activity |N|Kill elementals, mainly around the cave on the south side of the volcano.|
 T Lost! |N|In the cave on the south side of the volcano (51,49)|
-A A Little Help From My Friends |NODEBUG|
-C A Little Help From My Friends |NODEBUG| |N|Use the canteen on him if he faints. Run back to Marshal's Refuge.| |U|11804|
-T A Little Help From My Friends |NODEBUG|
+A A Little Help From My Friends
+C A Little Help From My Friends |N|Use the canteen on him if he faints. Run back to Marshal's Refuge.| |U|11804|
+T A Little Help From My Friends
 T Beware of Pterrordax
 T Shizzle's Flyer
 T Roll the Bones
@@ -92,18 +91,20 @@ K Oozes |L|12235 30|
 
 R Silithus |N|Take the path up out of the crater in the northwest corner of the zone (29,22)|
 R Cenarion Hold |N|Follow the road|
+f Cenarion Hold
 F Gadgetzan |N|FP is up the big hill|
 T Bungle in the Jungle |N|Skip the follow-up|
 T Super Sticky
 
-H Thunder Bluff
+F Thunder Bluff
 A Un'Goro Soil |N|On Elder Rise|
 T Un'Goro Soil
 A Morrowgrain Research
 T Morrowgrain Research
 
-F The Crossroads
-h The Crossroads
+N Learn new abilities
+
+H The Crossroads
 
 F Ratchet
 T Volcanic Activity

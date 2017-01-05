@@ -3,6 +3,7 @@ TourGuide:RegisterGuide("Stonetalon Mountains (23-25)", "The Barrens (25)", "Hor
 F Sun Rock Retreat
 A Cenarius' Legacy |T|
 T Boulderslide Ravine |N|Skip the follow-up| |T|
+A Trouble in the Deeps
 A Elemental War |T|
 A Harpies Threaten |T|
 h Sun Rock Retreat |T|
@@ -20,10 +21,13 @@ A Gerenzo Wrenchwhistle
 C Gerenzo Wrenchwhistle |N|At (64,41)|
 C Shredding Machines
 T Gerenzo Wrenchwhistle
+A Arachnophobia |N|From a sign outside Sishir Canyon (59.1, 75.8)|
+C Arachnophobia |N|In Sishir Canyon (52.20, 73.90)|
 T Jin'Zil's Forest Magic
 T Shredding Machines
 
 H Sun Rock Retreat
+T Arachnophobia |T| |N|Back at Sun Rock Retreat|
 C New Life |N|West in the Charred Vale (32,67)|
 C Elemental War
 C Harpies Threaten

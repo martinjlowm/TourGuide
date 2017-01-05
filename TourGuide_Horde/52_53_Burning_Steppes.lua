@@ -1,4 +1,4 @@
-TourGuide:RegisterGuide("Burning Steppes (53-54)", "Felwood (54)", "Horde", function()
+TourGuide:RegisterGuide("Burning Steppes (52-53)", "Azshara (53-54)", "Horde", function()
 return [[
 F Burning Steppes
 A Broodling Essence
@@ -28,6 +28,7 @@ T The Rise of the Machines (Part 2) |N|In the Badlands (25,44)| |Z|Badlands|
 
 H The Crossroads
 F Orgrimmar
+h Orgrimmar
 T Bone-Bladed Weapons |N|(52,34)| |Z|Orgrimmar|
 ]]
 end)

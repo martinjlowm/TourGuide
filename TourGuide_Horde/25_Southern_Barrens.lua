@@ -6,6 +6,7 @@ A Enraged Thunder Lizards |O| |PRE|Ishamuhale|
 h Camp Taurajo
 A A New Ore Sample
 C Enraged Thunder Lizards |O| |PRE|Ishamuhale|
+K Washte Pawne |L|5103| |N|(43.2,80.9)|
 C Revenge of Gann (Part 1) |N|Dwarf area (47,85)|
 T Revenge of Gann (Part 1)
 A Revenge of Gann (Part 2)

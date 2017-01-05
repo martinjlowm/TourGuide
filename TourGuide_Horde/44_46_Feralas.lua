@@ -1,4 +1,4 @@
-TourGuide:RegisterGuide("Feralas (45-46)", "Azshara (46-47)", "Horde", function()
+TourGuide:RegisterGuide("Feralas (44-46)", "Azshara (46-46)", "Horde", function()
 return [[
 F Freewind Post
 R Camp Mojache |N|West in Feralas|
@@ -8,6 +8,7 @@ A Gordunni Cobalt |T|
 A War on the Woodpaw |T|
 A The Mark of Quality |T|
 A A Strange Request |T|
+f Grab flight point
 h Camp Mojache |T|
 
 C War on the Woodpaw |N|North of Camp Mojache (71,37)|
@@ -35,7 +36,6 @@ A The Battle Plans
 
 C A Grim Discovery (Part 1) |N|West of Camp Mojache (66,46)|
 
-H Camp Mojache
 T The Battle Plans |T|
 A Zukk'ash Infestation |T|
 A Stinglasher |T|
@@ -60,7 +60,6 @@ T Dark Ceremony |T|
 A The Gordunni Orb |T|
 
 F Orgrimmar
-h Orgrimmar |T|
 T Zukk'ash Report |N|In The Drag (56,46)| |Z|Orgrimmar| |T|
 A Ripple Recovery (Part 1) |N|From Dran Droffers in The Drag (59.4, 36.9)| |Z|Orgrimmar| |T|
 T Ripple Recovery (Part 1) |N|The other guy in the same building| |T|
@@ -69,6 +68,7 @@ T Parts of the Swarm |N|At Belgrom Rockmaul in the Valley of Honor (75,34)| |Z|O
 T A Grim Discovery (Part 2) |T|
 A Betrayed |T|
 T A Strange Request |N|In the Cleft of Shadow (49.6,50.6)| |Z|Orgrimmar| |T|
+A Return to Witch Doctor Uzer'i
 T Report to Zor |N|In the Valley of Wisdom (38.9,38.4)| |Z|Orgrimmar| |T|
 A Service to the Horde |T|
 T Service to the Horde |T|
@@ -83,5 +83,24 @@ A A Donation of Silk (Orgrimmar) |T|
 T A Donation of Silk (Orgrimmar) |T|
 A A Donation of Mageweave (Orgrimmar) |T|
 T A Donation of Mageweave (Orgrimmar) |T|
+
+N Buy mount now if you have the gold!
+
+H Camp Mojache
+T Return to Witch Doctor Uzer'i
+A Natural Materials
+A Testing the Vessel
+C Natural Materials
+N Grind Hippogryphs until Natural Materials is complete
+A Find OOX-22/FE! |U|8705| |O|
+C Find OOX-22/FE! |O|
+T Find OOX-22/FE!
+N Grind to level 46 on Hippogryphs
+H Camp Mojache
+T Natural Materials
+A The Sunken Temple
+F Thunder Bluff
+T Deadmire
+N Learn new abilities
 ]]
 end)

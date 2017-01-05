@@ -1,4 +1,4 @@
-TourGuide:RegisterGuide("Western Plaguelands (56)", "Eastern Plaguelands (56-57)", "Horde", function()
+TourGuide:RegisterGuide("Western Plaguelands (55-56)", "Eastern Plaguelands (56-57)", "Horde", function()
 return [[
 F Undercity
 A A Call to Arms: The Plaguelands! |N|From Harbinger Balthazad, he patrols around the center and middle rings of the city.|
@@ -67,6 +67,7 @@ T Target: Gahrron's Withering |N|Talk to the cauldren|
 A Return to the Bulwark (Part 4)
 
 T The Wildlife Suffers Too (Part 2)
+A Glyphed Oaken Branch
 
 T All Along the Watchtowers |N|Back at the Bulwark|
 A Scholomance

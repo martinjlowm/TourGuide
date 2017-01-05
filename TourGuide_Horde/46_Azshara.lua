@@ -1,4 +1,4 @@
-TourGuide:RegisterGuide("Azshara (46-47)", "Stranglethorn Vale (47)", "Horde", function()
+TourGuide:RegisterGuide("Azshara (46)", "The Hinterlands (46-47)", "Horde", function()
 return [[
 F Splintertree Post |N|Ashenvale|
 R Azshara |N|Go east dur!|
@@ -13,13 +13,17 @@ T A Land Filled with Hatred
 R Valormok |N|North of the road, on the mountain's edge (21,52)|
 T Betrayed
 
-H Orgrimmar
+f Grab flight point
+F Orgrimmar
 F Undercity
+A Lines of Communication |N|Magic Quarter|
 A Seeping Corruption (Part 1) |N|Apothecarium Quarter|
 A Errand for Apothecary Zinge (Part 1)
 T Errand for Apothecary Zinge (Part 1) |N|Out in other room|
 A Errand for Apothecary Zinge (Part 2)
 T Errand for Apothecary Zinge (Part 2)
 A Into the Field
+F Tarren Mill
+h Tarren Mill
 ]]
 end)

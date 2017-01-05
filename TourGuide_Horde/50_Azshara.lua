@@ -1,5 +1,5 @@
 
-TourGuide:RegisterGuide("Azshara (50)", "The Hinterlands (50-51)", "Horde", function()
+TourGuide:RegisterGuide("Azshara (50)", "The Hinterlands (50)", "Horde", function()
 return [[
 F Orgrimmar
 h Orgrimmar
@@ -26,6 +26,8 @@ A March of the Silithid
 T Delivery to Jes'rimon |N|at (55,34)| |Z|Orgrimmar|
 A Jes'rimon's Payment to Jediga
 A Bone-Bladed Weapons
+
+N Learn new abilities
 
 F Undercity
 T Delivery to Andron Gant |N|Apothecarium Quarter|

@@ -1,5 +1,5 @@
 
-TourGuide:RegisterGuide("Western Plaguelands (57-59)", "Hellfire Pennisula (59-60)", "Horde", function()
+TourGuide:RegisterGuide("Western Plaguelands (57-58)", "Winterspring (58-60)", "Horde", function()
 return [[
 R The Bulwark
 T Return to the Bulwark (Part 4)
@@ -62,5 +62,7 @@ T Brother Carlin
 A Bonescythe Digs
 T Bonescythe Digs
 T Zaeldarr the Outcast
+
+N Grind to level 58
 ]]
 end)

@@ -18,12 +18,16 @@ C Homeward Bound
 C Steelsnap |N|Moves around, try (16,25)|
 C A Different Approach |N|Around (8,14)|
 
+N Make sure you are at least level 28
+
 H Sun Rock Retreat
 F Thunder Bluff
 T Steelsnap |N|Hunter Rise|
 A Frostmaw
 T Sacred Fire |N|Elder Rise|
 A Arikara
+
+N Learn new abilities
 
 F Freewind Post
 h Freewind Post
@@ -42,6 +46,7 @@ T A Different Approach
 A A Dip in the Moonwell
 
 C A Dip in the Moonwell |N|On the west edge of the zone near Thalanaar (9,18).  If you have a pet you will have to dismiss it before you can control the robot.|
+N Grind to level 29 e.g. at Camp E'Thok
 C Hypercapacitor Gizmo |N|Find the cage at the wrecked caravan north of Whitereach Post (22,24)|
 K Galak Messenger |L|12564|
 

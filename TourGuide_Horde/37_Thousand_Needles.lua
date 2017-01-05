@@ -1,6 +1,6 @@
 TourGuide:RegisterGuide("Thousand Needles (37)", "Dustwallow Marsh (37-38)", "Horde", function()
 return [[
-F Orgrimmar |N|Take the zeppelin, dur!|
+R Orgrimmar |N|Take the zeppelin, dur!|
 T Alliance Relations (Part 4) |N|Keldran in the Valley of Spirits (21,53)| |Z|Orgrimmar|
 F The Crossroads
 h The Crossroads

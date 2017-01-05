@@ -1,14 +1,8 @@
-TourGuide:RegisterGuide("Tanaris (44-45)", "Feralas (45-46)", "Horde", function()
+TourGuide:RegisterGuide("Tanaris (43-44)", "Feralas (44-46)", "Horde", function()
 return [[
 F Gadgetzan
-A WANTED: Caliph Scorpidsting |N|Wanted poster in front of the cage| |T|
-A WANTED: Andre Firebeard |T|
-T Tran'rek |T|
-A Gadgetzan Water Survey |N|Southwest side of town on a hill (50.2,27.5)| |T|
-A Wastewander Justice |N|Between the bank and the inn (52.5,28.5)| |T|
-A Water Pouch Bounty |T|
-h Gadgetzan
 
+N Check the following steps. They might not be necessary. Skip to the WANTED quests if not
 R Mirage Raceway |N|In the Shimmering Flats (77.8,77.3)| |Z|Thousand Needles|
 T Rumors for Kravel
 T News for Fizzle
@@ -24,7 +18,14 @@ R Gadgetzan
 T Safety First |T|
 A Safety First |T|
 T Safety First |N|Back at Mirage Raceway (80.2,76.2)| |Z|Thousand Needles|
-H Gadgetzan
+
+A WANTED: Caliph Scorpidsting |N|Wanted poster in front of the cage| |T|
+A WANTED: Andre Firebeard |T|
+T Tran'rek |T|
+A Gadgetzan Water Survey |N|Southwest side of town on a hill (50.2,27.5)| |T|
+A Wastewander Justice |N|Between the bank and the inn (52.5,28.5)| |T|
+A Water Pouch Bounty |T|
+h Gadgetzan
 
 R Steamwheedle Port
 A Pirate Hats Ahoy!
@@ -40,6 +41,7 @@ C WANTED: Andre Firebeard |N|At Lost Rigger Cove (73.4,47.1)|
 C Stoley's Shipment |N|Upstairs in the northern building (72.1,46.7)|
 C Pirate Hats Ahoy!
 C Southsea Shakedown
+N Grind pirates until you get the ship schedule from a Pirate's Footlocker |L|9250|
 
 H Gadgetzan
 T Water Pouch Bounty

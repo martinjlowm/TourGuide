@@ -1,12 +1,8 @@
 TourGuide:RegisterGuide("Ashenvale (26-27)", "Stonetalon Mountains (27)", "Horde", function()
 return [[
-F The Crossroads
-T Report to Kadrak |N|Take the road north out of town to the Ashenvale border| |T|
-R Splintertree Post |N|Follow the road north, then east (73,65)|
-h Splintertree Post
+F Splintertree Post
 A Stonetalon Standstill
 A Satyr Horns
-T The Ashenvale Hunt |N|Don't skip this or the quest items won't drop!  Go to Orgrimmar and grab it if you don't have it.|
 A Ashenvale Outrunners |N|At the camp southwest of Splintertree Post (71,68)|
 
 K Sharptalon |L|16305| |N|South of Splintertree Post (74,71).  He's level 31, so try kiting him to the guards at the nearby outpost.|
@@ -37,13 +33,10 @@ T Shadumbra's Head |O|
 A The Hunt Completed
 T The Hunt Completed
 
-R The Zoram Strand |N|Follow the main road west as far as you can, then break off and run to the coast (13,31).  Don't get too close to the ally towns!|
+F The Zoram Strand
 T Je'neu of the Earthen Ring
-A Vorsha the Lasher
-A Naga at the Zoram Strand
-C Vorsha the Lasher |N|On the island|
-C Naga at the Zoram Strand
-T Naga at the Zoram Strand
+T Trouble in the Deeps
+C Vorsha the Lasher |N|If you didn't complete it earlier|
 T Vorsha the Lasher
 A Between a Rock and a Thistlefur
 A Troll Charm
@@ -56,6 +49,7 @@ T Between a Rock and a Thistlefur
 T Troll Charm
 
 H Splintertree Post
+N Grind till level 27
 
 N Stable Pet |C|Hunter|
 P Bite (Rank 4) |C|Hunter| |N|Tame a Ghostpaw Alpha|

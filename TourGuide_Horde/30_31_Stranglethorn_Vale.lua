@@ -1,6 +1,6 @@
 TourGuide:RegisterGuide("Stranglethorn Vale (30-31)", "Thousand Needles (31-32)", "Horde", function()
 return [[
-F Grom'gol Base Camp |N|Hearth to Orgrimmar and ride zeppelin to Grom'Gol|
+R Grom'gol Base Camp |N|Ride zeppelin to Grom'Gol|
 f Grab flight point
 
 R Nesingwary's Expedition |N|Follow the road north, look for a little camp by the river (35,10)|
@@ -32,5 +32,7 @@ A Panther Mastery (Part 3)
 
 T Tiger Mastery (Part 2)
 A Tiger Mastery (Part 3)
+
+N Make sure you are level 31 by now, otherwise grind till you are
 ]]
 end)

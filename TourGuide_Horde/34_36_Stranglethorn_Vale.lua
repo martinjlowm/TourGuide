@@ -16,7 +16,6 @@ N Keep main pet stabled |N|Continue to use your Scorpashi Lasher| |C|Hunter|
 F Grom'gol Base Camp
 A The Defense of Grom'gol (Part 1)
 A Mok'thardin's Enchantment (Part 1)
-A Bloodscalp Insight
 A Hunt for Yenniku
 A Trollbane
 A Bloody Bone Necklaces
@@ -28,7 +27,6 @@ N Save all Pages |N|Save all Green Hills of Stranglethorn pages|
 C Singing Blue Shards |N|From Basilisk on the coast far to the north (25,19)|
 C Tiger Mastery (Part 3) |N|Tigers between the troll ruins and Nessingwary's camp|
 C Bloodscalp Ears
-C Bloodscalp Insight
 C Hunt for Yenniku
 C Raptor Mastery (Part 2) |N|Lashtail Raptors near Grom'gol|
 C The Defense of Grom'gol (Part 1)
@@ -37,8 +35,9 @@ T Hunt for Yenniku |N|Back at Grom'gol|
 A Headhunting
 T The Defense of Grom'gol (Part 1)
 A The Defense of Grom'gol (Part 2)
-T Bloodscalp Insight
 A An Unusual Patron
+
+N You should be level 35, buy new water/food/repair
 
 C Headhunting |N|(21,14) with Bloody Bone Necklaces|
 C Bloody Bone Necklaces
@@ -72,17 +71,21 @@ T Investigate the Camp
 T Goblin Sponsorship (Part 4)
 A Goblin Sponsorship (Part 5)
 
-T The Defense of Grom'gol (Part 2) |N|Back at Grom'gol|
+F Grom'gol Base Camp
+N You should be level 36 by now
+T The Defense of Grom'gol (Part 2)
 T An Unusual Patron
 T Mok'thardin's Enchantment (Part 1)
 A Mok'thardin's Enchantment (Part 2)
 T Headhunting
 T Bloody Bone Necklaces
+A Split Bone Necklace
 T The Vile Reef
 
 F Undercity |N|Take Zeppelin|
-A To Steal From Thieves |N|In the center of Undercity| |NODEBUG|
+A To Steal From Thieves |N|In the center of Undercity|
 A A Donation of Silk
 T A Donation of Silk
+N Learn new abilities
 ]]
 end)

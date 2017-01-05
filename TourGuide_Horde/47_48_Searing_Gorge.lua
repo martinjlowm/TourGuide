@@ -1,4 +1,4 @@
-TourGuide:RegisterGuide("Searing Gorge (47-48)", "Swamp of Sorrows (48-49)", "Horde", function()
+TourGuide:RegisterGuide("Searing Gorge (47-48)", "Swamp of Sorrows (48)", "Horde", function()
 return [[
 F Kargath
 R Searing Gorge |N|West!|

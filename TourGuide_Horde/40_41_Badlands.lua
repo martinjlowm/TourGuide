@@ -33,9 +33,12 @@ T Broken Alliances
 T Badlands Reagent Run
 T Barbecued Buzzard Wings
 
+N Grind to level 41
+
 H Grom'gol Base Camp
 T The Green Hills of Stranglethorn
-A Nothing But The Truth (Part 1) |N|Follow the road north into Duskwood (87.8,35.7)| |Z|Duskwood| |NODEBUG|
-T Nothing But The Truth (Part 1) |N|Skip the follow-up| |NODEBUG|
+A Nothing But The Truth (Part 1) |N|Follow the road north into Duskwood (87.8,35.7)| |Z|Duskwood|
+T Nothing But The Truth (Part 1)
+A Nothing But The Truth (Part 2)
 ]]
 end)
