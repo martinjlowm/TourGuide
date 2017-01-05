@@ -37,7 +37,7 @@ A The Deserter
 
 C Noggle's Last Satchel |N|(40,90)|
 T The Deserter
-N Die on purpose
+N Die on purpose and spirit resurrect
 
 T Noggle's Last Satchel
 

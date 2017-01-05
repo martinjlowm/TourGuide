@@ -1,4 +1,4 @@
-TourGuide:RegisterGuide("Feralas (44-46)", "Azshara (46-46)", "Horde", function()
+TourGuide:RegisterGuide("Feralas (44-46)", "Azshara (46)", "Horde", function()
 return [[
 F Freewind Post
 R Camp Mojache |N|West in Feralas|
@@ -94,7 +94,7 @@ C Natural Materials
 N Grind Hippogryphs until Natural Materials is complete
 A Find OOX-22/FE! |U|8705| |O|
 C Find OOX-22/FE! |O|
-T Find OOX-22/FE!
+T Find OOX-22/FE! |O|
 N Grind to level 46 on Hippogryphs
 H Camp Mojache
 T Natural Materials

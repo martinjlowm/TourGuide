@@ -1,4 +1,4 @@
-TourGuide:RegisterGuide("The Hinterlands (50)", "Blasted Lands (50-51)", "Horde", function()
+TourGuide:RegisterGuide("The Hinterlands (50)", "The Blasted Lands (50-51)", "Horde", function()
 return [[
 F Revantusk Village
 A Snapjaws, Mon!

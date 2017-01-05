@@ -1,5 +1,4 @@
-
-TourGuide:RegisterGuide("Eastern Plaguelands (56-57)", "Western Plaguelands (57-59)", "Horde", function()
+TourGuide:RegisterGuide("Eastern Plaguelands (56-57)", "Western Plaguelands (57-58)", "Horde", function()
 return [[
 R Eastern Plaguelands
 A Demon Dogs |N|Follow the river north (7,43)|

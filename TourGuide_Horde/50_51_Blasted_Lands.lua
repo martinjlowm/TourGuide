@@ -1,4 +1,4 @@
-TourGuide:RegisterGuide("The Blasted Lands (50-51)", "Un'goro Crater (51-52)", "Horde", function()
+TourGuide:RegisterGuide("The Blasted Lands (50-51)", "Un'Goro Crater (51-52)", "Horde", function()
 return [[
 F Stonard
 R Blasted Lands

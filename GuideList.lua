@@ -83,8 +83,8 @@ function TourGuide:CreateGuidesPanel()
     end
 
     frame:EnableMouseWheel()
-    frame:SetScript("OnMouseWheel", function(f, val)
-                        offset = offset - val*NUMROWS
+    frame:SetScript("OnMouseWheel", function(...)
+                        offset = offset - arg1 * NUMROWS
                         if (offset + NUMROWS*2) > table.getn(self.guidelist) then offset = offset - NUMROWS end
                         if offset < 0 then offset = 0 end
                         self:UpdateGuidesPanel()

@@ -1,6 +1,6 @@
 TourGuide:RegisterGuide("Un'Goro Crater (51-52)", "Burning Steppes (52-53)", "Horde", function()
 return [[
-R Un'Goro Crater |N|Southewest corner of the zone (26,52)| |Z|Tanaris|
+R Un'Goro Crater |N|Southwest corner of the zone (26,52)| |Z|Tanaris|
 N Look for loot... |N|There are many loot nodes scattered across this zone.  You'll need 7 of each color of power crystals.  Also loot any dirt piles or sprouts you find.|
 
 A The Apes of Un'Goro |N|Tauren on the hill to the left of the ramp from Tanaris (69,77)|

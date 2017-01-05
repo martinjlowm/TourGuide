@@ -1,4 +1,4 @@
-TourGuide:RegisterGuide("Winterspring (58-60)", "Felwood (55)", "Horde", function()
+TourGuide:RegisterGuide("Winterspring (58-60)", nil, "Horde", function()
 return [[
 H Undercity
 F Orgrimmar
