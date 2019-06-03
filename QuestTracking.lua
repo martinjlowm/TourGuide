@@ -52,10 +52,24 @@ end
 
 
 function TourGuide:QUEST_LOG_UPDATE(event)
+    local isPreviousComplete
+    if self.current and self.current > 1 then
+        _, isPreviousComplete = self:GetObjectiveStatus(self.current - 1)
+    end
+
     local action, _, logi, complete = self:GetObjectiveInfo(), self:GetObjectiveStatus()
     self:Debug(10, "QUEST_LOG_UPDATE", action, logi, complete)
 
-    if (self.updatedelay and not logi) or action == "ACCEPT" or action == "COMPLETE" and complete then self:UpdateStatusFrame() end
+    if table.getn(self.statusframe.rows) > 1 then
+        for _, row in next, self.statusframe.rows do
+            complete = complete or select(3, self:GetObjectiveStatus(row.step))
+            if complete then
+                action = self:GetObjectiveInfo(row.step)
+            end
+        end
+    end
+
+    if not isPreviousComplete or (self.updatedelay and not logi) or action == "ACCEPT" or action == "COMPLETE" and complete then self:UpdateStatusFrame() end
 
     if action == "KILL" or action == "NOTE" then
         local quest, questtext = self:GetObjectiveTag("Q"), self:GetObjectiveTag("QO")
@@ -120,3 +134,5 @@ GetQuestReward = function(...)
 
     return orig(unpack(arg))
 end
+
+TourGuide:EnableDebug(10)

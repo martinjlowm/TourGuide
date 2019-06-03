@@ -65,12 +65,10 @@ end
 
 
 do
-    local function LevelSort(a, b)
+    local function LevelSort(left, right)
         local level_pattern = "[(]([^)-]*)"
-        a_level = string.match(a, level_pattern)
-        b_level = string.match(b, level_pattern) or 0
 
-        return tonumber(a_level) < tonumber(b_level)
+        return (tonumber(string.match(left, level_pattern)) or 0) < (tonumber(string.match(right, level_pattern)) or 0)
     end
 
     local guides, nextzones = {}, {}
@@ -185,10 +183,11 @@ function TourGuide:SetTurnedIn(i, value, noupdate)
     end
 
     if value then value = true else value = nil end -- Cleanup to minimize savedvar data
-	self.turnedin[self.quests[i]] = value
-	self:DebugF(1, "Set turned in %q = %s", self.quests[i], tostring(value))
-	if not noupdate then self:UpdateStatusFrame()
-	else self.updatedelay = i end
+
+    self.turnedin[self.quests[i]] = value
+    self:DebugF(1, "Set turned in %q = %s", self.quests[i], tostring(value))
+    if not noupdate then self:UpdateStatusFrame()
+    else self.updatedelay = i end
 end
 
 

@@ -45,17 +45,20 @@ local function ParseQuests(...)
     local accepts, turnins, completes = {}, {}, {}
     local uniqueid = 1
     local actions, quests, tags = {}, {}, {}
+    local group_boundaries = {}
     local i = 1
 
     for j = 1, select('#', unpack(arg)) do
         local text = select(j, unpack(arg))
+
         local _, _, classes = string.find(text, "|C|([^|]+)|")
         local _, _, races = string.find(text, "|R|([^|]+)|")
 
         if text ~= "" and (not classes or string.find(classes, myclass)) and (not races or string.find(races, myrace)) then
             local action, quest, tag = select(3, string.find(text, "^(%a) ([^|]*)(.*)"))
+
             assert(actiontypes[action], "Unknown action: "..text)
-            quest = string.trim(quest)
+            quest = string.trim(quest or '')
             if not (action == "A" or action =="C" or action =="T") then
                 quest = quest.."@"..uniqueid.."@"
                 uniqueid = uniqueid + 1

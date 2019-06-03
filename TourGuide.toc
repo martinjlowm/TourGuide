@@ -9,7 +9,6 @@
 ## SavedVariables: TourGuideAlphaDB
 ## SavedVariablesPerCharacter: TourGuideQuestHistoryDB
 
-## Dependencies: gxLuaPlus
 ## OptionalDeps: Dongle, Optionhouse, TomTom, tekDebug
 
 ## LoadManagers: AddonLoader

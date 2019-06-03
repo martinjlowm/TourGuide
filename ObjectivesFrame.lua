@@ -228,6 +228,7 @@ function TourGuide:UpdateOHPanel(value)
     for i,row in ipairs(rows) do
         row.i = i + offset
         local action, name = self:GetObjectiveInfo(i + offset)
+
         if not name then
             row:Hide()
         else

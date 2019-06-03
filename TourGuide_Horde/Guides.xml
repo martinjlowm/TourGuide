@@ -1,4 +1,9 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
+  <Script file="01-horde-exalted.lua"/>
+  <Script file="02-horde-exalted.lua"/>
+  <Script file="03-horde-exalted.lua"/>
+  <Script file="04-horde-exalted.lua"/>
+
   <Script file="01_12_TirisfalGlades.lua"/>
   <Script file="01_12_Mulgore.lua"/>
   <Script file="01_12_Durotar.lua"/>
