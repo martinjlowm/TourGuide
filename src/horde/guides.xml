@@ -6,22 +6,22 @@
 
   <!-- <Script file="01_12_TirisfalGlades.lua"/> -->
   <!-- <Script file="01_12_Mulgore.lua"/> -->
-  <!-- <Script file="01_12_Durotar.lua"/> -->
+  <Script file="01-12-durotar.lua"/>
 
-  <!-- <Script file="12_15_Barrens.lua"/> -->
-  <!-- <Script file="15_16_Stonetalon_Mountains.lua"/> -->
-  <!-- <Script file="16_20_Barrens.lua"/> -->
+  <Script file="12-15-barrens.lua"/>
+  <Script file="15-16-stonetalon-mountains.lua"/>
+  <Script file="16-20-barrens.lua"/>
 
-  <!-- <Script file="20_21_Stonetalon_Mountains.lua"/> -->
-  <!-- <Script file="21_22_Ashenvale.lua"/> -->
-  <!-- <Script file="22_23_Southern_Barrens.lua"/> -->
-  <!-- <Script file="23_25_Stonetalon_Mountains.lua"/> -->
-  <!-- <Script file="25_Southern_Barrens.lua"/> -->
-  <!-- <Script file="25_26_Thousand_Needles.lua"/> -->
-  <!-- <Script file="26_27_Ashenvale.lua"/> -->
-  <!-- <Script file="27_Stonetalon_Mountains.lua"/> -->
-  <!-- <Script file="27_29_Thousand_Needles.lua"/> -->
-  <!-- <Script file="29_30_Hillsbrad_Foothills.lua"/> -->
+  <Script file="20-21-stonetalon-mountains.lua"/>
+  <Script file="21-22-ashenvale.lua"/>
+  <Script file="22-23-southern-barrens.lua"/>
+  <Script file="23-25-stonetalon-mountains.lua"/>
+  <Script file="25-southern-barrens.lua"/>
+  <Script file="25-26-thousand-needles.lua"/>
+  <Script file="26-27-ashenvale.lua"/>
+  <Script file="27-stonetalon-mountains.lua"/>
+  <Script file="27-29-thousand-needles.lua"/>
+  <Script file="29-30-hillsbrad-foothills.lua"/>
 
   <!-- <Script file="30_Alterac_Mountains.lua"/> -->
   <!-- <Script file="30_Arathi_Highlands.lua"/> -->

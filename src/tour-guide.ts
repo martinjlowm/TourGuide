@@ -134,6 +134,14 @@ TourGuide.icons = setmetatable(
 TourGuide.initialize = function(this: ITourGuide) {
   [myfaction] = UnitFactionGroup('player')
 
+  const [name] = UnitName('player');
+  let guide: string;
+  if (name === 'Ankhesa') {
+    guide = 'Exalted with Factions (Part 1)';
+  } else {
+    guide = 'Durotar (1-12)';
+  }
+
   this.db = this.initializeDB(
     'TourGuideAlphaDB', {
       char: {
@@ -143,7 +151,7 @@ TourGuide.initialize = function(this: ITourGuide) {
         cachedturnins: {},
         trackquests: true,
         completion: {},
-        currentguide: 'No Guide',
+        currentguide: guide,
         petskills: {}
       },
     })
@@ -157,7 +165,8 @@ TourGuide.initialize = function(this: ITourGuide) {
 
   this.filterGuides();
 
-  this.db.char.currentguide = this.db.char.currentguide || this.guidelist[1];
+  this.db.char.currentguide = this.db.char.currentguide || guide;
+  print(this.db.char.currentguide);
   this.loadGuide(this.db.char.currentguide);
 
   this.statusFrameHandler = new _NS.statusFrame.StatusFrameHandler();
