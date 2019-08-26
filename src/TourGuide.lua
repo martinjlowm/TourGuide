@@ -1,9 +1,9 @@
 
-local OptionHouse = LibStub("OptionHouse-1.1")
+const OptionHouse = LibStub("OptionHouse-1.1")
 
 
-local myfaction
-local L = TOURGUIDE_LOCALE
+const myfaction
+const L = TOURGUIDE_LOCALE
 TOURGUIDE_LOCALE = nil
 
 TourGuide = DongleStub("Dongle-1.0"):New("TourGuide")
@@ -211,17 +211,29 @@ function TourGuide:CompleteQuest(name)
 end
 
 
----------------------------------
---      Utility Functions      --
----------------------------------
+//-------------------------------
+//      Utility Functions      --
+//-------------------------------
 
+TourGuide.ColorGradient = function(perc) {
+  if (perc >= 1) {
+    return [0, 1, 0];
+  } else if (perc <= 0) {
+    return [1, 0, 0];
+  }
+
+  const [segment, relperc] = math.modf(perc * 2);
+  const [r1, g1, b1, r2, g2, b2] = select(
+    (segment * 3) + 1,
+    1, 0, 0,
+    1, 0.82, 0,
+    0, 1, 0
+  );
+
+  return r1 + (r2 - r1) * relperc, g1 + (g2 - g1) * relperc, b1 + (b2 - b1) * relperc;
+}
 function TourGuide.ColorGradient(perc)
-    if perc >= 1 then return 0,1,0
-    elseif perc <= 0 then return 1,0,0 end
 
-    local segment, relperc = math.modf(perc*2)
-    local r1, g1, b1, r2, g2, b2 = select((segment*3)+1, 1,0,0, 1,0.82,0, 0,1,0)
-    return r1 + (r2-r1)*relperc, g1 + (g2-g1)*relperc, b1 + (b2-b1)*relperc
 end
 
 

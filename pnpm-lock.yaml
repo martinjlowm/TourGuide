@@ -1,5 +1,5 @@
 devDependencies:
-  '@types/wow-api': github.com/martinjlowm/types-wow-api/b83c58f5675e1df1936f59faab18726a38d28514
+  '@types/wow-api': github.com/martinjlowm/types-wow-api/a7651daf20eb469159986a50acbd22be286d76b6
   lua-types: 2.6.1
   typescript: 3.5.3
   typescript-to-lua: 0.26.0
@@ -43,11 +43,11 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-ACzBtm/PhXBDId6a6sDJfroT2pOWt/oOnk4/dElG5G33ZL776N3Y6/6bKZJBFpd+b05F3Ct9qDjMeJmRWtE2/g==
-  github.com/martinjlowm/types-wow-api/b83c58f5675e1df1936f59faab18726a38d28514:
+  github.com/martinjlowm/types-wow-api/a7651daf20eb469159986a50acbd22be286d76b6:
     dev: true
     name: '@types/wow-api'
     resolution:
-      tarball: 'https://codeload.github.com/martinjlowm/types-wow-api/tar.gz/b83c58f5675e1df1936f59faab18726a38d28514'
+      tarball: 'https://codeload.github.com/martinjlowm/types-wow-api/tar.gz/a7651daf20eb469159986a50acbd22be286d76b6'
     version: 1.13.2
 specifiers:
   '@types/wow-api': 'github:martinjlowm/types-wow-api'

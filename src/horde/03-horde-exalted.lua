@@ -7,28 +7,29 @@ return
 F Orgrimmar
 h Orgrimmar
 
-R The Undercity |N|Take the zeppelin outside Orgrimmar to Undercity.|
+R Undercity |N|Take the zeppelin outside Orgrimmar to Undercity.|
 F Hillsbrad Foothills
 
-A Battle of Hillsbrad (Part 1)
-A Souvenirs of Death
-A Regthar Deathgate
-A The Hammer May Fall
-A Helcular's Revenge (Part 1)
-A Elixir of Pain (Part 1)
-A Soothing Turtle Bisque
+A Elixir of Pain (Part 1) |N|First house on the left.|
+A The Hammer May Fall |N|First dude you see by the fence|
+A Soothing Turtle Bisque |N|Inside the Inn|
+A Battle of Hillsbrad (Part 1) |N|From the High Executor, in front of the church|
+A Regthar Deathgate |N|Inside the church|
+A Helcular's Revenge (Part 1) |N|Graveyard|
 
 C Helcular's Revenge (Part 1)
 C Battle of Hillsbrad (Part 1)
-T Battle of Hillsbrad (Part 1)
-A Battle of Hillsbrad (Part 2)
-A Helcular's Revenge (Part 2)
+C Elixir of Pain (Part 1)
 T Elixir of Pain (Part 1)
 A Elixir of Pain (Part 2)
+T Battle of Hillsbrad (Part 1)
+A Battle of Hillsbrad (Part 2)
+T Helcular's Revenge (Part 1)
+A Helcular's Revenge (Part 2)
+
 
 R Alterac Mountains
 N Charge The Flame of Uzel (37,68) |Q|Helcular's Revenge (Part 2)| |QO|Flame of Uzel charged|
-C Elixir of Pain (Part 1) |N|On your way to the yeti cave in Hillsbrad Foothills|
 N Charge The Flame of Azel (43.9,28.1) |Q|Helcular's Revenge (Part 2)| |QO|Flame of Azel charged|
 N Charge The Flame of Veraz (44.0,26.6) |Q|Helcular's Revenge (Part 2)| |QO|Flame of Veraz charged|
 
@@ -36,9 +37,11 @@ C Battle of Hillsbrad (Part 2)
 T Elixir of Pain (Part 2)
 T Battle of Hillsbrad (Part 2)
 A Battle of Hillsbrad (Part 3)
+A Souvenirs of Death
 C Battle of Hillsbrad (Part 3)
 T Battle of Hillsbrad (Part 3)
 A Battle of Hillsbrad (Part 4)
+A Dangerous! |N|Wanted sign at the Inn entrance|
 
 C Battle of Hillsbrad (Part 4)
 K Clerk Horrace Whitesteed |Q|Dangerous!|
@@ -61,25 +64,28 @@ F Undercity
 T Elixir of Agony (Part 2)
 A Elixir of Agony (Part 3)
 A Going, Going, Guano!
+N Buy a Strong Troll's Blood Potion off the AH
 F Tarren Mill
 
-T Helcular's Revenge (Part 2)
+T Helcular's Revenge (Part 2) |N|By Southshore|
 C Elixir of Agony (Part 3)
 T Elixir of Agony (Part 3)
 A Elixir of Agony (Part 4)
 A Battle of Hillsbrad (Part 6)
 A Humbert's Sword
 
-C Soothing Turtle Bisque
+C Soothing Turtle Bisque |N|Find a group for the following quests (elite)|
 C Battle of Hillsbrad (Part 6)
 C Humbert's Sword
 C Elixir of Agony (Part 4)
 
-T Soothing Turtle Bisque
-T Elixir of Agony (Part 4)
 T Battle of Hillsbrad (Part 6)
 A Battle of Hillsbrad (Part 7)
 T Humbert's Sword
+T Soothing Turtle Bisque
+T Elixir of Agony (Part 4)
+A Elixir of Agony (Part 5)
+T Elixir of Agony (Part 5)
 ]] ..
 -------------------
 -- Arathi Highlands
@@ -115,9 +121,9 @@ R Nesingwary's Expedition |N|Follow the road north, look for a little camp by th
 A Welcome to the Jungle
 T Welcome to the Jungle
 
+A Raptor Mastery (Part 1)
 A Tiger Mastery (Part 1)
 A Panther Mastery (Part 1)
-A Raptor Mastery (Part 1)
 
 C Tiger Mastery (Part 1) |N|Near the camp, slightly to the east|
 C Panther Mastery (Part 1) |N|Near camp and to the north|
@@ -133,13 +139,8 @@ C Tiger Mastery (Part 2) |N|Northwest and northeast of the camp|
 C Raptor Mastery (Part 1) |N|East near the ruins (28,14)|
 
 T Raptor Mastery (Part 1)
-A Raptor Mastery (Part 2)
-
 T Panther Mastery (Part 2)
-A Panther Mastery (Part 3)
-
 T Tiger Mastery (Part 2)
-A Tiger Mastery (Part 3)
 
 N Make sure you are level 31 by now, otherwise grind till you are
 ]] ..
@@ -160,14 +161,14 @@ A Family Tree
 T Test of Strength
 A Test of Lore (Part 1)
 
-R Shimmering Flats
-A Hemet Nesingwary Jr. |N|From Kravel Koalbeard (77.8, 77.2)|
+R The Shimmering Flats
+A Hemet Nesingwary |N|From Kravel Koalbeard (77.8, 77.2)|
 A Wharfmaster Dizzywig
-A A Bump in the Road
-A Hardened Shells
-A Load Lightening
 A Rocket Car Parts
 A Salt Flat Venom
+A Hardened Shells
+A Load Lightening
+A A Bump in the Road
 
 C A Bump in the Road
 C Hardened Shells
@@ -196,18 +197,16 @@ f Grab flight point
 H Orgrimmar
 N Learn new abilities
 T The Swarm Grows (Part 1) |N|Valley of Honor (75,34)| |Z|Orgrimmar|
-A The Swarm Grows (Part 2)
-A Rig Wars
 A Alliance Relations (Part 1) |N|From Craven Drok in the Cleft of Shadow (50,47)| |Z|Orgrimmar|
 T Alliance Relations (Part 1) |N|To Keldran near west gate of Orgimmar past Valley of Spirits (22,54)| |Z|Orgrimmar|
 A Alliance Relations (Part 2)
 
 F Sun Rock Retreat
 
-T Test of Lore (Part 1)
+T Test of Lore (Part 1) |N|Found at his tent by the path towards Ashenvale|
 A Test of Lore (Part 2)
 T Horde Presence |N|Walk through the cave leading to Ashenvale|
-C Test of Lore (Part 2)
+C Test of Lore (Part 2) |N|In the ghost dungeon by the Forsaken camp.|
 T Test of Lore (Part 2)
 A Test of Lore (Part 3)
 T Test of Lore (Part 3)
@@ -250,15 +249,18 @@ T Gelkis Alliance |N|To Uthek the Wise at (36.3, 79.2)|
 A Stealing Supplies
 
 R Shadowprey Village |N|Follow the road west, down on the shore (24,71)|
-C Catch of the Day
 A Hunting in Stranglethorn
 A Hand of Iruxos
 h Shadowprey Village
 A Other Fish to Fry
 A Clam Bait
+
+C Catch of the Day |N|Loot the fish traps underwater|
 f Grab flight point |N|Out on the pier|
 
-N Run north in water |N|Travel north in the water collecting 10 Clam Meat from the clams on the bottom| |L|15924 10|
+R Ghost Walker Post
+T Catch of the Day
+
 A Sceptre of Light |N|From Azore Aldamort on the hill (38.9, 27.1)|
 
 C The Burning of Spirits |N|In Thunder Axe Fortress (54,29)|
@@ -280,7 +282,7 @@ T Book of the Ancients |N|Back on shore at the tower|
 
 A Bone Collector |N|From Bibbly F'utzbuckle at Kormek's Hut (62,38)|
 
-T The Burning of Spirits
+T The Burning of Spirits |N|Back at the Ghost Walker Post.|
 A Alliance Relations (Part 4)
 T The Corrupter (Part 3)
 A The Corrupter (Part 4)
@@ -288,7 +290,6 @@ T The Corrupter (Part 4)
 A The Corrupter (Part 5)
 
 C Bone Collector |N|In the Kodo Graveyard|
-T Catch of the Day
 C Stealing Supplies |N|In the Magram village with Centaur Bounty (70,74)|
 C Centaur Bounty
 
@@ -303,6 +304,7 @@ T Hand of Iruxos
 T Other Fish to Fry
 T Clam Bait
 T Stealing Supplies |N|At the Gelkis village.  Skip the follow-up|
+A Ongeku
 
 N You should be level 34 by now, otherwise grind until you are
 
@@ -329,11 +331,17 @@ A Lieutenant Paval Reethe |N|Laying on the planks on the ground (29.8, 48.2)| |Z
 A The Black Shield (Part 1) |N|On top of fireplace|
 
 R Brackenwall Village |N|North along the road (35,29)| |Z|Dustwallow Marsh|
+f Brackenwall Village
 T Suspicious Hoofprints
 T Lieutenant Paval Reethe
 T The Black Shield (Part 1)
 A The Black Shield (Part 2)
 T The Black Shield (Part 2) |N|Skip the follow-up|
+
+F Orgrimmar
+T Alliance Relations (Part 4) |N|Keldran in the Valley of Spirits (21,53)| |Z|Orgrimmar|
+A Rig Wars
+A Chief Engineer Scooty
 
 F Ratchet
 T Goblin Sponsorship (Part 1)
@@ -346,13 +354,16 @@ A Parts for Kravel
 ---------------------
 [[
 b Booty Bay
+T Goblin Sponsorship (Part 2) |N|To Wharfmaster Lozgil (26.3, 73.5)|
+A Goblin Sponsorship (Part 3)
+h Booty Bay
+T Chief Engineer Scooty
+A Gnomer-gooooone!
+T Gnomer-gooooone!
 N Find a group for Gnomeregan
 C Rig Wars
 
 
-T Goblin Sponsorship (Part 2) |N|To Wharfmaster Lozgil (26.3, 73.5)|
-A Goblin Sponsorship (Part 3)
-h Booty Bay
 A Singing Blue Shards |N|From Crank Fizzlebub (27.1, 77.3)|
 A Bloodscalp Ears
 A Hostile Takeover
@@ -364,15 +375,15 @@ N Keep main pet stabled |N|Continue to use your Scorpashi Lasher| |C|Hunter|
 
 F Grom'gol Base Camp
 A The Defense of Grom'gol (Part 1)
-A Mok'thardin's Enchantment (Part 1)
 A Hunt for Yenniku
-A Trollbane
-A Bloody Bone Necklaces
-A The Vile Reef
 
 P Dash (Rank 1) |N|Tame a Stranglethorn Tiger (29,11)| |C|Hunter|
 
 N Save all Pages |N|Save all Green Hills of Stranglethorn pages|
+T Hemet Nesingwary
+T Hunting in Stranglethorn
+A Tiger Mastery (Part 3)
+A Raptor Mastery (Part 3)
 C Singing Blue Shards |N|From Basilisk on the coast far to the north (25,19)|
 C Tiger Mastery (Part 3) |N|Tigers between the troll ruins and Nessingwary's camp|
 C Bloodscalp Ears
@@ -382,17 +393,22 @@ C The Defense of Grom'gol (Part 1)
 
 T Hunt for Yenniku |N|Back at Grom'gol|
 A Headhunting
+A Bloody Bone Necklaces
+A The Vile Reef
 T The Defense of Grom'gol (Part 1)
-A The Defense of Grom'gol (Part 2)
-A An Unusual Patron
 
 N You should be level 35, buy new water/food/repair
 
 C Headhunting |N|(21,14) with Bloody Bone Necklaces|
 C Bloody Bone Necklaces
-C An Unusual Patron |N|The Altar is on the island of water elementals (19,22)|
 C The Vile Reef |N|The tablet is outside the wall of the underwater city you can avoid the elite murlocs (24,24)|
 C Encrusted Tail Fins |N|(24,24)|
+
+T Headhunting
+T The Vile Reef
+T Bloody Bone Necklaces
+A The Defense of Grom'gol (Part 2)
+A Mok'thardin's Enchantment (Part 1)
 
 T Tiger Mastery (Part 3) |N|Back at Nesingwary's Expedition|
 A Tiger Mastery (Part 4)
@@ -400,8 +416,7 @@ T Raptor Mastery (Part 2)
 A Raptor Mastery (Part 3)
 C Tiger Mastery (Part 4)|N|Sin'Dall is on top of a nearby hill (31,17)|
 T Tiger Mastery (Part 4)
-T Hemet Nesingwary Jr.
-T Hunting in Stranglethorn
+A Panther Mastery (Part 3)
 
 C Hostile Takeover |N|Venture Co. geologists near Lake Nazferiti (44,19)|
 C Goblin Sponsorship (Part 4)
@@ -423,18 +438,19 @@ A Goblin Sponsorship (Part 5)
 F Grom'gol Base Camp
 N You should be level 36 by now
 T The Defense of Grom'gol (Part 2)
-T An Unusual Patron
 T Mok'thardin's Enchantment (Part 1)
 A Mok'thardin's Enchantment (Part 2)
 T Headhunting
-A Bloodscalp Clan Heads
+A Trollbane
 T Bloody Bone Necklaces
-A Split Bone Necklace
 T The Vile Reef
 
 F Undercity |N|Take Zeppelin|
 A To Steal From Thieves |N|In the center of Undercity|
+T Test of Lore |N|On the way towards Sylvanas|
 A The Crown of Will (Part 1)
+T Battle of Hillsbrad (Part 7)
+T Going, Going, Guano!
 A A Donation of Silk
 T A Donation of Silk
 N Learn new abilities
@@ -445,8 +461,7 @@ N Learn new abilities
 [[
 F Hammerfall
 h Hammerfall
-T Trollbane
-A Sigil of Strom
+T Trollbane |N|Skip Sigil of Strom for now...|
 A Call to Arms (Part 1)
 A Foul Magics
 A Guile of the Raptor (Part 1)
@@ -465,7 +480,7 @@ C To Steal From Thieves |N|At Dabyrie Farmstead (54,40)| |NODEBUG|
 N Get Thundering Key |N|From Stone of Outer Binding (52,50)| |Q|Stones of Binding| |QO|Thundering Key: 1/1|
 
 C Guile of the Raptor (Part 1)
-C Call to Arms |N|(53,75)|
+C Call to Arms (Part 2) |N|(53,75)|
 
 C Foul Magics |N|At Northfold Manor (31,28)|
 C Stones of Binding |N|From Stone of West Binding (25,31)|
@@ -479,6 +494,7 @@ A Guile of the Raptor (Part 2)
 T Guile of the Raptor (Part 2)
 A Guile of the Raptor (Part 3)
 T Guile of the Raptor (Part 3)
+T Call to Arms (Part 2)
 ]] ..
 --------------------
 -- Alterac Mountains
@@ -498,7 +514,6 @@ C Stone Tokens |N|At Dalaran (20,85)| |Z|Hillsbrad Foothills|
 C Prison Break In |N|At (20,85)|
 
 T The Crown of Will (Part 2)
-A The Crown of Will (Part 3)
 T Infiltration
 A Gol'dir
 T Prison Break In
@@ -506,15 +521,8 @@ T Stone Tokens
 A Dalaran Patrols
 A Bracers of Binding
 
-C The Crown of Will (Part 3)
-T The Crown of Will (Part 3)
-A The Crown of Will (Part 4)
-C The Crown of Will (Part 4)
-C Gol'dir
-
-T The Crown of Will (Part 4)
-A The Crown of Will (Part 5)
-T Gol'dir
+C Gol'dir |N|The jailor is out in the open - I think 8)|
+T Gol'dir |N|Inside the Inn|
 A Blackmoore's Legacy
 
 T Blackmoore's Legacy
@@ -531,7 +539,7 @@ T WANTED: Baron Vardus
 T Dalaran Patrols
 T Bracers of Binding
 T Taretha's Gift
-«
+
 F Undercity
 T To Steal From Thieves
 N Buy 3 soothing spices from the cooking center
@@ -542,7 +550,7 @@ N Buy 3 soothing spices from the cooking center
 [[
 R Orgrimmar |N|Take the zeppelin, dur!|
 T Rig Wars
-T Alliance Relations (Part 4) |N|Keldran in the Valley of Spirits (21,53)| |Z|Orgrimmar|
+A The Swarm Grows (Part 2)
 F The Crossroads
 h The Crossroads
 F Freewind Post
@@ -591,12 +599,11 @@ A Deadmire
 F Dustwallow Marsh
 A Theramore Spies |T|
 A The Black Shield (Part 3) |T|
-A Twilight of the Dawn Runner |T|
 A Hungry! |N|From Mudcrush Durtfeet, south of Brackenwall (35,37)|
 
-C Twilight of the Dawn Runner |N|The cargo is on the top of the Northpoint Tower (46,23)| |L|23657|
-
 A The Lost Report |N|From a dirt pile near Jarl's hut (55.4, 26.0)|
+A Soothing Spices
+T Soothing Spices
 A Jarl Needs Eyes
 
 C Hungry! |N|On the peninsula (58,15)|
@@ -611,16 +618,12 @@ C Theramore Spies |N|Stealthed mobs all around Brackenwall Village|
 T Theramore Spies |N|Back in Brackenwall Village| |T|
 A The Theramore Docks |T|
 T The Lost Report |T|
-A Help Mudsprocket |T|
 T The Black Shield (Part 3) |T|
 A The Black Shield (Part 4) |T|
 T The Black Shield (Part 4) |T|
-T Twilight of the Dawn Runner |T|
 
 T Hungry! |N|Southwest at Mudcrush Durtfeet (35,38)|
-T Inspecting the Ruins |N|Follow the path south-west from Mudcrush (30,48)|
 
-F Brackenwall Village
 A The Severed Head |N|At Jarl's cabin (55,25)|
 T Jarl Needs Eyes
 
@@ -652,30 +655,12 @@ T The Rumormonger |N|Up the steps|
 A Dream Dust in the Swamp
 
 F Grom'gol Base Camp
-
-C Bloodscalp Clan Heads
-T Bloodscalp Clan Heads
-A Speaking with Nezzliok
-A Speaking with Gan'zulah
-
-C Speaking with Nezzliok |N|Place this accordingly|
-C Speaking with Gan'zulah |N|Place this accordingly|
-T Speaking with Nezzliok |N|Place this accordingly|
-T Speaking with Gan'zulah |N|Place this accordingly|
-A The Fate of Yenniku |N|Place this accordingly|
-T The Fate of Yenniku |N|Place this accordingly|
-A The Singing Crystals |N|Place this accordingly|
-C The Singing Crystals |N|Place this accordingly|
-T The Singing Crystals |N|Place this accordingly|
-A The Mind's Eye |N|Place this accordingly|
-C The Mind's Eye |N|Place this accordingly|
-T The Mind's Eye |N|Place this accordingly|
-A Saving Yenniku |N|Place this accordingly|
-C Saving Yenniku |N|Place this accordingly|
-T Saving Yenniku |N|Place this accordingly|
-
 T The Troll Witchdoctor
 A Marg Speaks |N|Click on the cauldron|
+
+A Bloodscalp Clan Heads
+C Bloodscalp Clan Heads
+T Bloodscalp Clan Heads
 
 C Raptor Mastery (Part 3) |N|Kill Jungle Stalkers (31,41)|
 C Mok'thardin's Enchantment (Part 2) |N|Kill Jungle Stalkers (31,41)|
@@ -686,11 +671,10 @@ C Venture Company Mining |N|(40,42)|
 T Mok'thardin's Enchantment (Part 2) |N|At Grom'gol|
 A Mok'thardin's Enchantment (Part 3)
 
-C Panther Mastery (Part 3) |N|Kill Bhag'thera at either (48,20),(49,23),(47,26)|
+C Panther Mastery (Part 4) |N|Kill Bhag'thera at either (48,20),(49,23),(47,26)|
 
-T Panther Mastery (Part 3)
+T Panther Mastery (Part 4)
 T Raptor Mastery (Part 3)
-A Raptor Mastery (Part 4) |N|Tethis, don't do it yet|
 
 H Booty Bay |SZ|The Salty Sailor Tavern|
 T Venture Company Mining
@@ -714,7 +698,6 @@ h Grom'gol Base Camp
 N Grind to level 40 on raptors/basilisks
 
 R Undercity |N|Take the zeppelin to Undercity|
-T Going, Going, Guano!
 A Hearts of Zeal
 A Into The Scarlet Monastery
 ]] ..
@@ -742,58 +725,41 @@ T Hearts of Zeal
 T Into The Scarlet Monastery
 F Tarren Mill
 h Tarren Mill
-T Vorrel's Revenge
+C Vorrel's Revenge
 H Tarren Mill
+T Vorrel's Revenge
 F Hammerfall
+
+N Find a group for Stromgarde and all the quests there
+
+A The Real Threat |N|The orc lady in front of the Inn|
+A Call to Arms (Part 3)
+A Sigil of Strom
+A Foul Magics (Part 2)
+
+C Sigil of Strom |N|Drops off the Syndicate in Stromgarde|
+T Sigil of Strom
+A The Broken Sigil |N|[40, 250]|
+C The Broken Sigil |N|[40, 250]|
+T The Broken Sigil |N|[40, 250]|
+A Sigil of Thoradin |N|[40, 25]|
+T Sigil of Thoradin |N|[40, 25]|
+A Sigil of Arathor |N|[41, 250]|
+C Sigil of Arathor |N|[41, 250]|
+T Sigil of Arathor |N|[41, 250]|
+A Sigil of Trollbane |N|[42, 250]|
+C Sigil of Trollbane |N|[42, 250]|
+T Sigil of Trollbane |N|[42, 250]|
+A Trol'kalar |N|[42, 25]|
+C Trol'kalar |N|[42, 350]|
+C The Real Threat |N|[40, 350]|
+C Call to Arms (Part 3)
+C Foul Magics (Part 2)
+T The Real Threat |N|[40, 350]|
+T Call to Arms (Part 3)
+T Trol'kalar |N|[42, 350]|
+T Foul Magics (Part 2)
+
 R Badlands
 ]]
 end)
--- Lunar festival
--- Bellowrage the Elder - [1, 75]
--- Bladeleaf the Elder - [1, 75]
--- Bladesing the Elder - [1, 75]
--- Bladeswift the Elder - [1, 75]
--- Bloodhoof the Elder - [1, 75]
--- Brightspear the Elder - [1, 75]
--- Bronzebeard the Elder - [1, 75]
--- Darkcore the Elder - [1, 75]
--- Darkhorn the Elder - [1, 75]
--- Dawnstrider the Elder - [1, 75]
--- Dreamseer the Elder - [1, 75]
--- Farwhisper the Elder - [1, 75]
--- Goldwell the Elder - [1, 75]
--- Graveborn the Elder - [1, 75]
--- Grimtotem the Elder - [1, 75]
--- Hammershout the Elder - [1, 75]
--- High Mountain the Elder - [1, 75]
--- Highpeak the Elder - [1, 75]
--- Ironband the Elder - [1, 75]
--- Meadowrun the Elder - [1, 75]
--- Mistwalker the Elder - [1, 75]
--- Moonstrike the Elder - [1, 75]
--- Moonwarden the Elder - [1, 75]
--- Morndeep the Elder - [1, 75]
--- Nightwind the Elder - [1, 75]
--- Obsidian the Elder - [1, 75]
--- Primestone the Elder - [1, 75]
--- Ragetotem the Elder - [1, 75]
--- Riversong the Elder - [1, 75]
--- Rumblerock the Elder - [1, 75]
--- Runetotem the Elder - [1, 75]
--- Silvervein the Elder - [1, 75]
--- Skychaser the Elder - [1, 75]
--- Skygleam the Elder - [1, 75]
--- Skyseer the Elder - [1, 75]
--- Snowcrown the Elder - [1, 75]
--- Splitrock the Elder - [1, 75]
--- Starglade the Elder - [1, 75]
--- Starsong the Elder - [1, 75]
--- Starweave the Elder - [1, 75]
--- Stonefort the Elder - [1, 75]
--- Stonespire the Elder - [1, 75]
--- Stormbrow the Elder - [1, 75]
--- Thunderhorn the Elder - [1, 75]
--- Wildmane the Elder - [1, 75]
--- Windrun the Elder - [1, 75]
--- Windtotem the Elder - [1, 75]
--- Winterhoof the Elder - [1, 75]

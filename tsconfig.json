@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "lib": ["esnext", "dom"],
+    "module": "commonjs",
+    "baseUrl": ".",
+    "outDir": "dist",
+    "rootDir": "src",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "types": ["lua-types/jit", "@types/wow-api"],
+    "typeRoots": ["node_modules/@types"]
+  },
+  "tstl": {
+    "luaTarget": "JIT",
+    "luaLibImport": "inline",
+    "noHeader": true
+  },
+  "noResolve": false
+}

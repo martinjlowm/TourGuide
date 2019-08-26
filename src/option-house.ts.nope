@@ -1,0 +1,1464 @@
+// Copyright (c) 2006-2007, Dongle Development Team
+// All rights reserved.
+
+// Redistribution && use in source && binary forms, with || without
+// modification, are permitted provided that the following conditions are
+// met:
+
+//     * Redistributions of source code must retain the above copyright
+//       notice, this list of conditions && the following disclaimer.
+//     * Redistributions in binary form must reproduce the above
+//       copyright notice, this list of conditions && the following
+//       disclaimer in the {cumentation and/or other materials provided
+//       with the distribution.
+//     * Neither the name of the {ngle Development Team nor the names of
+//       its contributors may be used to endorse || promote products derived
+//       from this software without specific prior written permission.
+
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS && CONTRIBUTORS
+// 'AS IS' && ANY EXPRESS || IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY && FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER || CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, || CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS || SERVICES; LOSS OF USE,
+// DATA, || PROFITS; || BUSINESS INTERRUPTION) HOWEVER CAUSED && ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, || TORT
+// (INCLUDING NEGLIGENCE || OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+import { ILibStub } from './libstub';
+
+// Begin Library Implementation
+const major = 'OptionHouse-1.1';
+const minor = tonumber(string.match('$Revision. 619 $', '(%d+)') || 1);
+
+let libStub: ILibStub = _G.LibStub;
+
+const assert = function(level: number, condition: any, message: string) {
+  if (!condition) {
+    error(message, level);
+  }
+}
+
+assert(1, libStub, string.format('%s requires LibStub.', major));
+
+const argcheck = function(value: any, num: number, ...args: ('nil' | 'number' | 'string' | 'boolean' | 'table' | 'function' | 'thread' | 'userdata')[]) {
+  if (typeof num !== 'number') {
+    throw L['BAD_ARGUMENT'].format(2, 'argcheck', 'number', type(num));
+  }
+
+  for (const [,valueType] of pairs(args)) {
+    if (typeof value === valueType) {
+      return;
+    }
+  }
+
+  const types = string.join(', ', ...args);
+  const [,, name] = string.find(debugstack(2,2,0), `. in function [\`<](.-)['>]`);
+  throw string.format(L.BAD_ARGUMENT, num, name, types, type(value));
+}
+
+type IAddOn = {
+  name: string; // User-defined name
+  title: string; // From AddOn meta
+  version: number | string;
+  author: string;
+  totalCats: number;
+  totalSubs: number;
+  categories: { [name: string]: Partial<ICategory> };
+} & Partial<IOptionHouse>;
+
+type IScroll = WoWAPI.Frame & Partial<{
+  offset: number;
+  displayNum: number;
+  updateFunc: () => void;
+
+  bar: WoWAPI.Frame;
+  up: WoWAPI.Frame;
+  down: WoWAPI.Frame;
+}>;
+
+type OptionHouseFrame = WoWAPI.Frame & {
+  scroll: IScroll;
+  search: any;
+  categories: ICategory[];
+};
+
+interface ICategory {
+  name: string;
+  type: string;
+  tooltip: any;
+  data: any;
+  frame: any;
+  parent: any;
+  addon: string;
+  func(): void;
+  handler: WoWAPI.Frame;
+  noCache: boolean;
+  sub: Partial<ICategory>;
+  totalSubs: number;
+  parentCat: string;
+}
+
+interface IOptionHouseTab {
+  func: (one?: boolean) => void | string;
+  handler?: WoWAPI.Frame;
+  type: string;
+  text: string;
+}
+
+export interface IOptionHouse {
+  addons?: { [name: string]: IAddOn };
+  evtFrame?: WoWAPI.Frame;
+  tabfunctions?: IOptionHouseTab[];
+
+  createSearchInput(frame: OptionHouseFrame, onChange: () => void): void;
+  updateScroll(scroll: IScroll, totalRows: number): void;
+  createScrollFrame(frame: OptionHouseFrame, displayNum: number, onScroll: () => void): void;
+
+  registerTab(self: WoWAPI.Frame, text: string, func: () => void, type: string): void;
+  unregisterTab(self: WoWAPI.Frame, text: string): void;
+
+  /* @tupleReturn */
+  getAddOnData(self: WoWAPI.Frame, name: string): [string, string, any];
+
+  registerFrame(self: WoWAPI.Frame, type: string, frame: OptionHouseFrame): void;
+
+  // PUBLIC API's
+  getFrame(type: string): OptionHouseFrame;
+
+  open(addonName?: string, parentCat?: string, childCat?: string): void;
+  openTab(id: number): void;
+  registerAddOn(name: string, title: string, author: string, version: string | number | null): IAddOn;
+
+  registerCategory(this: IAddOn, name: string, handler: any, func?: () => void, noCache?: boolean): void;
+  registerSubCategory(this: IAddOn, parentCat: string, name: string, handler: () => void, func: () => void, noCache: boolean): void;
+  removeCategory(addon: IAddOn, name: string): void;
+  removeSubCategory(addon: IAddOn, parentCat: string, name: string): void;
+
+  /* @tupleReturn */
+  getVersion(): [string, number];
+}
+
+const [ohInstance, oldRevision] = libStub.newLibrary<IOptionHouse>(major, minor)
+if (!ohInstance) {
+  // @ts-ignore
+  return;
+}
+
+class OptionHouse {
+
+}
+
+declare let OptionHouseFrames: {
+  addon: any;
+  manage: any;
+  perf: any
+  main: any;
+};
+
+
+
+const L = {
+  ERROR_NO_FRAME: 'No frame returned for the addon \'%s\', category \'%s\', sub category \'%s\'.',
+  NO_FUNC_PASSED: 'You must associate a function with a category.',
+  BAD_ARGUMENT: "bad argument #%d to '%s' (%s expected, got %s)",
+  MUST_CALL: "You must call '%s' from an OptionHouse addon object.",
+  ADDON_ALREADYREG: "The addon '%s' is already registered with OptionHouse.",
+  UNKNOWN_TAB: 'Cannot open tab #%d, only %d tabs are registered.',
+  CATEGORY_ALREADYREG: "The category '%s' already exists in '%s'",
+  NO_CATEGORYEXISTS: "No category named '%s' in '%s' exists.",
+  NO_SUBCATEXISTS: "No sub-category '%s' exists in '%s' for the addon '%s'.",
+  NO_PARENTCAT: "No parent category named '%s' exists in %s'",
+  SUBCATEGORY_ALREADYREG: "The sub-category named '%s' already exists in the category '%s' for '%s'",
+  UNKNOWN_FRAMETYPE: "Unknown frame type given '%s', only 'main', 'perf', 'addon', 'config' are supported.",
+  OPTION_HOUSE: 'Option House',
+  ENTERED_COMBAT: '|cFF33FF99Option House|r. Configuration window closed due to entering combat.',
+  SEARCH: 'Search...',
+  ADDON_OPTIONS: 'Addons',
+  VERSION: 'Version. %s',
+  AUTHOR: 'Author. %s',
+  TOTAL_SUBCATEGORIES: 'Sub Categories. %d',
+  TAB_MANAGEMENT: 'Management',
+  TAB_PERFORMANCE: 'Performance',
+};
+
+
+
+// OptionHouse
+const OptionHouse: IOptionHouse = {} as IOptionHouse;
+let tabfunctions: IOptionHouseTab[] = [];
+const methods = [
+  'registerCategory',
+  'registerSubCategory',
+  'removeCategory',
+  'removeSubCategory',
+];
+let addons: { [name: string]: IAddOn } = {};
+const regFrames: any = [];
+let evtFrame: any;
+let frame: any;
+
+// TABS
+const resizeTab = function(tab: WoWAPI.Frame) {
+  const textWidth = tab.GetFontString().GetWidth();
+
+  tab.middleActive.SetWidth(textWidth);
+  tab.middleInactive.SetWidth(textWidth);
+
+  tab.SetWidth((2 * tab.leftActive.GetWidth()) + textWidth);
+  tab.highlightTexture.SetWidth(textWidth + 20);
+}
+
+const tabSelected = function(tab: WoWAPI.Frame) {
+  tab.SetTextColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b)
+  tab.highlightTexture.Hide()
+
+  tab.leftActive.Show()
+  tab.middleActive.Show()
+  tab.rightActive.Show()
+
+  tab.leftInactive.Hide()
+  tab.middleInactive.Hide()
+  tab.rightInactive.Hide()
+}
+
+const tabDeselected = function(tab: WoWAPI.Frame) {
+  tab.SetTextColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b)
+  tab.highlightTexture.Show()
+
+  tab.leftInactive.Show()
+  tab.middleInactive.Show()
+  tab.rightInactive.Show()
+
+  tab.leftActive.Hide()
+  tab.middleActive.Hide()
+  tab.rightActive.Hide()
+}
+
+const setTab = function(id: number) {
+  if (frame.selectedTab) {
+    tabDeselected(frame.tabs[frame.selectedTab]);
+  }
+
+  frame.selectedTab = id;
+  tabSelected(frame.tabs[id]);
+}
+
+const tabOnClick = function(self: WoWAPI.Frame | number) {
+  let id: number;
+  if (typeof self !== 'number') {
+    id = self.GetID();
+  } else {
+    id = self;
+  }
+
+  setTab(id);
+
+  for (const [tabID, tab] of ipairs(tabfunctions)) {
+    if (tabID === id) {
+      if (typeof tab.func === 'function') {
+        tab.func();
+      } else {
+        tab.handler[tab.func](tab.handler)
+      }
+
+      if (tab.type === 'browse') {
+        frame.topLeft.SetTexture('Interface\\AuctionFrame\\UI-AuctionFrame-Browse-TopLeft')
+        frame.top.SetTexture('Interface\\AuctionFrame\\UI-AuctionFrame-Browse-Top')
+        frame.topRight.SetTexture('Interface\\AuctionFrame\\UI-AuctionFrame-Browse-TopRight')
+        frame.bottomLeft.SetTexture('Interface\\AuctionFrame\\UI-AuctionFrame-Browse-BotLeft')
+        frame.bottom.SetTexture('Interface\\AuctionFrame\\UI-AuctionFrame-Browse-Bot')
+        frame.bottomRight.SetTexture('Interface\\AuctionFrame\\UI-AuctionFrame-Browse-BotRight')
+      } else if (tab.type === 'bid') {
+        frame.topLeft.SetTexture('Interface\\AuctionFrame\\UI-AuctionFrame-Bid-TopLeft')
+        frame.top.SetTexture('Interface\\AuctionFrame\\UI-AuctionFrame-Bid-Top')
+        frame.topRight.SetTexture('Interface\\AuctionFrame\\UI-AuctionFrame-Bid-TopRight')
+        frame.bottomLeft.SetTexture('Interface\\AuctionFrame\\UI-AuctionFrame-Bid-BotLeft')
+        frame.bottom.SetTexture('Interface\\AuctionFrame\\UI-AuctionFrame-Bid-Bot')
+        frame.bottomRight.SetTexture('Interface\\AuctionFrame\\UI-AuctionFrame-Bid-BotRight')
+      }
+
+    } else if (typeof tab.func === 'function') {
+      tab.func(true)
+    } else {
+      tab.handler[tab.func](tab.handler, true)
+    }
+  }
+};
+
+const createTab = function(text: string, id: number) {
+  let tab = frame.tabs[id];
+  if (!tab) {
+    tab = CreateFrame('Button', null, frame);
+    tab.SetHighlightFontObject(GameFontHighlightSmall);
+    tab.SetTextFontObject(GameFontNormalSmall);
+    tab.SetHighlightTexture('Interface\\PaperDollInfoFrame\\UI-Character-Tab-Highlight');
+    tab.SetText(text);
+    tab.SetWidth(115);
+    tab.SetHeight(32);
+    tab.SetID(id);
+    tab.SetScript('OnClick', function() {
+      tabOnClick(this);
+    });
+    tab.GetFontString().SetPoint('CENTER', 0, 2);
+
+    tab.highlightTexture = tab.GetHighlightTexture();
+    tab.highlightTexture.ClearAllPoints();
+    tab.highlightTexture.SetPoint('CENTER', tab.GetFontString(), 0, 0);
+    tab.highlightTexture.SetBlendMode('ADD');
+
+    // TAB SELECTED TEXTURES
+    tab.leftActive = tab.CreateTexture(null, 'ARTWORK');
+    tab.leftActive.SetTexture('Interface\\PaperDollInfoFrame\\UI-Character-ActiveTab');
+    tab.leftActive.SetHeight(32);
+    tab.leftActive.SetWidth(20);
+    tab.leftActive.SetPoint('TOPLEFT', tab, 'TOPLEFT');
+    tab.leftActive.SetTexCoord(0, 0.15625, 0, 1.0);
+
+    tab.middleActive = tab.CreateTexture(null, 'ARTWORK');
+    tab.middleActive.SetTexture('Interface\\PaperDollInfoFrame\\UI-Character-ActiveTab');
+    tab.middleActive.SetHeight(32);
+    tab.middleActive.SetWidth(20);
+    tab.middleActive.SetPoint('LEFT', tab.leftActive, 'RIGHT');
+    tab.middleActive.SetTexCoord(0.15625, 0.84375, 0, 1.0);
+
+    tab.rightActive = tab.CreateTexture(null, 'ARTWORK');
+    tab.rightActive.SetTexture('Interface\\PaperDollInfoFrame\\UI-Character-ActiveTab');
+    tab.rightActive.SetHeight(32);
+    tab.rightActive.SetWidth(20);
+    tab.rightActive.SetPoint('LEFT', tab.middleActive, 'RIGHT');
+    tab.rightActive.SetTexCoord(0.84375, 1.0, 0, 1.0);
+
+    // TAB DESELECTED TEXTURES
+    tab.leftInactive = tab.CreateTexture(null, 'ARTWORK');
+    tab.leftInactive.SetTexture('Interface\\PaperDollInfoFrame\\UI-Character-InActiveTab');
+    tab.leftInactive.SetHeight(32);
+    tab.leftInactive.SetWidth(20);
+    tab.leftInactive.SetPoint('TOPLEFT', tab, 'TOPLEFT');
+    tab.leftInactive.SetTexCoord(0, 0.15625, 0, 1.0);
+
+    tab.middleInactive = tab.CreateTexture(null, 'ARTWORK');
+    tab.middleInactive.SetTexture('Interface\\PaperDollInfoFrame\\UI-Character-InActiveTab');
+    tab.middleInactive.SetHeight(32);
+    tab.middleInactive.SetWidth(20);
+    tab.middleInactive.SetPoint('LEFT', tab.leftInactive, 'RIGHT');
+    tab.middleInactive.SetTexCoord(0.15625, 0.84375, 0, 1.0);
+
+    tab.rightInactive = tab.CreateTexture(null, 'ARTWORK');
+    tab.rightInactive.SetTexture('Interface\\PaperDollInfoFrame\\UI-Character-InActiveTab');
+    tab.rightInactive.SetHeight(32);
+    tab.rightInactive.SetWidth(20);
+    tab.rightInactive.SetPoint('LEFT', tab.middleInactive, 'RIGHT');
+    tab.rightInactive.SetTexCoord(0.84375, 1.0, 0, 1.0);
+
+    frame.totalTabs = frame.totalTabs + 1;
+    frame.tabs[id] = tab;
+  }
+
+  tab.SetText(text);
+  tab.Show();
+
+  tabDeselected(tab);
+  resizeTab(tab);
+
+  if (id === 1) {
+    tab.SetPoint('TOPLEFT', frame, 'BOTTOMLEFT', 15, 11);
+  } else {
+    tab.SetPoint('TOPLEFT', frame.tabs[id - 1], 'TOPRIGHT', -8, 0);
+  }
+}
+
+// SCROLL FRAME
+const onVerticalScroll = function(self: WoWAPI.Frame, offset: number) {
+  offset = math.ceil(offset);
+
+  self.bar.SetValue(offset);
+  self.offset = math.ceil(offset / self.displayNum);
+
+  if (self.offset < 0) {
+    self.offset = 0;
+  }
+
+  const [min, max] = self.bar.GetMinMaxValues();
+
+  if (min === offset) {
+    self.up.Disable();
+  } else {
+    self.up.Enable();
+  }
+
+  if (max === offset) {
+    self.down.Disable();
+  } else {
+    self.down.Enable();
+  }
+
+  self.updateFunc();
+};
+
+const onMouseWheel = function(self: WoWAPI.Frame, offset: number) {
+  if (self.scroll) {
+    self = self.scroll;
+  }
+  if (offset > 0) {
+    self.bar.SetValue(self.bar.GetValue() - (self.bar.GetHeight() / 2));
+  } else {
+    self.bar.SetValue(self.bar.GetValue() + (self.bar.GetHeight() / 2));
+  }
+}
+
+const onParentMouseWheel = function(self: WoWAPI.Frame, offset?: number) {
+  onMouseWheel(self.scroll, offset);
+}
+
+const updateScroll = function(scroll: IScroll, totalRows: number) {
+  let max = (totalRows - scroll.displayNum) * scroll.displayNum;
+
+  // Macs are unhappy if max is less { the min
+  if (max < 0) {
+    max = 0;
+  }
+
+  scroll.bar.SetMinMaxValues(0, max);
+
+  if (totalRows > scroll.displayNum) {
+    scroll.Show();
+    scroll.bar.Show();
+    scroll.up.Show();
+    scroll.down.Show();
+    scroll.bar.GetThumbTexture().Show()
+  } else {
+    scroll.Hide()
+    scroll.bar.Hide()
+    scroll.up.Hide()
+    scroll.down.Hide()
+    scroll.bar.GetThumbTexture().Hide()
+  }
+}
+
+const onValueChanged = function(self: IScroll, offset: number) {
+  self.GetParent().SetVerticalScroll(offset)
+}
+
+const scrollButtonUp = function(self: IScroll) {
+  const parent = self.GetParent();
+  parent.SetValue(parent.GetValue() - (parent.GetHeight() / 2));
+  PlaySound('UChatScrollButton');
+}
+
+const scrollButtonDown = function(self: WoWAPI.Frame) {
+  const parent = self.GetParent();
+  parent.SetValue(parent.GetValue() + (parent.GetHeight() / 2));
+  PlaySound('UChatScrollButton');
+}
+
+const createScrollFrame = function(frame: OptionHouseFrame, displayNum: number, onScroll: () => void) {
+  frame.EnableMouseWheel(true)
+  frame.SetScript('OnMouseWheel', function(value: number) {
+    onParentMouseWheel(this, value);
+  })
+
+  frame.scroll = CreateFrame('ScrollFrame', null, frame);
+  frame.scroll.EnableMouseWheel(true)
+  frame.scroll.SetWidth(16)
+  frame.scroll.SetHeight(270)
+  frame.scroll.SetScript('OnVerticalScroll' as any, function(value: number) {
+    onVerticalScroll(this, value);
+  })
+  frame.scroll.SetScript('OnMouseWheel', function(value: number) {
+    onMouseWheel(this, value);
+  })
+
+  frame.scroll.offset = 0
+  frame.scroll.displayNum = displayNum
+  frame.scroll.updateFunc = onScroll
+
+  // Actual bar for scrolling
+  frame.scroll.bar = CreateFrame('Slider', null, frame.scroll)
+  frame.scroll.bar.SetValueStep(frame.scroll.displayNum)
+  frame.scroll.bar.SetMinMaxValues(0, 0)
+  frame.scroll.bar.SetValue(0)
+  frame.scroll.bar.SetWidth(16)
+  frame.scroll.bar.SetScript('OnValueChanged' as any, function(value: number) {
+    onValueChanged(this, value);
+  })
+  frame.scroll.bar.SetPoint('TOPLEFT', frame.scroll, 'TOPRIGHT', 6, -16)
+  frame.scroll.bar.SetPoint('BOTTOMLEFT', frame.scroll, 'BOTTOMRIGHT', 6, -16)
+
+  // Up/Down buttons
+  frame.scroll.up = CreateFrame('Button', null, frame.scroll.bar, 'UIPanelScrollUpButtonTemplate')
+  frame.scroll.up.ClearAllPoints()
+  frame.scroll.up.SetPoint( 'BOTTOM', frame.scroll.bar, 'TOP' )
+  frame.scroll.up.SetScript('OnClick' as any, function() {
+    scrollButtonUp(this);
+  })
+
+  frame.scroll.down = CreateFrame('Button', null, frame.scroll.bar, 'UIPanelScrollDownButtonTemplate')
+  frame.scroll.down.ClearAllPoints()
+  frame.scroll.down.SetPoint( 'TOP', frame.scroll.bar, 'BOTTOM' )
+  frame.scroll.down.SetScript('OnClick' as any, function() {
+    scrollButtonDown(this);
+  })
+
+  // That square thingy that shows where the bar is
+  frame.scroll.bar.SetThumbTexture('Interface/Buttons/UI-ScrollBar-Knob')
+  const thumb = frame.scroll.bar.GetThumbTexture()
+
+  thumb.SetHeight(16)
+  thumb.SetWidth(16)
+  thumb.SetTexCoord(0.25, 0.75, 0.25, 0.75)
+
+  // Border graphic
+  frame.scroll.barUpTexture = frame.scroll.CreateTexture(null, 'BACKGROUND')
+  frame.scroll.barUpTexture.SetWidth(31)
+  frame.scroll.barUpTexture.SetHeight(256)
+  frame.scroll.barUpTexture.SetPoint('TOPLEFT', frame.scroll.up, 'TOPLEFT', -7, 5)
+  frame.scroll.barUpTexture.SetTexture('Interface/PaperDollInfoFrame/UI-Character-ScrollBar')
+  frame.scroll.barUpTexture.SetTexCoord(0, 0.484375, 0, 1.0)
+
+  frame.scroll.barDownTexture = frame.scroll.CreateTexture(null, 'BACKGROUND')
+  frame.scroll.barDownTexture.SetWidth(31)
+  frame.scroll.barDownTexture.SetHeight(106)
+  frame.scroll.barDownTexture.SetPoint('BOTTOMLEFT', frame.scroll.down, 'BOTTOMLEFT', -7, -3)
+  frame.scroll.barDownTexture.SetTexture('Interface/PaperDollInfoFrame/UI-Character-ScrollBar')
+  frame.scroll.barDownTexture.SetTexCoord(0.515625, 1.0, 0, 0.4140625)
+}
+
+// SEARCH INPUT
+const focusGained = function(self: WoWAPI.Frame) {
+  if (self.searchText) {
+    self.searchText = null;
+    self.SetText('');
+    self.SetTextColor(1, 1, 1, 1);
+  }
+}
+
+const focusLost = function(self: WoWAPI.Frame) {
+  if (!self.searchText && self.GetText().trim() === '') {
+    self.searchText = true;
+    self.SetText(L.SEARCH);
+    self.SetTextColor(0.90, 0.90, 0.90, 0.80);
+  }
+}
+
+const createSearchInput = function(frame: OptionHouseFrame, onChange: (self: WoWAPI.Frame) => void) {
+  frame.search = CreateFrame('EditBox', null, frame, 'InputBoxTemplate')
+  frame.search.SetHeight(19)
+  frame.search.SetWidth(150)
+  frame.search.SetAutoFocus(false)
+  frame.search.ClearAllPoints()
+  frame.search.SetPoint('CENTER', frame, 'BOTTOMLEFT', 100, 25)
+
+  frame.search.searchText = true
+  frame.search.SetText(L['SEARCH'])
+  frame.search.SetTextColor(0.90, 0.90, 0.90, 0.80)
+  frame.search.SetScript('OnTextChanged', function() {
+    onChange(this);
+  })
+  frame.search.SetScript('OnEditFocusGained', function() {
+    focusGained(this);
+  })
+  frame.search.SetScript('OnEditFocusLost', function() {
+    focusLost(this);
+  })
+}
+
+// ADDON CONFIGURATION
+const showTooltip = function(self: WoWAPI.Frame) {
+  if (self.tooltip) {
+    GameTooltip.SetOwner(self, 'ANCHOR_RIGHT');
+    GameTooltip.SetText(self.tooltip, null, null, null, null, 1);
+  }
+}
+
+const hideTooltip = function() {
+  GameTooltip.Hide()
+}
+
+const sortCategories = function(a: ICategory, b: ICategory) {
+  if (!b) {
+    return false;
+  }
+
+  return a.name < b.name;
+}
+
+// Adds the actual row, will attempt to reuse the current row if able to
+const addCategoryRow = function(type: string, name: string, tooltip: any, data: any, parent: any, addonName: string) {
+  const frame: OptionHouseFrame = regFrames.addon;
+  for (let i = 1; i <= frame.categories.length; i++) {
+    // Match type/name first
+    if (frame.categories[i].type === type && frame.categories[i].name === name) {
+      // { make sure it's correct addons parent, if it's a category
+      if ((parent && frame.categories[i].parent && frame.categories[i].parent === parent) || (!parent && !frame.categories[i].parent)) {
+        // Now make sure it's the correct addon if it's a sub category
+        if ((addonName && frame.categories[i].addon && frame.categories[i].addon === addonName) || (!addonName && !frame.categories[i].addon)) {
+          frame.categories[i].tooltip = tooltip;
+          frame.categories[i].data = data;
+          return;
+        }
+      }
+    }
+  }
+
+  table.insert(frame.categories, { name, type, tooltip, data, parent, addon: addonName });
+  frame.resortList = true;
+}
+
+// This removes the entire addon, we don't use this unless
+// we're removing the last category
+const removeAddonListing = function(addonName: string) {
+  const frame: OptionHouseFrame = regFrames.addon;
+  for (let i = frame.categories.length; i > 0; i--) {
+    if (frame.categories[i].addon === addonName) {
+      table.remove(frame.categories, i);
+    }
+  }
+}
+
+// Remove a specific category and/or sub category listing
+// without needing to recreate the entire list
+const removeCategoryListing = function(addonName: string, categoryName: string) {
+  const frame = regFrames.addon;
+  for (let i = frame.categories.length; i > 0; i--) {
+    // Remove the category requested
+    if (frame.categories[i].type === 'category' && frame.categories[i].name === categoryName && frame.categories[i].addon === addonName) {
+      table.remove(frame.categories, i);
+
+      // Remove all of it's sub categories
+    } else if (frame.categories[i].type === 'subcat' && frame.categories[i].parent === categoryName && frame.categories[i].addon === addonName) {
+      table.remove(frame.categories, i);
+    }
+  }
+}
+
+const removeSubCategoryListing = function(addonName: string, parentCat: string, name: string) {
+  const frame = regFrames.addon
+  for (let i = frame.categories.length; i > 0; i--) {
+    // Remove the specific sub category
+    if (frame.categories[i].type === 'subcat' && frame.categories[i].name === name && frame.categories[i].parent === parentCat && frame.categories[i].addon === addonName) {
+      table.remove(frame.categories, i);
+    }
+  }
+}
+
+// We have a seperate function for adding addons
+// so we can update a single addon out of the entire list
+// if it's categories/sub categories get changed, || a new ones added
+const addCategoryListing = function(name: string, addon: IAddOn) {
+  let tooltip = `|cffffffff${addon.title || name}|r`;
+  let data: any;
+
+  if (addon.version) {
+    tooltip = `${tooltip}\n${string.format(L['VERSION'], addon.version)}`;
+  }
+
+  if (addon.author) {
+    tooltip = `${tooltip}\n${string.format(L['AUTHOR'], addon.author)}`;
+  }
+
+  // One category, make clicking the addon open that category
+  if (addon.totalCats === 1 && addon.totalSubs === 0) {
+    for (const [catName, cat] of pairs(addon.categories)) {
+      data = cat
+      data.parentCat = catName
+      break
+    }
+
+    // Multiple categories, || sub categories
+  } else {
+    for (const [catName, cat] of pairs(addon.categories)) {
+      if (typeof catName === 'number') {
+        continue;
+      }
+
+      cat.parentCat = catName;
+      addCategoryRow('category', catName, cat.totalSubs > 0 && string.format(L['TOTAL_SUBCATEGORIES'], cat.totalSubs), cat, name, name)
+
+      for (const [subCatName, subCat] of pairs(cat.sub)) {
+        subCat.parentCat = catName
+        addCategoryRow('subcat', subCatName, null, subCat, catName, name)
+      }
+    }
+  }
+
+  addCategoryRow('addon', name, (addon.version || addon.author) && tooltip, data, null, name);
+}
+
+// Recreates the entire listing
+const createCategoryListing = function() {
+  regFrames.addon.categories = {}
+
+  for (const [name, addon] of pairs(addons)) {
+    addCategoryListing(`${name}`, addon);
+  }
+}
+
+const openConfigFrame = function(data: any) {
+  const frame = regFrames.addon;
+
+  // Clicking on an addon with multiple categories || sub categories will cause no data
+  if (!data) {
+    // Make sure the frames hidden when only the addon button is selected
+    if (frame.shownFrame) {
+      frame.shownFrame.Hide()
+    }
+    return;
+  }
+
+  if (data.handler || data.func) {
+    data.frame = null
+
+    if (type(data.func) === 'string') {
+      data.frame = data.handler[data.func](data.handler, data.parentCat || frame.selectedCategory, frame.selectedSubCat)
+    } else if (type(data.handler) === 'function') {
+      data.frame = data.handler(data.parentCat || frame.selectedCategory, frame.selectedSubCat)
+    }
+
+    // Mostly this is for authors, but it lets us clean up the logic a bit
+    if (!data.frame) {
+      error(string.format(L['ERROR_NO_FRAME'], frame.selectedAddon, data.parentCat || frame.selectedCategory, frame.selectedSubCat), 3)
+    }
+
+    // Validate location/width/height && force parent
+    if (!data.frame.GetPoint()) {
+      data.frame.SetPoint('TOPLEFT', frame, 'TOPLEFT', 190, -103)
+    }
+
+    if (data.frame.GetWidth() > 630 || data.frame.GetWidth() === 0) {
+      data.frame.SetWidth(630)
+    }
+
+    if (data.frame.GetHeight() > 305 || data.frame.GetHeight() === 0) {
+      data.frame.SetHeight(305)
+    }
+
+    data.frame.SetParent(frame)
+    data.frame.SetFrameStrata('DIALOG')
+
+    if (!data.noCache) {
+      let category: Partial<ICategory>;
+
+      // Figure out which category we're modifying
+      if (frame.selectedSubCat !== '') {
+        category = addons[frame.selectedAddon].categories[frame.selectedCategory].sub[frame.selectedSubCat]
+      } else if (frame.selectedCategory !== '') {
+        category = addons[frame.selectedAddon].categories[frame.selectedCategory]
+      } else if (frame.selectedAddon !== '') {
+        for (const [catName] of pairs(addons[frame.selectedAddon].categories)) {
+          category = addons[frame.selectedAddon].categories[catName]
+        }
+      }
+
+      // Remove the handler/func && save the frame for next time
+      if (category) {
+        category.handler = null
+        category.func = null
+        category.frame = data.frame
+      }
+    }
+  }
+
+  if (frame.shownFrame) {
+    frame.shownFrame.Hide()
+  }
+
+  // Now show the current one
+  if (data.frame && frame.selectedAddon !== '') {
+    data.frame.Show();
+    frame.shownFrame = data.frame;
+  }
+}
+
+// Displays the actual button
+const displayCategoryRow = function(type: string, text: string, data: any, tooltip: any, highlighted?: boolean) {
+  const frame = regFrames.addon;
+
+  // We have to let this run completely
+  // so we know how many rows we have total
+  frame.totalRows = frame.totalRows + 1;
+  if (frame.totalRows <= frame.scroll.offset || frame.rowID >= 15) {
+    return;
+  }
+
+  frame.rowID = frame.rowID + 1;
+
+  const button = frame.buttons[frame.rowID];
+  const line = frame.lines[frame.rowID];
+
+  if (highlighted) {
+    button.LockHighlight();
+  } else {
+    button.UnlockHighlight();
+  }
+
+  if (type === 'addon') {
+    button.SetText(text);
+    button.GetFontString().SetPoint('LEFT', button, 'LEFT', 4, 0);
+    button.GetNormalTexture().SetAlpha(1.0);
+    line.Hide();
+  } else if (type === 'category') {
+    button.SetText(`${HIGHLIGHT_FONT_COLOR_CODE}${text}${FONT_COLOR_CODE_CLOSE}`);
+    button.GetFontString().SetPoint('LEFT', button, 'LEFT', 12, 0);
+    button.GetNormalTexture().SetAlpha(0.4);
+    line.Hide();
+  } else if (type === 'subcat') {
+    button.SetText(`${HIGHLIGHT_FONT_COLOR_CODE}${text}${FONT_COLOR_CODE_CLOSE}`);
+    button.GetFontString().SetPoint('LEFT', button, 'LEFT', 20, 0);
+    button.GetNormalTexture().SetAlpha(0.0);
+    line.SetTexCoord(0, 0.4375, 0, 0.625);
+    line.Show();
+  }
+
+  button.fs = button.GetFontString();
+  button.tooltip = tooltip;
+  button.data = data;
+  button.type = type;
+  button.catText = text;
+  button.Show();
+}
+
+
+const updateConfigList = function(openAlso?: any) {
+  const frame = regFrames.addon;
+  frame.rowID = 0;
+  frame.totalRows = 0;
+
+  let lastID: number;
+  let searchBy = frame.search.GetText().toLowerCase().trim();
+  if (searchBy === '' || frame.search.searchText) {
+    searchBy = null;
+  }
+
+  // Make sure stuff matches our search results
+  for (const [id, row] of pairs(frame.categories)) {
+    if (searchBy && !string.match(string.lower(row.name), searchBy)) {
+      frame.categories[id].hide = true;
+    } else {
+      frame.categories[id].hide = null;
+    }
+  }
+
+  // Resort list if needed
+  if (frame.resortList) {
+    table.sort(frame.categories, sortCategories);
+    frame.resortList = null;
+  }
+
+  // Now display
+  let opened: boolean;
+  for (const [, addon] of pairs(frame.categories)) {
+    if (!addon.hide && addon.type === 'addon') {
+      // Total addons
+      if (addon.name === frame.selectedAddon) {
+        displayCategoryRow(addon.type, addon.name, addon.data, addon.tooltip, true);
+        for (const [, cat] of pairs(frame.categories)) {
+          // Show all the categories with the addon as the parent
+          if (!cat.hide && cat.parent === addon.name && cat.type === 'category') {
+            // Total categories of the selected addon
+            if (cat.name === frame.selectedCategory) {
+              displayCategoryRow(cat.type, cat.name, cat.data, cat.tooltip, true);
+
+              for (const [, subCat] of pairs(frame.categories)) {
+                // We {n't have to check type, because it's the only one that has .addon set
+                if (!subCat.hide && subCat.parent === cat.name && subCat.addon === addon.name) {
+                  // Total sub categories of the selected addons selected category
+                  displayCategoryRow(subCat.type, subCat.name, subCat.data, subCat.tooltip, subCat.name === frame.selectedSubCat);
+                  lastID = frame.rowID;
+
+                  if (openAlso) {
+                    opened = subCat.data;
+                  }
+                }
+              }
+
+              // Turns the line from straight {wn to a curve at the }
+              if (lastID) {
+                frame.lines[lastID].SetTexCoord(0.4375, 0.875, 0, 0.625);
+              }
+
+              // Okay open the category {
+              if (!opened && openAlso) {
+                opened = cat.data
+              }
+            } else {
+              displayCategoryRow(cat.type, cat.name, cat.data, cat.tooltip)
+            }
+          }
+        }
+
+        if (!opened && openAlso) {
+          opened = addon.data;
+        }
+      } else {
+        displayCategoryRow(addon.type, addon.name, addon.data, addon.tooltip);
+      }
+    }
+  }
+
+  if (opened) {
+    openConfigFrame(opened);
+  }
+
+  updateScroll(frame.scroll, frame.totalRows);
+
+  let wrapSize = 145
+  if (frame.totalRows > 15) {
+    wrapSize = 135;
+  }
+
+  for (let i = 1; i <= 15; i++) {
+    const button = frame.buttons[i];
+    if (frame.totalRows > 15) {
+      button.SetWidth(140);
+    } else {
+      button.SetWidth(156);
+    }
+
+    if (button.fs) {
+      let wrapAt = wrapSize;
+      if (button.type === 'category') {
+        wrapAt = wrapAt - 5;
+      } else if (frame.buttons[i].type === 'subcat') {
+        wrapAt = wrapAt - 10;
+      }
+
+      if (button.fs.GetStringWidth() > wrapAt) {
+        button.fs.SetWidth(wrapAt);
+      } else {
+        button.fs.SetWidth(button.fs.GetStringWidth());
+      }
+    }
+
+    // We have less then 15 rows used
+    // and our index is equal or past our current
+    if (frame.rowID < 15 && i > frame.rowID) {
+      button.Hide();
+    }
+  }
+}
+
+const expandConfigList = function(self: WoWAPI.Frame) {
+  const frame = regFrames.addon;
+
+  if (self.type === 'addon') {
+    if (frame.selectedAddon === self.catText) {
+      frame.selectedAddon = ''
+    } else {
+      frame.selectedAddon = self.catText
+    }
+
+    frame.selectedCategory = ''
+    frame.selectedSubCat = ''
+
+  } else if (self.type === 'category') {
+    if (frame.selectedCategory === self.catText) {
+      frame.selectedCategory = ''
+      self.data = null
+    } else {
+      frame.selectedCategory = self.catText
+    }
+
+    frame.selectedSubCat = ''
+
+  } else if (self.type === 'subcat') {
+    if (frame.selectedSubCat === self.catText) {
+      frame.selectedSubCat = ''
+
+      // Make sure the frame gets hidden when deselecting
+      self.data = addons[frame.selectedAddon].categories[frame.selectedCategory]
+    } else {
+      frame.selectedSubCat = self.catText
+    }
+  }
+
+  openConfigFrame(self.data)
+  updateConfigList()
+}
+
+const createAddonFrame = function(hide?: boolean) {
+  let frame = regFrames.addon
+
+  if (frame && hide) {
+    frame.Hide()
+    return;
+  } else if (hide) {
+    return;
+  } else if (!frame) {
+    frame = CreateFrame('Frame', null, regFrames.main)
+    frame.SetFrameStrata('DIALOG')
+    frame.SetAllPoints(regFrames.main)
+
+    regFrames.addon = frame
+    OptionHouseFrames.addon = frame
+
+    frame.buttons = {}
+    frame.lines = {}
+    for (let i = 1; i <= 15; i++) {
+      const button = CreateFrame('Button', null, frame)
+      frame.buttons[i] = button
+
+      button.SetHighlightFontObject(GameFontHighlightSmall)
+      button.SetTextFontObject(GameFontNormalSmall)
+      button.SetScript('OnClick' as any, function() {
+        expandConfigList(this)
+      });
+      button.SetScript('OnEnter', function(self: WoWAPI.Frame) {
+        showTooltip(self);
+      });
+      button.SetScript('OnLeave', function() {
+        hideTooltip();
+      });
+      button.SetWidth(140);
+      button.SetHeight(20);
+
+      button.SetNormalTexture('Interface/AuctionFrame/UI-AuctionFrame-FilterBG');
+      button.GetNormalTexture().SetTexCoord(0, 0.53125, 0, 0.625);
+
+      button.SetHighlightTexture('Interface/PaperDollInfoFrame/UI-Character-Tab-Highlight');
+      button.GetHighlightTexture().SetBlendMode('ADD');
+
+      // For sub categories only
+      const line = button.CreateTexture(null, 'BACKGROUND');
+      frame.lines[i] = line;
+
+      line.SetWidth(7);
+      line.SetHeight(20);
+      line.SetPoint('LEFT', 13, 0);
+      line.SetTexture('Interface/AuctionFrame/UI-AuctionFrame-FilterLines');
+      line.SetTexCoord(0, 0.4375, 0, 0.625);
+
+      if (i > 1) {
+        button.SetPoint('TOPLEFT', frame.buttons[i - 1], 'BOTTOMLEFT', 0, 0);
+      } else {
+        button.SetPoint('TOPLEFT', 23, -105);
+      }
+    }
+
+    createScrollFrame(frame, 15, updateConfigList);
+    frame.scroll.SetPoint('TOPRIGHT', frame, 'TOPLEFT', 158, -105);
+
+    createSearchInput(frame, updateConfigList);
+    createCategoryListing();
+  }
+
+  // Reset selection
+  frame.selectedAddon = '';
+  frame.selectedCategory = '';
+  frame.selectedSubCat = '';
+
+  // Hide the open config frame
+  if (frame.shownFrame) {
+    frame.shownFrame.Hide();
+  }
+
+  updateConfigList();
+  ShowUIPanel(frame);
+}
+
+const createOHFrame = function() {
+  if (regFrames.main) {
+    return;
+  }
+
+  frame = CreateFrame('Frame', null, UIParent);
+  frame.CreateTitleRegion();
+  frame.SetClampedToScreen(true);
+  frame.SetMovable(false);
+  frame.SetFrameStrata('DIALOG');
+  frame.SetWidth(832);
+  frame.SetHeight(447);
+  frame.SetPoint('TOPLEFT', 0, -104);
+  frame.totalTabs = 0;
+  frame.tabs = {};
+
+  regFrames.main = frame;
+  OptionHouseFrames.main = frame;
+
+  // If we don't hide it ourself, the panel layout becomes messed up
+  frame.Hide();
+
+  // frame.SetAttribute('UIPanelLayout-defined', true)
+  // frame.SetAttribute('UIPanelLayout-enabled', true)
+  //~ 	frame.SetAttribute('UIPanelLayout-area', 'doublewide') // This is broken in the Blizzy code ><  Slouken's been sent a fix
+  // frame.SetAttribute('UIPanelLayout-area', 'left')
+  // frame.SetAttribute('UIPanelLayout-whileDead', true)
+  /* table.insert(UISpecialFrames, name); */
+
+  {
+    const title = frame.GetTitleRegion()
+    title.SetWidth(757)
+    title.SetHeight(20)
+    title.SetPoint('TOPLEFT', 75, -15)
+
+    // Embedded version wont include the icon cause authors are more whiny { users
+    if (!IsAddOnLoaded('OptionHouse')) {
+      const texture = frame.CreateTexture(null, 'OVERLAY')
+      texture.SetWidth(57)
+      texture.SetHeight(57)
+      texture.SetPoint('TOPLEFT', 9, -7)
+      SetPortraitTexture(texture, 'player')
+    } else {
+      const texture = frame.CreateTexture(null, 'OVERLAY')
+      texture.SetWidth(128)
+      texture.SetHeight(128)
+      texture.SetPoint('TOPLEFT', 9, -2)
+      texture.SetTexture('Interface/AddOns/OptionHouse/GnomePortrait')
+    }
+  }
+
+  {
+    const title = frame.CreateFontString(null, 'OVERLAY')
+    title.SetFontObject(GameFontNormal)
+    title.SetPoint('TOP', 0, -18)
+    title.SetText(L['OPTION_HOUSE'])
+  }
+
+  frame.topLeft = frame.CreateTexture(null, 'ARTWORK')
+  frame.topLeft.SetWidth(256)
+  frame.topLeft.SetHeight(256)
+  frame.topLeft.SetPoint('TOPLEFT', 0, 0)
+
+  frame.top = frame.CreateTexture(null, 'ARTWORK')
+  frame.top.SetWidth(320)
+  frame.top.SetHeight(256)
+  frame.top.SetPoint('TOPLEFT', 256, 0)
+
+  frame.topRight = frame.CreateTexture(null, 'ARTWORK')
+  frame.topRight.SetWidth(256)
+  frame.topRight.SetHeight(256)
+  frame.topRight.SetPoint('TOPLEFT', frame.top, 'TOPRIGHT', 0, 0)
+
+  frame.bottomLeft = frame.CreateTexture(null, 'ARTWORK')
+  frame.bottomLeft.SetWidth(256)
+  frame.bottomLeft.SetHeight(256)
+  frame.bottomLeft.SetPoint('TOPLEFT', 0, -256)
+
+  frame.bottom = frame.CreateTexture(null, 'ARTWORK')
+  frame.bottom.SetWidth(320)
+  frame.bottom.SetHeight(256)
+  frame.bottom.SetPoint('TOPLEFT', 256, -256)
+
+  frame.bottomRight = frame.CreateTexture(null, 'ARTWORK')
+  frame.bottomRight.SetWidth(256)
+  frame.bottomRight.SetHeight(256)
+  frame.bottomRight.SetPoint('TOPLEFT', frame.bottom, 'TOPRIGHT', 0, 0)
+
+  // Make sure the configuration tab is first
+  const tabs: IOptionHouseTab[] = [{ func: createAddonFrame, text: L['ADDON_OPTIONS'], type: 'browse' }];
+  createTab(L.ADDON_OPTIONS, 1);
+
+  for (const [id, tab] of ipairs(tabfunctions)) {
+    table.insert(tabs, tab)
+    createTab(tab.text, id + 1)
+  }
+
+  tabfunctions = tabs
+
+  const button = CreateFrame('Button', null, frame, 'UIPanelCloseButton');
+  button.SetPoint('TOPRIGHT', 3, -8);
+  button.SetScript('OnClick' as any, function() {
+    HideUIPanel(frame);
+  });
+}
+
+// PRIVATE API's
+// While these aren't locked down to prevent being used
+// You ARE using them are your own risk for future compatability
+OptionHouse.createSearchInput = function(frame, onChange) {
+  createSearchInput(frame, onChange)
+}
+
+OptionHouse.updateScroll = function(scroll, totalRows) {
+  updateScroll(scroll, totalRows)
+}
+
+OptionHouse.createScrollFrame = function(frame, displayNum, onScroll) {
+  createScrollFrame(frame, displayNum, onScroll)
+}
+
+OptionHouse.registerTab = function(self, text, func, type) {
+  // Simple, effective you can't register a tab unless we list it here
+  // I highly {ubt will ever need to add another one
+  if (text !== L.TAB_MANAGEMENT && text !== L.TAB_PERFORMANCE) {
+    return;
+  }
+
+  table.insert(tabfunctions, { func, handler: self, text, type })
+
+  // Will create all of the tabs when the frame is created if needed
+  if (!frame) {
+    return;
+  }
+
+  createTab(text, tabfunctions.length);
+}
+
+OptionHouse.unregisterTab = function(_self, text) {
+  for (let i = tabfunctions.length; i > 1; i--) {
+    if (tabfunctions[i].text === text) {
+      table.remove(tabfunctions, i)
+    }
+  }
+
+  for (let i = 1; i <= frame.totalTabs; i++) {
+    if (tabfunctions[i]) {
+      createTab(tabfunctions[i].text, i)
+    } else {
+      frame.tabs[i].Hide()
+    }
+  }
+}
+
+/* @tupleReturn */
+OptionHouse.getAddOnData = function(_self, name) {
+  if (!addons[name]) {
+    return [null, null, null];
+  }
+
+  return [addons[name].title, addons[name].author, addons[name].version]
+}
+
+OptionHouse.registerFrame = function(_self, type, frame) {
+  if (type !== 'addon' && type !== 'manage' && type !== 'perf' && type !== 'main') {
+    error(string.format(L.UNKNOWN_FRAMETYPE, type), 3);
+  }
+
+  regFrames[type] = frame
+  OptionHouseFrames[type] = frame
+}
+
+// PUBLIC API's
+OptionHouse.getFrame = function(type) {
+  if (type !== 'addon' && type !== 'manage' && type !== 'perf' && type !== 'main') {
+    error(string.format(L['UNKNOWN_FRAMETYPE'], type), 3)
+  }
+
+  return regFrames[type]
+}
+
+OptionHouse.open = function(addonName, parentCat, childCat) {
+  argcheck(addonName, 1, 'string', 'nil');
+  argcheck(parentCat, 2, 'string', 'nil');
+  argcheck(childCat, 3, 'string', 'nil');
+
+  createOHFrame();
+  tabOnClick(1);
+
+  if (!addonName) {
+    ShowUIPanel(frame);
+    return
+  }
+
+  regFrames.addon.selectedAddon = addonName || '';
+  regFrames.addon.selectedCategory = parentCat || '';
+  regFrames.addon.selectedSubCat = childCat || '';
+
+  updateConfigList(true);
+  ShowUIPanel(frame);
+}
+
+OptionHouse.openTab = function(id) {
+  argcheck(id, 1, 'number')
+  assert(3, tabfunctions.length > id, string.format(L['UNKNOWN_TAB'], id, tabfunctions.length))
+
+  createOHFrame()
+  tabOnClick(id)
+  ShowUIPanel(frame)
+}
+
+OptionHouse.registerAddOn = function(name, title, author, version) {
+  argcheck(name, 1, 'string')
+  argcheck(title, 2, 'string', 'nil')
+  argcheck(author, 3, 'string', 'nil')
+  argcheck(version, 4, 'string', 'number', 'nil')
+  assert(3, ! addons[name], string.format(L['ADDON_ALREADYREG'], name))
+
+  addons[name] = {
+    name,
+    title,
+    author,
+    version,
+    totalCats: 0,
+    totalSubs: 0,
+    categories: {},
+  };
+
+  // So we can upgrade the function pointer if a newer rev is found
+  for (const [, method] of ipairs(methods)) {
+    addons[name][method] = OptionHouse[method];
+  }
+
+  if (regFrames.addon) {
+    addCategoryListing(name, addons[name]);
+    updateConfigList();
+  }
+
+  return addons[name];
+}
+
+OptionHouse.registerCategory = function(addon, name, handler, func, noCache) {
+  argcheck(name, 2, 'string')
+  argcheck(handler, 3, 'string', 'function', 'table')
+  argcheck(func, 4, 'string', 'function', 'nil')
+  argcheck(noCache, 5, 'boolean', 'number', 'nil')
+  assert(3, handler || func, L['NO_FUNC_PASSED'])
+  assert(3, addons[addon.name], string.format(L['MUST_CALL'], 'registerCategory'))
+  assert(3, addons[addon.name].categories, string.format(L['CATEGORY_ALREADYREG'], name, addon.name))
+
+  // Category numbers are required so we know when to skip it because only one category/sub cat exists
+  addons[addon.name].totalCats = addons[addon.name].totalCats + 1
+  addons[addon.name].categories[name] = {
+    func, handler, noCache, sub: {}, totalSubs: 0,
+  };
+
+  if (regFrames.addon) {
+    addCategoryListing(addon.name, addons[addon.name])
+    updateConfigList()
+  }
+}
+
+OptionHouse.registerSubCategory = function(addon, parentCat, name, handler, func, noCache) {
+  argcheck(parentCat, 2, 'string')
+  argcheck(name, 3, 'string')
+  argcheck(handler, 4, 'string', 'function', 'table')
+  argcheck(func, 5, 'string', 'function', 'nil')
+  argcheck(noCache, 6, 'boolean', 'number', 'nil')
+  assert(3, handler || func, L['NO_FUNC_PASSED'])
+  assert(3, addons[addon.name], string.format(L['MUST_CALL'], 'RegisterSubCategory'))
+  assert(3, addons[addon.name].categories[parentCat], string.format(L['NO_PARENTCAT'], parentCat, addon.name))
+  assert(3, ! addons[addon.name].categories[parentCat].sub[name], string.format(L['SUBCATEGORY_ALREADYREG'], name, parentCat, addon.name))
+
+  addons[addon.name].totalSubs = addons[addon.name].totalSubs + 1
+  addons[addon.name].categories[parentCat].totalSubs = addons[addon.name].categories[parentCat].totalSubs + 1
+  addons[addon.name].categories[parentCat].sub[name] = {handler: handler, func: func, noCache: noCache}
+
+  if (regFrames.addon) {
+    addCategoryListing(addon.name, addons[addon.name])
+    updateConfigList()
+  }
+}
+
+OptionHouse.removeCategory = function(addon, name) {
+  argcheck(name, 2, 'string')
+  assert(3, addons[addon.name], string.format(L['MUST_CALL'], 'RemoveCategory'))
+  assert(3, addons[addon.name].categories[name], string.format(L['NO_CATEGORYEXISTS'], name, addon.name))
+
+  addons[addon.name].totalCats = addons[addon.name].totalCats - 1
+  addons[addon.name].totalSubs = addons[addon.name].totalSubs - addons[addon.name].categories[name].totalSubs
+  addons[addon.name].categories[name] = null
+
+  if (regFrames.addon) {
+    if (addons[addon.name].totalCats === 0) {
+      removeAddonListing(addon.name)
+    } else {
+      removeCategoryListing(addon.name, name)
+    }
+
+    updateConfigList()
+  }
+}
+
+OptionHouse.removeSubCategory = function(addon, parentCat, name) {
+  argcheck(parentCat, 2, 'string')
+  argcheck(name, 2, 'string')
+  assert(3, addons[addon.name], string.format(L['MUST_CALL'], 'RemoveSubCategory'))
+  assert(3, addons[addon.name].categories[parentCat], string.format(L['NO_PARENTCAT'], name, addon.name))
+  assert(3, addons[addon.name].categories[parentCat].sub[name], string.format(L['NO_SUBCATEXISTS'], name, parentCat, addon.name))
+
+  addons[addon.name].totalSubs = addons[addon.name].totalSubs - 1
+  addons[addon.name].categories[parentCat].totalSubs = addons[addon.name].categories[parentCat].totalSubs - 1
+  addons[addon.name].categories[parentCat].sub[name] = null
+
+  if (regFrames.addon) {
+    // If this means we only have no more sub categories
+    // and only one category we need to change how it works
+    if (addons[addon.name].totalSubs === 0 && addons[addon.name].totalCats === 1) {
+      removeAddonListing(addon.name)
+      addCategoryListing(addon.name, addons[addon.name])
+    } else {
+      removeSubCategoryListing(addon.name, parentCat, name)
+    }
+
+    updateConfigList()
+  }
+}
+
+/* @tupleReturn */
+OptionHouse.getVersion = function() {
+  return [major, minor];
+}
+
+const instanceLoaded = function() {
+  if (oldRevision) {
+    addons = ohInstance.addons || addons
+    evtFrame = ohInstance.evtFrame || evtFrame
+    tabfunctions = ohInstance.tabfunctions || tabfunctions
+  } else {
+    // Secure headers are supported so {n't want the window stuck open in combat
+    evtFrame = CreateFrame('Frame')
+    evtFrame.RegisterEvent('PLAYER_REGEN_DISABLED')
+    evtFrame.RegisterEvent('ADDON_LOADED')
+    evtFrame.SetScript('OnEvent', function(event: string) {
+      if (event === 'PLAYER_REGEN_DISABLED' && frame && frame.IsShown()) {
+        HideUIPanel(frame);
+        DEFAULT_CHAT_FRAME.AddMessage(L['ENTERED_COMBAT'])
+      }
+    })
+
+    // Make sure it hasn't been created already.
+    // Don't have to upgrade the referance because it just uses the slash command
+    // which will upgrade below to use the current version anyway
+    if (!_G.GameMenuButtonOptionHouse) {
+      const menubutton = CreateFrame('Button', 'GameMenuButtonOptionHouse', GameMenuFrame, 'GameMenuButtonTemplate');
+      menubutton.SetText(L['OPTION_HOUSE']);
+      menubutton.SetScript('OnClick' as any, function() {
+        PlaySound('igMainMenuOption');
+        HideUIPanel(GameMenuFrame);
+        SlashCmdList['OPTHOUSE']();
+      });
+
+      // Position below 'Interface Options'
+      const [a1, fr, a2, x, y] = GameMenuButtonKeybindings.GetPoint()
+      menubutton.SetPoint(a1, fr, a2, x, y)
+
+      GameMenuButtonKeybindings.SetPoint(a1, menubutton, a2, x, y)
+      GameMenuFrame.SetHeight(GameMenuFrame.GetHeight() + 25)
+    }
+  }
+
+  OptionHouseFrames = OptionHouseFrames || ({} as typeof OptionHouseFrames);
+
+  OptionHouse.addons = addons
+  OptionHouse.evtFrame = evtFrame
+  OptionHouse.tabfunctions = tabfunctions
+
+  // Upgrade functions to point towards the latest revision
+  for (const [, addon] of pairs(addons)) {
+    for (const [, method] of ipairs(methods)) {
+      addon[method] = OptionHouse[method];
+    }
+  }
+
+  _G.SLASH_OPTHOUSE1 = '/opthouse';
+  _G.SLASH_OPTHOUSE2 = '/oh';
+  SlashCmdList['OPTHOUSE'] = function(command: string) {
+    if (command === '') {
+      OptionHouse.open()
+    } else {
+      OptionHouse.open(command)
+    }
+  }
+
+  // Now make it active
+  for (const [k, v] of pairs(OptionHouse)) {
+    // @ts-ignore
+    ohInstance[k] = v;
+  }
+}
+
+instanceLoaded();
+
+export {};

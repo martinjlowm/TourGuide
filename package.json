@@ -1,0 +1,16 @@
+{
+  "name": "TourGuide",
+  "description": "TypeScript port of TourGuide by tekkub",
+  "scripts": {
+    "build": "tstl -p tsconfig.json && rsync -am --include='*.xml' --include='*/' --exclude='*' src/ dist/",
+    "test": "pnpm run build && echo 'Not implemented yet'",
+    "type-check": "tsc --noEmit --watch",
+    "watch": "tstl -p tsconfig.json --watch"
+  },
+  "devDependencies": {
+    "@types/wow-api": "github:martinjlowm/types-wow-api",
+    "lua-types": "^2.5.2",
+    "typescript": "^3.5.2",
+    "typescript-to-lua": "^0.26.0"
+  }
+}
