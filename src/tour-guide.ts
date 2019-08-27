@@ -68,7 +68,7 @@ interface ITourGuide extends IDongle {
 
   // Events
   CHAT_MSG_LOOT(this: ITourGuide, event: string, msg: string): void;
-  UI_INFO_MESSAGE(this: ITourGuide, event: string, msg: string): void;
+  UI_INFO_MESSAGE(this: ITourGuide, event: string, errorType: number, msg: string): void;
   QUEST_LOG_UPDATE(this: ITourGuide): void;
   CRAFT_SHOW(this: ITourGuide, event: string): void;
   ZONE_CHANGED(this: ITourGuide, event: string): void;
@@ -134,7 +134,7 @@ TourGuide.icons = setmetatable(
 TourGuide.initialize = function(this: ITourGuide) {
   [myfaction] = UnitFactionGroup('player')
 
-  const [name] = UnitName('player');
+  const name = UnitName('player');
   let guide: string;
   if (name === 'Ankhesa') {
     guide = 'Exalted with Factions (Part 1)';
@@ -718,8 +718,9 @@ TourGuide.CHAT_MSG_LOOT = function(event: string, msg: string) {
   }
 }
 
-TourGuide.UI_INFO_MESSAGE = function(msg) {
-  if (msg === _G.ERR_NEWTAXIPATH && this.getObjectiveInfo()[0] === 'GETFLIGHTPOINT') {
+TourGuide.UI_INFO_MESSAGE = function(event: string, errorType: number, msg: string) {
+  const [action] = this.getObjectiveInfo();
+  if (msg === _G.ERR_NEWTAXIPATH && action === 'GETFLIGHTPOINT') {
     this._debug(1, 'Discovered flight point');
     this.setTurnedIn();
   }
@@ -785,7 +786,7 @@ if (tekDebug) {
 {
   const orig = GetQuestReward;
   // @ts-ignore
-  GetQuestReward = function(choice: number) {
+  GetQuestReward = function(this: void, choice: number) {
     const quest = GetTitleText();
     TourGuide._debug(10, 'GetQuestReward', quest);
     TourGuide.completeQuest(quest);
@@ -797,7 +798,7 @@ if (tekDebug) {
 {
   const orig = AddQuestWatch;
   // @ts-ignore
-  AddQuestWatch = function(quest: number) {
+  AddQuestWatch = function(this: void, quest: number) {
     if (IsQuestWatched(quest)) {
       return
     }
@@ -809,7 +810,7 @@ if (tekDebug) {
 {
   const orig = RemoveQuestWatch;
   // @ts-ignore
-  RemoveQuestWatch = function(quest: number) {
+  RemoveQuestWatch = function(this: void, quest: number) {
     if (!IsQuestWatched(quest)) {
       return
     }
